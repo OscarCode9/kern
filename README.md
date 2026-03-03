@@ -15,6 +15,7 @@ Implemented:
 - Inverse compiler: `kern_compiler.py` (Kern -> Python)
 - Round-trip and functional benchmarks on HumanEval
 - Multi-tokenizer benchmark on HumanEval + MBPP
+- Unified head-to-head harness vs external baselines (SimPy, Token Sugar)
 
 ## Key results
 
@@ -49,6 +50,30 @@ Per-dataset highlights:
 - HumanEval + `cl100k_base`: `30368 -> 8873` (`70.78%` saved)
 - MBPP train + `cl100k_base`: `21202 -> 16786` (`20.83%` saved)
 
+### Head-to-head baseline comparison (official code adapters)
+
+Run context:
+- Datasets: HumanEval (164) + MBPP train (374) = 538
+- Representations: `python`, `kern`, `simpy`, `token_sugar`
+- Protocol: encode -> decode-to-python -> `ast.parse` + HumanEval functional check
+
+`cl100k_base` overall results:
+
+| Representation | Parse OK | HumanEval functional | Python tokens | Repr tokens | Saved % |
+|---|---:|---:|---:|---:|---:|
+| `kern` | `538/538` | `164/164` | `51570` | `25659` | `+50.24%` |
+| `python` | `538/538` | `164/164` | `51570` | `51570` | `0.00%` |
+| `simpy` | `526/538` | `156/164` | `49583`* | `59888` | `-20.78%` |
+| `token_sugar` | `528/538` | `155/164` | `48592`* | `97481` | `-100.61%` |
+
+*For baseline rows, token totals are computed on parse-valid samples only (same harness rule as all representations).
+
+Statistical view (`overall`, `cl100k_base`, bootstrap 95% CI on saved %):
+- `kern`: `50.244%` [`47.527`, `53.220`]
+- `python`: `0.000%` [`0.000`, `0.000`]
+- `simpy`: `-20.783%` [`-22.246`, `-19.384`]
+- `token_sugar`: `-100.611%` [`-107.692`, `-94.196`]
+
 ## Repository layout
 
 - `kern_transpiler.py`: Python AST to Kern emitter
@@ -60,6 +85,8 @@ Per-dataset highlights:
 - `benchmark_humaneval_functional.py`: HumanEval functional validation
 - `benchmark_multitokenizer.py`: HumanEval + MBPP multi-tokenizer benchmark
 - `benchmark_head_to_head.py`: unified head-to-head harness (`python`, `kern`, optional external baselines)
+- `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
+- `test_baseline_adapters.py`: adapter sanity tests (`python`, `kern`, `simpy`, `token_sugar`)
 
 Generated benchmark artifacts:
 - `humaneval_roundtrip_report.json`
@@ -70,13 +97,15 @@ Generated benchmark artifacts:
 - `head_to_head_summary.csv`
 - `head_to_head_summary.json`
 - `head_to_head_details.json`
+- `head_to_head_stats.csv`
+- `head_to_head_stats.json`
 
 ## Quickstart
 
 Install dependencies:
 
 ```bash
-python3 -m pip install tiktoken human-eval datasets transformers sentencepiece
+python3 -m pip install tiktoken human-eval datasets transformers sentencepiece rope tree-sitter regex tqdm
 ```
 
 Run tests:
@@ -84,6 +113,7 @@ Run tests:
 ```bash
 python3 test_transpiler.py
 python3 test_roundtrip_full.py
+python3 test_baseline_adapters.py
 ```
 
 Run benchmarks:
@@ -94,19 +124,21 @@ python3 benchmark_humaneval_roundtrip.py
 python3 benchmark_humaneval_functional.py
 python3 benchmark_multitokenizer.py
 python3 benchmark_head_to_head.py --datasets humaneval mbpp_train --tokenizers cl100k_base
+python3 analyze_head_to_head.py
 ```
 
-Run with external baseline adapters (SimPy / Token Sugar) once you have converters:
+Run head-to-head with SimPy and Token Sugar adapters:
 
 ```bash
 python3 benchmark_head_to_head.py \
   --datasets humaneval mbpp_train \
-  --tokenizers cl100k_base o200k_base \
-  --external-config head_to_head_external_example.json
+  --tokenizers cl100k_base o200k_base llama_tinyllama codegen_350m_mono \
+  --include-simpy \
+  --include-token-sugar
 ```
 
 ## Notes
 
 - `llama_tinyllama` is used as a practical tokenizer proxy for LLaMA-family tokenization.
 - Benchmark scripts validate conversion before counting tokens (transpile, compile, and parse-back checks).
-- `head_to_head_external_example.json` is a template; replace command paths with your real converters.
+- `head_to_head_external_example.json` remains available if you want command-based custom adapters.

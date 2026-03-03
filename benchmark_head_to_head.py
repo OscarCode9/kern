@@ -29,6 +29,8 @@ import csv
 import json
 import os
 import subprocess
+import sys
+import warnings
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Callable
@@ -170,6 +172,90 @@ def load_external_adapters(path: str | None) -> list[RepresentationAdapter]:
             )
         )
     return adapters
+
+
+def _install_simpy_tree_sitter_compat() -> None:
+    """
+    SimPy depends on legacy tree_sitter API:
+      - Language(path, name)
+      - Parser.set_language(lang)
+    Recent tree_sitter versions changed both APIs.
+    This compatibility shim keeps SimPy usable in this harness.
+    """
+    import ctypes
+    import tree_sitter
+
+    if getattr(tree_sitter, "_kern_simpy_compat", False):
+        return
+
+    original_language = tree_sitter.Language
+
+    def compat_language(path_or_ptr, name=None):
+        if name is None:
+            return original_language(path_or_ptr)
+        try:
+            # Works in older tree_sitter versions
+            return original_language(path_or_ptr, name)
+        except TypeError:
+            # Newer API needs a pointer. Resolve symbol from shared library.
+            lib = ctypes.cdll.LoadLibrary(path_or_ptr)
+            symbol = getattr(lib, f"tree_sitter_{name}")
+            symbol.restype = ctypes.c_void_p
+            return original_language(symbol())
+
+    if not hasattr(tree_sitter.Parser, "set_language"):
+        def _set_language(self, language):
+            self.language = language
+        setattr(tree_sitter.Parser, "set_language", _set_language)
+
+    warnings.filterwarnings(
+        "ignore",
+        message="int argument support is deprecated",
+        category=DeprecationWarning,
+    )
+    tree_sitter.Language = compat_language
+    tree_sitter._kern_simpy_compat = True
+
+
+def simpy_adapter(simpy_root: str) -> RepresentationAdapter:
+    _install_simpy_tree_sitter_compat()
+    root = str(Path(simpy_root).resolve())
+    expected_files = [
+        Path(root) / "spy" / "build" / "python-languages.so",
+        Path(root) / "spy" / "build" / "spython-languages.so",
+    ]
+    missing = [str(p) for p in expected_files if not p.exists()]
+    if missing:
+        raise FileNotFoundError(
+            "SimPy parser libraries missing. Expected:\n  - "
+            + "\n  - ".join(missing)
+        )
+    if root not in sys.path:
+        sys.path.insert(0, root)
+    from spy import Transformer  # type: ignore
+
+    transformer = Transformer()
+    return RepresentationAdapter(
+        name="simpy",
+        encode=lambda src: transformer.parse(src),
+        decode_to_python=lambda encoded: transformer.decode(encoded),
+    )
+
+
+def token_sugar_adapter(token_sugar_root: str, pattern_file: str) -> RepresentationAdapter:
+    root = str(Path(token_sugar_root).resolve())
+    pattern_path = str(Path(pattern_file).resolve())
+    if root not in sys.path:
+        sys.path.insert(0, root)
+    from eval import Parser as SugarParser  # type: ignore
+
+    parser = SugarParser()
+    parser.set_patterns(pattern_path)
+    return RepresentationAdapter(
+        name="token_sugar",
+        encode=lambda src: parser.encode(src),
+        decode_to_python=lambda encoded: parser.parse(encoded)[0],
+    )
 
 
 # ---------------------------- evaluation -------------------------------
@@ -372,6 +458,37 @@ def parse_args() -> argparse.Namespace:
         help="Path to JSON external adapter config",
     )
     parser.add_argument(
+        "--include-simpy",
+        action="store_true",
+        help="Include SimPy baseline adapter",
+    )
+    parser.add_argument(
+        "--simpy-root",
+        default="external/SimPy",
+        help="Path to SimPy repo root (default: external/SimPy)",
+    )
+    parser.add_argument(
+        "--include-token-sugar",
+        action="store_true",
+        help="Include Token Sugar baseline adapter",
+    )
+    parser.add_argument(
+        "--token-sugar-root",
+        default="external/TokenSugar",
+        help="Path to TokenSugar repo root (default: external/TokenSugar)",
+    )
+    parser.add_argument(
+        "--token-sugar-pattern-file",
+        default="external/TokenSugar/mined_sugars.json",
+        help="Path to Token Sugar pattern file",
+    )
+    parser.add_argument(
+        "--max-cases",
+        type=int,
+        default=0,
+        help="Optional limit of samples per dataset (0 = all)",
+    )
+    parser.add_argument(
         "--skip-functional",
         action="store_true",
         help="Skip HumanEval functional checks",
@@ -390,13 +507,21 @@ def main() -> None:
 
     tokenizers = build_tokenizers(args.tokenizers)
     adapters = [python_adapter(), kern_adapter()]
+    if args.include_simpy:
+        adapters.append(simpy_adapter(args.simpy_root))
+    if args.include_token_sugar:
+        adapters.append(
+            token_sugar_adapter(args.token_sugar_root, args.token_sugar_pattern_file)
+        )
     adapters.extend(load_external_adapters(args.external_config))
 
     inputs: list[tuple[str, str, dict]] = []
     if "humaneval" in args.datasets:
-        inputs.extend(load_humaneval())
+        rows = load_humaneval()
+        inputs.extend(rows[: args.max_cases] if args.max_cases > 0 else rows)
     if "mbpp_train" in args.datasets:
-        inputs.extend(load_mbpp_train())
+        rows = load_mbpp_train()
+        inputs.extend(rows[: args.max_cases] if args.max_cases > 0 else rows)
 
     results: list[CaseResult] = []
     total = len(inputs) * len(adapters)

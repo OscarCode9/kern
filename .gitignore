@@ -19,3 +19,6 @@ htmlcov/
 .DS_Store
 .vscode/
 .idea/
+
+# Local baseline clones / large externals
+external/
