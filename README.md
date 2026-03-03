@@ -59,6 +59,7 @@ Per-dataset highlights:
 - `benchmark_humaneval_roundtrip.py`: AST/parse round-trip benchmark
 - `benchmark_humaneval_functional.py`: HumanEval functional validation
 - `benchmark_multitokenizer.py`: HumanEval + MBPP multi-tokenizer benchmark
+- `benchmark_head_to_head.py`: unified head-to-head harness (`python`, `kern`, optional external baselines)
 
 Generated benchmark artifacts:
 - `humaneval_roundtrip_report.json`
@@ -66,6 +67,9 @@ Generated benchmark artifacts:
 - `benchmark_multitokenizer_summary.csv`
 - `benchmark_multitokenizer_summary.json`
 - `benchmark_multitokenizer_details.json`
+- `head_to_head_summary.csv`
+- `head_to_head_summary.json`
+- `head_to_head_details.json`
 
 ## Quickstart
 
@@ -89,9 +93,20 @@ python3 benchmark_grammar.py
 python3 benchmark_humaneval_roundtrip.py
 python3 benchmark_humaneval_functional.py
 python3 benchmark_multitokenizer.py
+python3 benchmark_head_to_head.py --datasets humaneval mbpp_train --tokenizers cl100k_base
+```
+
+Run with external baseline adapters (SimPy / Token Sugar) once you have converters:
+
+```bash
+python3 benchmark_head_to_head.py \
+  --datasets humaneval mbpp_train \
+  --tokenizers cl100k_base o200k_base \
+  --external-config head_to_head_external_example.json
 ```
 
 ## Notes
 
 - `llama_tinyllama` is used as a practical tokenizer proxy for LLaMA-family tokenization.
 - Benchmark scripts validate conversion before counting tokens (transpile, compile, and parse-back checks).
+- `head_to_head_external_example.json` is a template; replace command paths with your real converters.

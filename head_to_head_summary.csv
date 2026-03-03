@@ -1,0 +1,7 @@
+representation,dataset,tokenizer,total_cases,parse_ok_cases,functional_total_cases,functional_ok_cases,python_tokens,repr_tokens,saved_tokens,saved_pct
+kern,humaneval,cl100k_base,164,164,164,164,30368,8873,21495,70.78
+kern,mbpp_train,cl100k_base,374,374,0,0,21202,16786,4416,20.83
+kern,overall,cl100k_base,538,538,164,164,51570,25659,25911,50.24
+python,humaneval,cl100k_base,164,164,164,164,30368,30368,0,0.0
+python,mbpp_train,cl100k_base,374,374,0,0,21202,21202,0,0.0
+python,overall,cl100k_base,538,538,164,164,51570,51570,0,0.0

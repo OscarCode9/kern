@@ -1,0 +1,80 @@
+[
+  {
+    "representation": "kern",
+    "dataset": "humaneval",
+    "tokenizer": "cl100k_base",
+    "total_cases": 164,
+    "parse_ok_cases": 164,
+    "functional_total_cases": 164,
+    "functional_ok_cases": 164,
+    "python_tokens": 30368,
+    "repr_tokens": 8873,
+    "saved_tokens": 21495,
+    "saved_pct": 70.78
+  },
+  {
+    "representation": "kern",
+    "dataset": "mbpp_train",
+    "tokenizer": "cl100k_base",
+    "total_cases": 374,
+    "parse_ok_cases": 374,
+    "functional_total_cases": 0,
+    "functional_ok_cases": 0,
+    "python_tokens": 21202,
+    "repr_tokens": 16786,
+    "saved_tokens": 4416,
+    "saved_pct": 20.83
+  },
+  {
+    "representation": "kern",
+    "dataset": "overall",
+    "tokenizer": "cl100k_base",
+    "total_cases": 538,
+    "parse_ok_cases": 538,
+    "functional_total_cases": 164,
+    "functional_ok_cases": 164,
+    "python_tokens": 51570,
+    "repr_tokens": 25659,
+    "saved_tokens": 25911,
+    "saved_pct": 50.24
+  },
+  {
+    "representation": "python",
+    "dataset": "humaneval",
+    "tokenizer": "cl100k_base",
+    "total_cases": 164,
+    "parse_ok_cases": 164,
+    "functional_total_cases": 164,
+    "functional_ok_cases": 164,
+    "python_tokens": 30368,
+    "repr_tokens": 30368,
+    "saved_tokens": 0,
+    "saved_pct": 0.0
+  },
+  {
+    "representation": "python",
+    "dataset": "mbpp_train",
+    "tokenizer": "cl100k_base",
+    "total_cases": 374,
+    "parse_ok_cases": 374,
+    "functional_total_cases": 0,
+    "functional_ok_cases": 0,
+    "python_tokens": 21202,
+    "repr_tokens": 21202,
+    "saved_tokens": 0,
+    "saved_pct": 0.0
+  },
+  {
+    "representation": "python",
+    "dataset": "overall",
+    "tokenizer": "cl100k_base",
+    "total_cases": 538,
+    "parse_ok_cases": 538,
+    "functional_total_cases": 164,
+    "functional_ok_cases": 164,
+    "python_tokens": 51570,
+    "repr_tokens": 51570,
+    "saved_tokens": 0,
+    "saved_pct": 0.0
+  }
+]

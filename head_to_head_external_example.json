@@ -1,0 +1,13 @@
+[
+  {
+    "name": "simpy",
+    "encode_cmd": "python /absolute/path/to/simpy_encode.py",
+    "decode_cmd": "python /absolute/path/to/simpy_decode.py",
+    "python_compatible": false
+  },
+  {
+    "name": "token_sugar",
+    "encode_cmd": "python /absolute/path/to/token_sugar_encode.py",
+    "python_compatible": true
+  }
+]
