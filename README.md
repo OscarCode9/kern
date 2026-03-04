@@ -74,6 +74,9 @@ Statistical view (`overall`, `cl100k_base`, bootstrap 95% CI on saved %):
 - `simpy`: `-20.783%` [`-22.246`, `-19.384`]
 - `token_sugar`: `-100.611%` [`-107.692`, `-94.196`]
 
+Universal claim for the current benchmark scope:
+- Across all evaluated datasets and tokenizers (HumanEval + MBPP train; `cl100k_base`, `o200k_base`, `llama_tinyllama`, `codegen_350m_mono`), `kern` preserves correctness (`538/538` parse, `164/164` HumanEval functional) while sustaining ~`50%` token reduction, outperforming `simpy` and `token_sugar` on robustness and token efficiency in the same harness.
+
 ## Repository layout
 
 - `kern_transpiler.py`: Python AST to Kern emitter
