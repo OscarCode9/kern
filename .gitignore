@@ -22,3 +22,6 @@ htmlcov/
 
 # Local baseline clones / large externals
 external/
+
+# Generated fine-tuning datasets
+data/
