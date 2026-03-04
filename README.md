@@ -90,6 +90,7 @@ Universal claim for the current benchmark scope:
 - `benchmark_head_to_head.py`: unified head-to-head harness (`python`, `kern`, optional external baselines)
 - `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
 - `test_baseline_adapters.py`: adapter sanity tests (`python`, `kern`, `simpy`, `token_sugar`)
+- `prepare_finetune_dataset.py`: exports `.py` + `.kern` pairs and JSONL for fine-tuning
 
 Generated benchmark artifacts:
 - `humaneval_roundtrip_report.json`
@@ -138,6 +139,33 @@ python3 benchmark_head_to_head.py \
   --tokenizers cl100k_base o200k_base llama_tinyllama codegen_350m_mono \
   --include-simpy \
   --include-token-sugar
+```
+
+Build fine-tuning dataset (`.kern` + `.py` + JSONL):
+
+```bash
+python3 prepare_finetune_dataset.py \
+  --datasets humaneval mbpp_train \
+  --valid-ratio 0.05 \
+  --seed 42 \
+  --out-dir data/finetune_v1 \
+  --overwrite
+```
+
+Output structure:
+
+```text
+data/finetune_v1/
+  train/
+    py/*.py
+    kern/*.kern
+    pairs.jsonl
+  valid/
+    py/*.py
+    kern/*.kern
+    pairs.jsonl
+  summary.json
+  rejected.jsonl
 ```
 
 ## Notes
