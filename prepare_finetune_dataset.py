@@ -18,6 +18,7 @@ import json
 import random
 import re
 import shutil
+import warnings
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -30,6 +31,13 @@ from kern_transpiler import transpile
 
 UNSUPPORTED_STMT = "# UNSUPPORTED:"
 UNSUPPORTED_EXPR_RE = re.compile(r"<[A-Za-z_][A-Za-z0-9_]*>")
+
+
+def parse_python_quiet(src: str) -> ast.AST:
+    # Silence noisy SyntaxWarning from backslash-heavy strings in corpora.
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", SyntaxWarning)
+        return ast.parse(src)
 
 
 @dataclass
@@ -106,7 +114,7 @@ def make_samples(
         if validate_roundtrip:
             try:
                 py_back = compile_kern(kern_src)
-                ast.parse(py_back)
+                parse_python_quiet(py_back)
             except Exception as exc:  # noqa: BLE001
                 rejected.append(
                     {

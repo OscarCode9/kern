@@ -31,6 +31,7 @@ import json
 import random
 import re
 import shutil
+import warnings
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
@@ -97,6 +98,14 @@ def has_def(module: ast.AST) -> bool:
     return False
 
 
+def parse_python_quiet(src: str) -> ast.AST:
+    # Large real-world corpora often contain string literals with backslashes
+    # that trigger SyntaxWarning on recent Python versions; keep logs readable.
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", SyntaxWarning)
+        return ast.parse(src)
+
+
 def quality_check(
     src: str,
     min_chars: int,
@@ -123,7 +132,7 @@ def quality_check(
         return False, "suspicious_spacing"
 
     try:
-        tree = ast.parse(src)
+        tree = parse_python_quiet(src)
     except Exception:
         return False, "python_parse_fail"
 
@@ -326,7 +335,7 @@ def main() -> None:
         if not args.no_validate:
             try:
                 py_back = compile_kern(kern_src)
-                ast.parse(py_back)
+                parse_python_quiet(py_back)
             except Exception as exc:  # noqa: BLE001
                 reject_counts["compile_parse_fail"] += 1
                 if len(rejected_sample) < args.rejected_sample_limit:

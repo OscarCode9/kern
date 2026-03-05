@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 from pathlib import Path
 from typing import Any
 
@@ -125,12 +124,23 @@ def main() -> None:
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
 
-    model = AutoModelForCausalLM.from_pretrained(
-        args.model_name,
-        quantization_config=bnb_config,
-        device_map="auto",
-        trust_remote_code=True,
-    )
+    try:
+        model = AutoModelForCausalLM.from_pretrained(
+            args.model_name,
+            quantization_config=bnb_config,
+            device_map="auto",
+            trust_remote_code=True,
+        )
+    except ValueError as exc:
+        msg = str(exc)
+        if "model type `qwen3_5`" in msg and "does not recognize this architecture" in msg:
+            raise RuntimeError(
+                "Your transformers version does not support Qwen3.5 yet. "
+                "Upgrade in Colab with:\n"
+                "  pip install -U git+https://github.com/huggingface/transformers.git\n"
+                "Then restart runtime and run again."
+            ) from exc
+        raise
     model.config.use_cache = False
 
     ds = load_dataset(

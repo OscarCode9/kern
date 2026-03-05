@@ -11,7 +11,7 @@ Grammar spec v0.2:
   imp module / from mod imp x   imports
   cls Name(Base){stmts}         classes
   try{...}exc Type{...}fin{}    try/except/finally
-  \params:expr                  lambda
+  \\params:expr                 lambda
   ret expr                      return
   x=expr, x+=expr               assignments
   x>0&y<0  x|y                  and→& or→|
