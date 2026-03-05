@@ -515,6 +515,9 @@ function App() {
         <p className="subtitle">
           VS Code-like explorer for <code>data/</code> and dark themed code editing with Monaco.
         </p>
+        <p className="subtitle">
+          Official docs in HTML: <a className="docs-inline-link" href="/?view=docs">/?view=docs</a>
+        </p>
         <p className={`health ${apiHealth}`}>{healthLabel}</p>
       </header>
 
