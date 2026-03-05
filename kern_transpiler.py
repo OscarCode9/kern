@@ -88,7 +88,7 @@ class KernEmitter(ast.NodeVisitor):
     def transpile(self, source: str) -> str:
         tree = ast.parse(source)
         parts = []
-        for node in self._strip_leading_docstring(list(tree.body)):
+        for node in self._strip_nonsemantic_string_exprs(list(tree.body)):
             parts.append(self._stmt(node))
         return "\n".join(p for p in parts if p)
 
@@ -105,11 +105,10 @@ class KernEmitter(ast.NodeVisitor):
         return f"# UNSUPPORTED:{node.__class__.__name__}"
 
     def _stmts(self, stmts) -> str:
-        """Render a list of statements, skipping docstrings."""
+        """Render a list of statements, skipping non-semantic string expressions."""
         parts = []
-        for i, s in enumerate(stmts):
-            # Skip leading docstring
-            if i == 0 and isinstance(s, ast.Expr) and isinstance(s.value, ast.Constant) and isinstance(s.value.value, str):
+        for s in stmts:
+            if self._is_nop_string_expr_stmt(s):
                 continue
             parts.append(self._stmt(s))
         return ";".join(p for p in parts if p)
@@ -122,6 +121,27 @@ class KernEmitter(ast.NodeVisitor):
                 and isinstance(stmts[0].value.value, str)):
             return stmts[1:]
         return stmts
+
+    def _is_nop_string_expr_stmt(self, node) -> bool:
+        return (
+            isinstance(node, ast.Expr)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+        )
+
+    def _strip_nonsemantic_string_exprs(self, stmts):
+        """Drop bare string expression statements (docstrings / no-op literals)."""
+        return [s for s in stmts if not self._is_nop_string_expr_stmt(s)]
+
+    def _strip_pass(self, stmts):
+        """Drop Pass statements — empty {} body handled by compiler."""
+        return [s for s in stmts if not isinstance(s, ast.Pass)]
+
+    def _expr_tuple_bare(self, node) -> str:
+        """Emit multi-element tuples without outer parens (for targets/returns)."""
+        if isinstance(node, ast.Tuple) and len(node.elts) > 1:
+            return ",".join(self._expr(e) for e in node.elts)
+        return self._expr(node)
 
     def _block(self, stmts) -> str:
         """Render {stmts} block."""
@@ -144,8 +164,8 @@ class KernEmitter(ast.NodeVisitor):
 
         decorators = "".join("@" + self._expr(d) + "\n" for d in node.decorator_list)
 
-        # Real body: skip only leading docstring
-        body = self._strip_leading_docstring(list(node.body))
+        # Real body: drop bare string literal expressions and lone pass stmts.
+        body = self._strip_pass(self._strip_nonsemantic_string_exprs(list(node.body)))
 
         if not body:
             body_str = "{}"
@@ -180,6 +200,9 @@ class KernEmitter(ast.NodeVisitor):
             if args.vararg.annotation:
                 s += ":" + self._expr(args.vararg.annotation)
             parts.append(s)
+        # Preserve Python keyword-only separator when there is no *args.
+        if args.kwonlyargs and not args.vararg:
+            parts.append("*")
         # keyword-only args
         for i, arg in enumerate(args.kwonlyargs):
             s = arg.arg
@@ -199,11 +222,12 @@ class KernEmitter(ast.NodeVisitor):
     def _stmt_Return(self, node) -> str:
         if node.value is None:
             return "ret"
-        return "ret " + self._expr(node.value)
+        return "ret " + self._expr_tuple_bare(node.value)
 
     def _stmt_Assign(self, node) -> str:
-        targets = ",".join(self._expr(t) for t in node.targets)
-        return targets + "=" + self._expr(node.value)
+        parts = [self._expr_tuple_bare(t) for t in node.targets]
+        parts.append(self._expr_tuple_bare(node.value))
+        return "=".join(parts)
 
     def _stmt_AnnAssign(self, node) -> str:
         s = self._expr(node.target) + ":" + self._expr(node.annotation)
@@ -230,7 +254,7 @@ class KernEmitter(ast.NodeVisitor):
         return "".join(parts)
 
     def _stmt_For(self, node) -> str:
-        target = self._expr(node.target)
+        target = self._expr_tuple_bare(node.target)
         iter_ = self._expr(node.iter)
         body = self._block(node.body)
         s = f"for {target} in {iter_}{body}"
@@ -266,8 +290,8 @@ class KernEmitter(ast.NodeVisitor):
         bases = ",".join(self._expr(b) for b in node.bases)
         base_str = f"({bases})" if bases else ""
         decorators = "".join("@" + self._expr(d) + "\n" for d in node.decorator_list)
-        # Skip only leading docstring in class body
-        body = self._strip_leading_docstring(list(node.body))
+        # Drop bare string literal expressions and lone pass in class body.
+        body = self._strip_pass(self._strip_nonsemantic_string_exprs(list(node.body)))
         body_str = self._block(body) if body else "{}"
         return f"{decorators}cls {node.name}{base_str}{body_str}"
 
@@ -333,14 +357,16 @@ class KernEmitter(ast.NodeVisitor):
         return "nonlocal " + ",".join(node.names)
 
     def _stmt_Expr(self, node) -> str:
-        # Bare expression statement
+        # Bare expression statement. Ignore no-op string literal statements.
+        if self._is_nop_string_expr_stmt(node):
+            return ""
         return self._expr(node.value)
 
     # yield / yield from as statements
     def _stmt_Yield(self, node) -> str:
         if node.value:
-            return "yld " + self._expr(node.value)
-        return "yld"
+            return "yield " + self._expr(node.value)
+        return "yield"
 
     # ── Expressions ────────────────────────────────────────────────
 
@@ -361,7 +387,13 @@ class KernEmitter(ast.NodeVisitor):
         return self._expr(node.value) + "." + node.attr
 
     def _expr_Subscript(self, node) -> str:
-        return self._expr(node.value) + "[" + self._expr(node.slice) + "]"
+        # In subscripts, tuple slices must be emitted without parentheses:
+        # arr[:,0] instead of arr[(:,0)].
+        if isinstance(node.slice, ast.Tuple):
+            inner = ",".join(self._expr(e) for e in node.slice.elts)
+        else:
+            inner = self._expr(node.slice)
+        return self._expr(node.value) + "[" + inner + "]"
 
     def _expr_Index(self, node) -> str:  # Python 3.8 compat
         return self._expr(node.value)
@@ -416,12 +448,24 @@ class KernEmitter(ast.NodeVisitor):
 
     def _expr_Call(self, node) -> str:
         func = self._expr(node.func)
-        args = [self._expr(a) for a in node.args]
-        kwargs = [k.arg + "=" + self._expr(k.value) if k.arg else "**" + self._expr(k.value)
-                  for k in node.keywords]
-        stars = ["*" + self._expr(a.value) if isinstance(a, ast.Starred) else self._expr(a)
-                 for a in node.args]
-        all_args = stars + kwargs
+        all_args = []
+        for a in node.args:
+            if isinstance(a, ast.Starred):
+                all_args.append("*" + self._expr(a.value))
+                continue
+            # list((x for ...)) -> list(x for ...) when generator is sole arg.
+            if (
+                isinstance(a, ast.GeneratorExp)
+                and len(node.args) == 1
+                and len(node.keywords) == 0
+            ):
+                all_args.append(self._expr_generator_inner(a))
+                continue
+            all_args.append(self._expr(a))
+        all_args.extend(
+            k.arg + "=" + self._expr(k.value) if k.arg else "**" + self._expr(k.value)
+            for k in node.keywords
+        )
         return func + "(" + ",".join(all_args) + ")"
 
     def _expr_Starred(self, node) -> str:
@@ -473,12 +517,15 @@ class KernEmitter(ast.NodeVisitor):
                 + self._comprehensions(node.generators) + "}")
 
     def _expr_GeneratorExp(self, node) -> str:
-        return "(" + self._expr(node.elt) + self._comprehensions(node.generators) + ")"
+        return "(" + self._expr_generator_inner(node) + ")"
+
+    def _expr_generator_inner(self, node) -> str:
+        return self._expr(node.elt) + self._comprehensions(node.generators)
 
     def _comprehensions(self, generators) -> str:
         s = ""
         for gen in generators:
-            s += " for " + self._expr(gen.target) + " in " + self._expr(gen.iter)
+            s += " for " + self._expr_tuple_bare(gen.target) + " in " + self._expr(gen.iter)
             for cond in gen.ifs:
                 s += " if " + self._expr(cond)
         return s
@@ -512,11 +559,11 @@ class KernEmitter(ast.NodeVisitor):
 
     def _expr_Yield(self, node) -> str:
         if node.value:
-            return "yld " + self._expr(node.value)
-        return "yld"
+            return "yield " + self._expr(node.value)
+        return "yield"
 
     def _expr_YieldFrom(self, node) -> str:
-        return "yld from " + self._expr(node.value)
+        return "yield from " + self._expr(node.value)
 
     def _expr_NamedExpr(self, node) -> str:  # walrus :=
         return self._expr(node.target) + ":=" + self._expr(node.value)

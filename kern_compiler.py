@@ -123,8 +123,16 @@ class Parser:
         v = c.v
 
         if c.t == 'NAME':
-            if v == 'fn':    return self._fn(False)
-            if v == 'cls':   return self._cls()
+            # "fn" is a definition keyword only for: fn NAME(...)
+            if v == 'fn' and self.peek().t == 'NAME' and self.peek(2).v == '(':
+                return self._fn(False)
+            # "cls" is a class keyword only for: cls NAME(...)|cls NAME{...}
+            if (
+                v == 'cls'
+                and self.peek().t == 'NAME'
+                and self.peek(2).v in {'(', '{'}
+            ):
+                return self._cls()
             if v == 'imp':   return self._import()
             if v == 'from':  return self._from()
             # "ret" is a keyword only when it is not being used as an identifier.
@@ -148,7 +156,7 @@ class Parser:
             if v == 'global':   return self._names('global')
             if v == 'nonlocal': return self._names('nonlocal')
             if v == 'async': return self._async()
-            if v == 'yld':   return self._yield()
+            if v == 'yld' or v == 'yield':   return self._yield()
 
         if c.t == 'OP' and v == '@':
             return self._decorated()
@@ -327,7 +335,7 @@ class Parser:
         return 'async ' + self._stmt()
 
     def _yield(self) -> str:
-        self.eat('yld')
+        self.pos += 1  # eat 'yld' or 'yield'
         if self.cur.v == 'from':
             self.eat('from')
             return 'yield from ' + self._expr_line()
@@ -402,9 +410,11 @@ class Parser:
         while self.cur.v == '.':
             self.eat('.'); dots += '.'
         parts = []
-        if self.cur.t == 'NAME':
+        # Allow relative imports like: from . imp x
+        # In that case, "imp" is the delimiter keyword, not module name.
+        if self.cur.t == 'NAME' and not (dots and self.cur.v == 'imp'):
             parts.append(self.eat().v)
-            while self.cur.v == '.' and self.peek().t == 'NAME':
+            while self.cur.v == '.' and self.peek().t == 'NAME' and self.peek().v != 'imp':
                 self.eat('.'); parts.append(self.eat().v)
         return dots + '.'.join(parts)
 
@@ -458,11 +468,14 @@ class Parser:
         return 'lambda ' + params_str + ': ' + body
 
     def _expr_line(self) -> str:
-        return self._expr_until({';', '}'})
+        # Trim boundary whitespace to avoid accidental over-indentation
+        # when expressions start with spaced keywords like "await" or "not".
+        return self._expr_until({';', '}'}).strip()
 
     # Keywords that need surrounding spaces when used inside expressions
     _SPACED_EXPR_KW = {
         'not', 'in', 'is', 'if', 'else', 'for', 'from', 'as', 'await', 'and', 'or',
+        'yield',
     }
 
     def _next_tok(self) -> str:
