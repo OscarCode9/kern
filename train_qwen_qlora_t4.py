@@ -16,6 +16,7 @@ Expected dataset format (JSONL):
 from __future__ import annotations
 
 import argparse
+import inspect
 import json
 from pathlib import Path
 from typing import Any
@@ -102,6 +103,10 @@ def resolve_resume_checkpoint(output_dir: Path, resume_arg: str) -> str | None:
     return str(checkpoints[-1])
 
 
+def _has_param(callable_obj: Any, param_name: str) -> bool:
+    return param_name in inspect.signature(callable_obj).parameters
+
+
 def main() -> None:
     args = parse_args()
     set_seed(args.seed)
@@ -176,43 +181,69 @@ def main() -> None:
         target_modules=lora_targets,
     )
 
-    train_config = SFTConfig(
-        output_dir=str(output_dir),
-        num_train_epochs=args.num_train_epochs,
-        learning_rate=args.learning_rate,
-        per_device_train_batch_size=args.per_device_batch_size,
-        per_device_eval_batch_size=1,
-        gradient_accumulation_steps=args.gradient_accumulation_steps,
-        max_seq_length=args.max_seq_length,
-        logging_steps=args.logging_steps,
-        save_steps=args.save_steps,
-        eval_steps=args.eval_steps,
-        save_total_limit=args.save_total_limit,
-        evaluation_strategy="steps",
-        save_strategy="steps",
-        fp16=True,
-        bf16=False,
-        gradient_checkpointing=True,
-        gradient_checkpointing_kwargs={"use_reentrant": False},
-        lr_scheduler_type="cosine",
-        warmup_ratio=0.03,
-        weight_decay=0.01,
-        max_grad_norm=0.3,
-        optim="paged_adamw_8bit",
-        report_to="none",
-        dataset_text_field="text",
-        packing=False,
-        seed=args.seed,
-    )
+    cfg_kwargs: dict[str, Any] = {
+        "output_dir": str(output_dir),
+        "num_train_epochs": args.num_train_epochs,
+        "learning_rate": args.learning_rate,
+        "per_device_train_batch_size": args.per_device_batch_size,
+        "per_device_eval_batch_size": 1,
+        "gradient_accumulation_steps": args.gradient_accumulation_steps,
+        "logging_steps": args.logging_steps,
+        "save_steps": args.save_steps,
+        "eval_steps": args.eval_steps,
+        "save_total_limit": args.save_total_limit,
+        "fp16": True,
+        "bf16": False,
+        "gradient_checkpointing": True,
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.03,
+        "weight_decay": 0.01,
+        "max_grad_norm": 0.3,
+        "optim": "paged_adamw_8bit",
+        "report_to": "none",
+        "seed": args.seed,
+    }
+    # TRL/Transformers naming drift across versions.
+    if _has_param(SFTConfig.__init__, "max_seq_length"):
+        cfg_kwargs["max_seq_length"] = args.max_seq_length
+    elif _has_param(SFTConfig.__init__, "max_length"):
+        cfg_kwargs["max_length"] = args.max_seq_length
+    if _has_param(SFTConfig.__init__, "evaluation_strategy"):
+        cfg_kwargs["evaluation_strategy"] = "steps"
+    elif _has_param(SFTConfig.__init__, "eval_strategy"):
+        cfg_kwargs["eval_strategy"] = "steps"
+    if _has_param(SFTConfig.__init__, "save_strategy"):
+        cfg_kwargs["save_strategy"] = "steps"
+    if _has_param(SFTConfig.__init__, "gradient_checkpointing_kwargs"):
+        cfg_kwargs["gradient_checkpointing_kwargs"] = {"use_reentrant": False}
+    if _has_param(SFTConfig.__init__, "dataset_text_field"):
+        cfg_kwargs["dataset_text_field"] = "text"
+    if _has_param(SFTConfig.__init__, "packing"):
+        cfg_kwargs["packing"] = False
 
-    trainer = SFTTrainer(
-        model=model,
-        tokenizer=tokenizer,
-        args=train_config,
-        train_dataset=train_ds,
-        eval_dataset=valid_ds,
-        peft_config=lora_config,
-    )
+    train_config = SFTConfig(**cfg_kwargs)
+
+    trainer_kwargs: dict[str, Any] = {
+        "model": model,
+        "args": train_config,
+        "train_dataset": train_ds,
+        "eval_dataset": valid_ds,
+        "peft_config": lora_config,
+    }
+    if _has_param(SFTTrainer.__init__, "tokenizer"):
+        trainer_kwargs["tokenizer"] = tokenizer
+    elif _has_param(SFTTrainer.__init__, "processing_class"):
+        trainer_kwargs["processing_class"] = tokenizer
+    if _has_param(SFTTrainer.__init__, "dataset_text_field"):
+        trainer_kwargs["dataset_text_field"] = "text"
+    if _has_param(SFTTrainer.__init__, "max_seq_length"):
+        trainer_kwargs["max_seq_length"] = args.max_seq_length
+    elif _has_param(SFTTrainer.__init__, "max_length"):
+        trainer_kwargs["max_length"] = args.max_seq_length
+    if _has_param(SFTTrainer.__init__, "packing"):
+        trainer_kwargs["packing"] = False
+
+    trainer = SFTTrainer(**trainer_kwargs)
 
     resume_ckpt = resolve_resume_checkpoint(output_dir, args.resume_from_checkpoint)
     if resume_ckpt:
