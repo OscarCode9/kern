@@ -8,6 +8,78 @@ Core idea:
 - Deterministic round-trip to preserve semantics.
 - Project blog (live updates): `https://oscarcode9.github.io/kern-language.html`
 
+## System architecture
+
+```mermaid
+flowchart LR
+  subgraph Inputs
+    A1[Python corpora<br/>HumanEval, MBPP, CodeSearchNet, repos]
+    A2[Kern source]
+  end
+
+  subgraph Core
+    B1[kern_transpiler.py<br/>Python -> Kern]
+    B2[kern_compiler.py<br/>Kern -> Python]
+    B3[kern_grammar_spec.md<br/>Grammar v0.2]
+  end
+
+  subgraph Validation and Benchmarks
+    C1[test_transpiler.py]
+    C2[test_roundtrip_full.py]
+    C3[Benchmarks<br/>roundtrip, functional, multitokenizer, head-to-head]
+    C4[Artifacts JSON/CSV]
+  end
+
+  subgraph Dataset Pipeline
+    D1[prepare_finetune_dataset.py]
+    D2[prepare_finetune_dataset_csn.py]
+    D3[pairs.jsonl]
+    D4[train_qwen_chat.jsonl]
+  end
+
+  subgraph Training
+    E1[QLoRA SFT on Qwen]
+    E2[Kern-tuned model]
+  end
+
+  subgraph Product Surface
+    F1[backend/main.py<br/>FastAPI]
+    F2[web/<br/>React + Monaco]
+    F3[Conversion API<br/>Python <-> Kern]
+  end
+
+  A1 --> B1
+  A2 --> B2
+  B3 --> B1
+  B3 --> B2
+  B1 <--> B2
+
+  B1 --> C1
+  B1 --> C2
+  B2 --> C2
+  B1 --> C3
+  C3 --> C4
+
+  A1 --> D1
+  A1 --> D2
+  B1 --> D1
+  B2 --> D1
+  B1 --> D2
+  B2 --> D2
+  D1 --> D3
+  D2 --> D3
+  D2 --> D4
+
+  D3 --> E1
+  D4 --> E1
+  E1 --> E2
+
+  B1 --> F3
+  B2 --> F3
+  F1 --> F3
+  F2 --> F1
+```
+
 ## Current status (March 5, 2026)
 
 Implemented:
