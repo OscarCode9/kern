@@ -104,6 +104,19 @@ Training-data pipeline status:
   - `data/finetune_csn20k/valid_qwen_chat.jsonl`
 - Full run summary: `data/finetune_csn20k/summary.json`
 
+Fine-tuning run #1 status (completed on March 5, 2026):
+- Training completed on Colab `Tesla T4` with `Qwen/Qwen2.5-Coder-3B-Instruct` (QLoRA, T4-safe config).
+- Run config: `5,000` train / `500` valid, `1` epoch, `313` steps, sequence length `512`.
+- Final telemetry snapshot:
+  - `train_runtime`: `5338s` (`~1h29m`)
+  - `train_loss`: `5.313`
+  - `eval_loss`: `8.483`
+- Final adapter exported to:
+  - `outputs/qwen-kern-qlora-t4/final_adapter`
+- Published adapter (Hugging Face):
+  - `https://huggingface.co/Oscarcode99/kern-qwen25-3b-lora-t4-run1`
+- Next immediate step: evaluate `Pass@1` + round-trip/compile success against Python baseline.
+
 ## Key results
 
 ### Correctness
