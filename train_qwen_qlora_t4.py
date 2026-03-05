@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import inspect
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -44,6 +45,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--eval-steps", type=int, default=100)
     parser.add_argument("--save-total-limit", type=int, default=3)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--max-grad-norm",
+        type=float,
+        default=0.3,
+        help="Gradient clipping. Set 0 to disable clipping.",
+    )
     parser.add_argument("--max-train-samples", type=int, default=0, help="0 = all")
     parser.add_argument("--max-valid-samples", type=int, default=0, help="0 = all")
     parser.add_argument(
@@ -117,6 +124,15 @@ def main() -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    # Colab T4 does not support bf16 AMP reliably for this stack.
+    # Force fp16 to avoid GradScaler bf16 unscale failures.
+    mp_env = os.environ.get("ACCELERATE_MIXED_PRECISION", "").strip().lower()
+    if mp_env == "bf16":
+        print("Overriding ACCELERATE_MIXED_PRECISION=bf16 -> fp16 for T4 compatibility.")
+        os.environ["ACCELERATE_MIXED_PRECISION"] = "fp16"
+    else:
+        os.environ.setdefault("ACCELERATE_MIXED_PRECISION", "fp16")
+
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
@@ -134,6 +150,7 @@ def main() -> None:
             args.model_name,
             quantization_config=bnb_config,
             device_map="auto",
+            torch_dtype=torch.float16,
             trust_remote_code=True,
         )
     except ValueError as exc:
@@ -147,6 +164,8 @@ def main() -> None:
             ) from exc
         raise
     model.config.use_cache = False
+    if getattr(model.config, "torch_dtype", None) == torch.bfloat16:
+        model.config.torch_dtype = torch.float16
 
     ds = load_dataset(
         "json",
@@ -198,7 +217,7 @@ def main() -> None:
         "lr_scheduler_type": "cosine",
         "warmup_ratio": 0.03,
         "weight_decay": 0.01,
-        "max_grad_norm": 0.3,
+        "max_grad_norm": args.max_grad_norm,
         "optim": "paged_adamw_8bit",
         "report_to": "none",
         "seed": args.seed,
