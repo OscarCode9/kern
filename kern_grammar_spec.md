@@ -1,4 +1,4 @@
-# KERN GRAMMAR SPEC v0.2
+# KERN GRAMMAR SPEC v0.2 (synced with implementation - Mar 2026)
 > Compact Python-transpilable language for LLMs · Token-first design
 
 ---
@@ -20,8 +20,8 @@
 | Inline block (no newline+indent) | `:\n    return x` → `=x` | -3 to -5 |
 | Single-expr function | `def f(x):\n    return x+1` → `fn f(x)=x+1` | -5 total |
 | Lambda `\` | `lambda x: x+1` → `\x:x+1` | -2 to -3 |
-| `and` → `&` (in context) | `x > 0 and x < 10` → `x>0&x<10` | -2 |
-| `or` → `\|` (in context) | `x < 0 or x > 10` → `x<0\|x>10` | -3 |
+| `and` → `&&` (in context) | `x > 0 and x < 10` → `x>0&&x<10` | -2 |
+| `or` → `\|\|` (in context) | `x < 0 or x > 10` → `x<0\|\|x>10` | -3 |
 | Strip `#` comments | `# check empty` → *(omit)* | -3 to -5 each |
 | Strip docstrings | `"""docstring"""` → *(omit)* | -5 to -15 each |
 
@@ -33,7 +33,7 @@
 
 - Keyword abbreviation when both are 1 BPE token: `self`→`s`, `True`→`T`, `None`→`N` = 0 savings
 - `while`→`whl` BREAKS BPE into `[wh][l]` = 2 tokens → WORSE, do not use
-- `and`→`&` or `or`→`|` in isolation = 0 savings (only saves when combined with space removal around adjacent operators)
+- Replacing boolean keywords alone (without surrounding-space compression) gives limited savings
 - Changing indent depth (4-space = 2-space, both 1 token)
 
 ---
@@ -58,7 +58,7 @@ blocks only follow: `fn`, `if`, `else`, `elif`, `while`, `for`, `cls`, `try`, `e
 
 ---
 
-## The 10 Constructs
+## Grammar Constructs (Core + Extended)
 
 ---
 
@@ -331,32 +331,31 @@ first, *rest = lst                    first,*rest=lst
 
 ---
 
-### 11. Logical operators: `and`/`or`/`not` → `&`/`|`/`!`
+### 11. Logical operators: `and`/`or` → `&&`/`||` (canonical)
 
 ```
-EXPR & EXPR      # and
-EXPR | EXPR      # or
-!EXPR            # not
+EXPR && EXPR     # and
+EXPR || EXPR     # or
+not EXPR         # not
 ```
 
-**Important**: `&`, `|`, `!` save tokens only in context combined with no-spaces
-policy. As isolated keywords they're the same (1 token each). But in expressions:
+**Important**: in Kern, boolean operators are emitted as `&&` / `||` to avoid
+collision with bitwise operators. Savings still come mostly from removing spaces
+around operators.
 
 ```python
 # Python                              # Kern                    Savings
-x > 0 and x < 10                      x>0&x<10                  -2 tokens
-x < 0 or x > 10                       x<0|x>10                  -3 tokens
-if a > 0 and b > 0:                   if a>0&b>0{               -2 tokens
-x >= 0 and x <= 100                   x>=0&x<=100               -2 tokens
+x > 0 and x < 10                      x>0&&x<10                 -2 tokens
+x < 0 or x > 10                       x<0||x>10                 -3 tokens
+if a > 0 and b > 0:                   if a>0&&b>0{              -2 tokens
+x >= 0 and x <= 100                   x>=0&&x<=100              -2 tokens
 ```
 
-**Ambiguity**: `&` and `|` are also bitwise operators in Python. In Kern, they
-are **always** logical `and`/`or`. If a Python program uses bitwise `&`/`|`,
-the transpiler emits `band`/`bor` instead (rare case).
+**Bitwise stays bitwise**: `&`, `|`, `^` remain bitwise operators in Kern
+expressions. For hand-written Kern, compiler also accepts name aliases
+`band` / `bor` / `bxor` as compatibility input.
 
-**`not`**: stays as `not` — `!x` saves 0 tokens vs `not x` (both 2 tokens).
-Use `!` only in tight boolean chains: `if!found{` vs `if not found{` saves nothing
-but allows fusion in some contexts. **Optional** — validate per-case.
+**`not`**: canonical form remains `not EXPR`.
 
 ---
 
@@ -435,24 +434,28 @@ Token estimate:
 
 ---
 
-## Constructs Deferred to v0.2
+## Implementation Status (Compiler + Transpiler, Mar 2026)
 
 | Python | Kern | Notes |
 |--------|------|-------|
-| `with X as y:` | `with X as y{...}` | same pattern, just `{}` |
-| `yield x` | `yld x` | verify BPE |
-| `yield from` | `yld from` | |
-| `@decorator` | `@decorator` | unchanged |
-| f-strings | `f"..."` | unchanged |
-| `async for` | `async for` | unchanged |
-| `async with` | `async with` | unchanged |
-| `match/case` (3.10+) | TBD | |
+| `with X as y:` | `with X as y{...}` | implemented |
+| `yield x` | `yield x` (`yld` accepted by compiler) | implemented |
+| `yield from x` | `yield from x` (`yld from` accepted by compiler) | implemented |
+| `@decorator` | `@decorator` | implemented |
+| f-strings | `f"..."` | implemented |
+| `async def` | `async fn` | implemented |
+| `async for` | `async for` | compiler supports; transpiler `AsyncFor` pending |
+| `async with` | `async with` | compiler supports; transpiler `AsyncWith` pending |
+| `match/case` (3.10+) | TBD | not implemented |
+
+Extended statements now implemented in both directions: `raise`, `del`,
+`assert`, `pass`, `break`, `continue`, `global`, `nonlocal`.
 
 ---
 
-## Validation Checklist (Step 3 in roadmap)
+## Validation Checklist (for grammar changes)
 
-Before implementing the transpiler, verify these assumptions with tiktoken:
+When changing grammar tokens, verify assumptions with tiktoken:
 
 ```python
 import tiktoken
@@ -481,5 +484,4 @@ assert tok(r"\x:x+1")[0] < tok("lambda x: x+1")[0]   # True: 4 < 6
 
 ---
 
-*Output of Kern Design Session — Step 2 complete*
-*Next: validate with 20-30 examples against tiktoken (Step 3)*
+*Spec synchronized with compiler/transpiler behavior (Mar 2026).*
