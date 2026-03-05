@@ -6,8 +6,9 @@ Core idea:
 - `Python -> Kern` for token-efficient reasoning/edit loops.
 - `Kern -> Python` for execution and ecosystem compatibility.
 - Deterministic round-trip to preserve semantics.
+- Project blog (live updates): `https://oscarcode9.github.io/kern-language.html`
 
-## Current status (March 3, 2026)
+## Current status (March 5, 2026)
 
 Implemented:
 - Grammar v0.2
@@ -16,6 +17,20 @@ Implemented:
 - Round-trip and functional benchmarks on HumanEval
 - Multi-tokenizer benchmark on HumanEval + MBPP
 - Unified head-to-head harness vs external baselines (SimPy, Token Sugar)
+- Large-scale dataset builder from CodeSearchNet Python (`prepare_finetune_dataset_csn.py`)
+
+## Latest update (March 5, 2026)
+
+Training-data pipeline status:
+- Built and validated a `20,000`-example Python -> Kern corpus from `code_search_net/python`.
+- Scan stats: `21,825` scanned, `20,000` kept (`91.64%` keep rate), compile/parse validation enabled.
+- Split: `19,000` train + `1,000` valid (`5%` validation ratio).
+- Exported both pair format and chat format for Qwen SFT:
+  - `data/finetune_csn20k/train/pairs.jsonl`
+  - `data/finetune_csn20k/valid/pairs.jsonl`
+  - `data/finetune_csn20k/train_qwen_chat.jsonl`
+  - `data/finetune_csn20k/valid_qwen_chat.jsonl`
+- Full run summary: `data/finetune_csn20k/summary.json`
 
 ## Key results
 
@@ -91,6 +106,7 @@ Universal claim for the current benchmark scope:
 - `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
 - `test_baseline_adapters.py`: adapter sanity tests (`python`, `kern`, `simpy`, `token_sugar`)
 - `prepare_finetune_dataset.py`: exports `.py` + `.kern` pairs and JSONL for fine-tuning
+- `prepare_finetune_dataset_csn.py`: builds large filtered datasets from CodeSearchNet Python (streaming + Qwen chat export)
 
 Generated benchmark artifacts:
 - `humaneval_roundtrip_report.json`
@@ -110,6 +126,13 @@ Install dependencies:
 
 ```bash
 python3 -m pip install tiktoken human-eval datasets transformers sentencepiece rope tree-sitter regex tqdm
+```
+
+Install web/API dependencies:
+
+```bash
+python3 -m pip install -r backend/requirements.txt
+cd web && npm install
 ```
 
 Run tests:
@@ -152,6 +175,16 @@ python3 prepare_finetune_dataset.py \
   --overwrite
 ```
 
+Build a larger, filtered `20k` dataset from CodeSearchNet Python (low disk usage via streaming):
+
+```bash
+python3 prepare_finetune_dataset_csn.py \
+  --target-kept 20000 \
+  --valid-ratio 0.05 \
+  --out-dir data/finetune_csn20k \
+  --overwrite
+```
+
 Output structure:
 
 ```text
@@ -167,6 +200,63 @@ data/finetune_v1/
   summary.json
   rejected.jsonl
 ```
+
+Large-run output structure (`data/finetune_csn20k`):
+
+```text
+data/finetune_csn20k/
+  train/
+    py/*.py
+    kern/*.kern
+    pairs.jsonl
+  valid/
+    py/*.py
+    kern/*.kern
+    pairs.jsonl
+  train_qwen_chat.jsonl
+  valid_qwen_chat.jsonl
+  summary.json
+  rejected_sample.jsonl
+```
+
+Run local web converter (React + FastAPI):
+
+One-command mode (recommended):
+
+```bash
+./run_web_tool.sh
+```
+
+If `5173` or `8000` are busy, the script fails fast with the conflicting PID.
+Free the port (or set `WEB_PORT` / `API_PORT`) and rerun.
+
+From `web/` you can also run one command:
+
+```bash
+cd web
+npm run dev
+```
+
+Manual mode:
+
+Terminal 1 (API):
+
+```bash
+python3 -m uvicorn backend.main:app --reload --port 8000
+```
+
+Terminal 2 (frontend):
+
+```bash
+cd web
+npm run dev:web
+```
+
+Open `http://localhost:5173` and use:
+- `Python -> Kern` (`POST /api/convert/python-to-kern`)
+- `Kern -> Python` (`POST /api/convert/kern-to-python`)
+- `data/` sidebar explorer (`GET /api/files/list`, `GET /api/files/content?path=...`)
+- Dark editor theme powered by Monaco (`@monaco-editor/react`, `vs-dark`)
 
 ## Notes
 
