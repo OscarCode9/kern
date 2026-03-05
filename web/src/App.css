@@ -1,0 +1,267 @@
+:root {
+  --bg: #101217;
+  --bg-2: #0a0c10;
+  --panel: #1a1f28;
+  --panel-2: #202632;
+  --ink: #d9e1ea;
+  --muted: #8a94a5;
+  --line: #2d3442;
+  --brand: #4fb4ff;
+  --brand-2: #ffb24f;
+  --ok: #39c685;
+  --err: #ff7474;
+}
+
+.page {
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 85% 0%, rgba(79, 180, 255, 0.12), transparent 26%),
+    radial-gradient(circle at 10% 95%, rgba(255, 178, 79, 0.1), transparent 28%),
+    linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
+  padding: 1rem;
+}
+
+.hero,
+.ide-shell,
+.statusbar {
+  max-width: 1460px;
+  margin: 0 auto;
+}
+
+.hero {
+  margin-bottom: 0.8rem;
+}
+
+.kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--brand);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.3rem, 2vw, 2.2rem);
+}
+
+.subtitle {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+}
+
+.subtitle code {
+  background: #151922;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.05rem 0.3rem;
+}
+
+.health {
+  margin: 0.6rem 0 0;
+  display: inline-block;
+  padding: 0.28rem 0.62rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #121722;
+  font-size: 0.82rem;
+}
+
+.health.online {
+  color: var(--ok);
+  border-color: #2b6550;
+}
+
+.health.offline {
+  color: var(--err);
+  border-color: #70393c;
+}
+
+.ide-shell {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #1a1f28, #171b23);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.24);
+}
+
+.sidebar {
+  min-height: 72vh;
+  padding: 0.6rem;
+  grid-row: 1 / span 2;
+}
+
+.panel-head {
+  padding: 0.45rem 0.45rem 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #c8d3e1;
+}
+
+.side-meta {
+  margin: 0 0.45rem 0.5rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.tree-wrap {
+  border-top: 1px solid var(--line);
+  margin-top: 0.3rem;
+  padding-top: 0.4rem;
+  max-height: calc(72vh - 3rem);
+  overflow: auto;
+}
+
+.tree-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #cfd7e2;
+  text-align: left;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.tree-item:hover {
+  background: #252c39;
+}
+
+.tree-item.active {
+  background: #2e3b54;
+}
+
+.tree-item:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+.tree-item.dir {
+  color: #bdd1ec;
+}
+
+.caret {
+  width: 10px;
+  color: #8ea6c8;
+}
+
+.file-badge {
+  min-width: 24px;
+  height: 16px;
+  border-radius: 4px;
+  background: #2c3545;
+  border: 1px solid #41506a;
+  font-size: 0.62rem;
+  color: #9fb8dc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tree-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.side-empty {
+  margin: 0.7rem 0.45rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.editor-panel {
+  padding: 0.5rem;
+}
+
+.editor-host {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #11151d;
+}
+
+.btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.38rem 0.66rem;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #2d7fb8, #3d99d7);
+  color: white;
+  font-weight: 600;
+}
+
+.btn.ghost {
+  background: #252d3a;
+  color: #c5d2e5;
+  border: 1px solid #3c4a62;
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.statusbar {
+  margin-top: 0.7rem;
+  min-height: 1.3rem;
+  font-size: 0.86rem;
+}
+
+.statusbar p {
+  margin: 0;
+}
+
+.ok {
+  color: var(--ok);
+}
+
+.error {
+  color: var(--err);
+}
+
+@media (max-width: 1200px) {
+  .ide-shell {
+    grid-template-columns: 260px 1fr;
+  }
+}
+
+@media (max-width: 960px) {
+  .ide-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    min-height: 240px;
+    grid-row: auto;
+  }
+
+  .tree-wrap {
+    max-height: 240px;
+  }
+}

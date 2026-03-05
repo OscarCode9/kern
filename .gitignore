@@ -20,6 +20,10 @@ htmlcov/
 .vscode/
 .idea/
 
+# Frontend build artifacts
+web/node_modules/
+web/dist/
+
 # Local baseline clones / large externals
 external/
 

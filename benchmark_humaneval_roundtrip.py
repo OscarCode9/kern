@@ -43,17 +43,17 @@ class CaseResult:
 
 
 class DocstringStripper(ast.NodeTransformer):
-    """Remove only docstring Expr nodes to avoid false AST mismatches."""
+    """Remove no-op string Expr nodes to avoid false AST mismatches."""
+
+    def _is_nop_string_expr(self, stmt: ast.stmt) -> bool:
+        return (
+            isinstance(stmt, ast.Expr)
+            and isinstance(stmt.value, ast.Constant)
+            and isinstance(stmt.value.value, str)
+        )
 
     def _strip_doc(self, body: list[ast.stmt]) -> list[ast.stmt]:
-        if (
-            body
-            and isinstance(body[0], ast.Expr)
-            and isinstance(body[0].value, ast.Constant)
-            and isinstance(body[0].value.value, str)
-        ):
-            return body[1:]
-        return body
+        return [stmt for stmt in body if not self._is_nop_string_expr(stmt)]
 
     def visit_Module(self, node: ast.Module):  # type: ignore[override]
         node.body = self._strip_doc(node.body)
