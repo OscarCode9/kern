@@ -46,6 +46,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--save-total-limit", type=int, default=3)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(
+        "--mixed-precision",
+        choices=["no", "fp16"],
+        default="no",
+        help="Precision mode. 'no' is the most stable option on Colab T4.",
+    )
+    parser.add_argument(
         "--max-grad-norm",
         type=float,
         default=0.3,
@@ -124,14 +130,8 @@ def main() -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Colab T4 does not support bf16 AMP reliably for this stack.
-    # Force fp16 to avoid GradScaler bf16 unscale failures.
-    mp_env = os.environ.get("ACCELERATE_MIXED_PRECISION", "").strip().lower()
-    if mp_env == "bf16":
-        print("Overriding ACCELERATE_MIXED_PRECISION=bf16 -> fp16 for T4 compatibility.")
-        os.environ["ACCELERATE_MIXED_PRECISION"] = "fp16"
-    else:
-        os.environ.setdefault("ACCELERATE_MIXED_PRECISION", "fp16")
+    # Colab T4: keep bf16 disabled. Default to full precision training loop for stability.
+    os.environ["ACCELERATE_MIXED_PRECISION"] = args.mixed_precision
 
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
@@ -150,7 +150,7 @@ def main() -> None:
             args.model_name,
             quantization_config=bnb_config,
             device_map="auto",
-            torch_dtype=torch.float16,
+            dtype=torch.float16,
             trust_remote_code=True,
         )
     except ValueError as exc:
@@ -211,7 +211,7 @@ def main() -> None:
         "save_steps": args.save_steps,
         "eval_steps": args.eval_steps,
         "save_total_limit": args.save_total_limit,
-        "fp16": True,
+        "fp16": args.mixed_precision == "fp16",
         "bf16": False,
         "gradient_checkpointing": True,
         "lr_scheduler_type": "cosine",
@@ -263,6 +263,15 @@ def main() -> None:
         trainer_kwargs["packing"] = False
 
     trainer = SFTTrainer(**trainer_kwargs)
+    # Some model configs keep trainable adapters in bf16; cast them to fp32
+    # to avoid AMP unscale errors on T4.
+    casted = 0
+    for param in trainer.model.parameters():
+        if param.requires_grad and param.dtype == torch.bfloat16:
+            param.data = param.data.to(torch.float32)
+            casted += 1
+    if casted:
+        print(f"Casted {casted} trainable bf16 tensors to fp32.")
 
     resume_ckpt = resolve_resume_checkpoint(output_dir, args.resume_from_checkpoint)
     if resume_ckpt:
