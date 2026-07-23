@@ -9,8 +9,22 @@
     },
     {
       "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 16) (<unknown>, line 16)",
+      "representation": "kern_compact",
+      "stage": "parse",
+      "task_id": "BigCodeBench/15"
+    },
+    {
+      "dataset": "BigCodeBench",
       "message": "SyntaxError: invalid decimal literal (<unknown>, line 6)",
       "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/36"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid decimal literal (<unknown>, line 6)",
+      "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/36"
     },
@@ -23,6 +37,13 @@
     },
     {
       "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 16) (<unknown>, line 16)",
+      "representation": "kern_compact",
+      "stage": "parse",
+      "task_id": "BigCodeBench/113"
+    },
+    {
+      "dataset": "BigCodeBench",
       "message": "normalized AST differs",
       "representation": "kern",
       "stage": "ast",
@@ -30,8 +51,22 @@
     },
     {
       "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern_compact",
+      "stage": "ast",
+      "task_id": "BigCodeBench/120"
+    },
+    {
+      "dataset": "BigCodeBench",
       "message": "SyntaxError: f-string: unmatched '[' (<unknown>, line 17)",
       "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/190"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: f-string: unmatched '[' (<unknown>, line 15)",
+      "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/190"
     },
@@ -45,7 +80,21 @@
     {
       "dataset": "BigCodeBench",
       "message": "normalized AST differs",
+      "representation": "kern_compact",
+      "stage": "ast",
+      "task_id": "BigCodeBench/256"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
       "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/271"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern_compact",
       "stage": "ast",
       "task_id": "BigCodeBench/271"
     },
@@ -59,7 +108,21 @@
     {
       "dataset": "BigCodeBench",
       "message": "normalized AST differs",
+      "representation": "kern_compact",
+      "stage": "ast",
+      "task_id": "BigCodeBench/485"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
       "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/491"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern_compact",
       "stage": "ast",
       "task_id": "BigCodeBench/491"
     },
@@ -72,8 +135,22 @@
     },
     {
       "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern_compact",
+      "stage": "ast",
+      "task_id": "BigCodeBench/493"
+    },
+    {
+      "dataset": "BigCodeBench",
       "message": "SyntaxError: invalid decimal literal (<unknown>, line 6)",
       "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/512"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid decimal literal (<unknown>, line 5)",
+      "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/512"
     },
@@ -86,8 +163,22 @@
     },
     {
       "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid decimal literal (<unknown>, line 5)",
+      "representation": "kern_compact",
+      "stage": "parse",
+      "task_id": "BigCodeBench/537"
+    },
+    {
+      "dataset": "BigCodeBench",
       "message": "SyntaxError: invalid syntax (<unknown>, line 13)",
       "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/571"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid syntax (<unknown>, line 12)",
+      "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/571"
     },
@@ -101,7 +192,21 @@
     {
       "dataset": "BigCodeBench",
       "message": "normalized AST differs",
+      "representation": "kern_compact",
+      "stage": "ast",
+      "task_id": "BigCodeBench/635"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
       "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/651"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern_compact",
       "stage": "ast",
       "task_id": "BigCodeBench/651"
     },
@@ -114,8 +219,22 @@
     },
     {
       "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern_compact",
+      "stage": "ast",
+      "task_id": "BigCodeBench/713"
+    },
+    {
+      "dataset": "BigCodeBench",
       "message": "SyntaxError: unterminated string literal (detected at line 11) (<unknown>, line 11)",
       "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/804"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 11) (<unknown>, line 11)",
+      "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/804"
     },
@@ -128,6 +247,13 @@
     },
     {
       "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid decimal literal (<unknown>, line 13)",
+      "representation": "kern_compact",
+      "stage": "parse",
+      "task_id": "BigCodeBench/879"
+    },
+    {
+      "dataset": "BigCodeBench",
       "message": "normalized AST differs",
       "representation": "kern",
       "stage": "ast",
@@ -135,8 +261,22 @@
     },
     {
       "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern_compact",
+      "stage": "ast",
+      "task_id": "BigCodeBench/947"
+    },
+    {
+      "dataset": "BigCodeBench",
       "message": "SyntaxError: unterminated string literal (detected at line 11) (<unknown>, line 11)",
       "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/1041"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 10) (<unknown>, line 10)",
+      "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/1041"
     },
@@ -150,7 +290,21 @@
     {
       "dataset": "BigCodeBench",
       "message": "normalized AST differs",
+      "representation": "kern_compact",
+      "stage": "ast",
+      "task_id": "BigCodeBench/1045"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
       "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/1077"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern_compact",
       "stage": "ast",
       "task_id": "BigCodeBench/1077"
     },
@@ -163,8 +317,22 @@
     },
     {
       "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid syntax. Perhaps you forgot a comma? (<unknown>, line 9)",
+      "representation": "kern_compact",
+      "stage": "parse",
+      "task_id": "BigCodeBench/1104"
+    },
+    {
+      "dataset": "BigCodeBench",
       "message": "normalized AST differs",
       "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/1119"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern_compact",
       "stage": "ast",
       "task_id": "BigCodeBench/1119"
     },
@@ -174,11 +342,25 @@
       "representation": "kern",
       "stage": "parse",
       "task_id": "BigCodeBench/1134"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 14) (<unknown>, line 14)",
+      "representation": "kern_compact",
+      "stage": "parse",
+      "task_id": "BigCodeBench/1134"
     }
   ],
   "functional": {
     "HumanEval+": {
       "kern": {
+        "base_pass": 163,
+        "dataset_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+        "error": "",
+        "plus_pass": 163,
+        "total": 164
+      },
+      "kern_compact": {
         "base_pass": 163,
         "dataset_hash": "fe585eb4df8c88d844eeb463ea4d0302",
         "error": "",
@@ -208,6 +390,13 @@
         "plus_pass": 378,
         "total": 378
       },
+      "kern_compact": {
+        "base_pass": 378,
+        "dataset_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+        "error": "",
+        "plus_pass": 378,
+        "total": 378
+      },
       "python": {
         "base_pass": 378,
         "dataset_hash": "ee43ecabebf20deef4bb776a405ac5b1",
@@ -229,8 +418,9 @@
     "bigcodebench_split": "v0.1.4",
     "evalplus": "0.3.1",
     "evalplus_min_time_limit": 5.0,
-    "generated_at_utc": "2026-07-23T08:01:09.517916+00:00",
+    "generated_at_utc": "2026-07-23T18:24:25.531986+00:00",
     "humaneval_plus_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+    "kern_compact": "opt-in local alpha-renaming; module names and function parameters preserved; AST checked against compact_tree",
     "kern_grammar": "v0.4",
     "mbpp_plus_hash": "ee43ecabebf20deef4bb776a405ac5b1",
     "normalization": "code-only source after removing no-op string expressions/docstrings; remaining formatting preserved",
@@ -274,9 +464,9 @@
       "parse_ok": 1128,
       "python_tokens": 163786,
       "representation": "kern",
-      "representation_tokens": 129139,
-      "saved_pct": 21.1538,
-      "saved_tokens": 34647,
+      "representation_tokens": 128909,
+      "saved_pct": 21.2942,
+      "saved_tokens": 34877,
       "tokenizer": "cl100k_base",
       "total_cases": 1140,
       "transform_ok": 1140
@@ -288,9 +478,37 @@
       "parse_ok": 1128,
       "python_tokens": 166184,
       "representation": "kern",
-      "representation_tokens": 132396,
-      "saved_pct": 20.3317,
-      "saved_tokens": 33788,
+      "representation_tokens": 132165,
+      "saved_pct": 20.4707,
+      "saved_tokens": 34019,
+      "tokenizer": "o200k_base",
+      "total_cases": 1140,
+      "transform_ok": 1140
+    },
+    {
+      "ast_cases": 1140,
+      "ast_equal": 1115,
+      "dataset": "BigCodeBench",
+      "parse_ok": 1128,
+      "python_tokens": 163786,
+      "representation": "kern_compact",
+      "representation_tokens": 119387,
+      "saved_pct": 27.1079,
+      "saved_tokens": 44399,
+      "tokenizer": "cl100k_base",
+      "total_cases": 1140,
+      "transform_ok": 1140
+    },
+    {
+      "ast_cases": 1140,
+      "ast_equal": 1115,
+      "dataset": "BigCodeBench",
+      "parse_ok": 1128,
+      "python_tokens": 166184,
+      "representation": "kern_compact",
+      "representation_tokens": 122534,
+      "saved_pct": 26.2661,
+      "saved_tokens": 43650,
       "tokenizer": "o200k_base",
       "total_cases": 1140,
       "transform_ok": 1140
@@ -358,9 +576,9 @@
       "parse_ok": 164,
       "python_tokens": 10571,
       "representation": "kern",
-      "representation_tokens": 7747,
-      "saved_pct": 26.7146,
-      "saved_tokens": 2824,
+      "representation_tokens": 7736,
+      "saved_pct": 26.8187,
+      "saved_tokens": 2835,
       "tokenizer": "cl100k_base",
       "total_cases": 164,
       "transform_ok": 164
@@ -372,9 +590,37 @@
       "parse_ok": 164,
       "python_tokens": 10611,
       "representation": "kern",
-      "representation_tokens": 7872,
-      "saved_pct": 25.8128,
-      "saved_tokens": 2739,
+      "representation_tokens": 7861,
+      "saved_pct": 25.9165,
+      "saved_tokens": 2750,
+      "tokenizer": "o200k_base",
+      "total_cases": 164,
+      "transform_ok": 164
+    },
+    {
+      "ast_cases": 164,
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "parse_ok": 164,
+      "python_tokens": 10571,
+      "representation": "kern_compact",
+      "representation_tokens": 7398,
+      "saved_pct": 30.0161,
+      "saved_tokens": 3173,
+      "tokenizer": "cl100k_base",
+      "total_cases": 164,
+      "transform_ok": 164
+    },
+    {
+      "ast_cases": 164,
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "parse_ok": 164,
+      "python_tokens": 10611,
+      "representation": "kern_compact",
+      "representation_tokens": 7518,
+      "saved_pct": 29.149,
+      "saved_tokens": 3093,
       "tokenizer": "o200k_base",
       "total_cases": 164,
       "transform_ok": 164
@@ -442,9 +688,9 @@
       "parse_ok": 378,
       "python_tokens": 15183,
       "representation": "kern",
-      "representation_tokens": 11030,
-      "saved_pct": 27.353,
-      "saved_tokens": 4153,
+      "representation_tokens": 11023,
+      "saved_pct": 27.3991,
+      "saved_tokens": 4160,
       "tokenizer": "cl100k_base",
       "total_cases": 378,
       "transform_ok": 378
@@ -456,9 +702,37 @@
       "parse_ok": 378,
       "python_tokens": 15270,
       "representation": "kern",
-      "representation_tokens": 11203,
-      "saved_pct": 26.6339,
-      "saved_tokens": 4067,
+      "representation_tokens": 11196,
+      "saved_pct": 26.6798,
+      "saved_tokens": 4074,
+      "tokenizer": "o200k_base",
+      "total_cases": 378,
+      "transform_ok": 378
+    },
+    {
+      "ast_cases": 378,
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "parse_ok": 378,
+      "python_tokens": 15183,
+      "representation": "kern_compact",
+      "representation_tokens": 10620,
+      "saved_pct": 30.0533,
+      "saved_tokens": 4563,
+      "tokenizer": "cl100k_base",
+      "total_cases": 378,
+      "transform_ok": 378
+    },
+    {
+      "ast_cases": 378,
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "parse_ok": 378,
+      "python_tokens": 15270,
+      "representation": "kern_compact",
+      "representation_tokens": 10777,
+      "saved_pct": 29.4237,
+      "saved_tokens": 4493,
       "tokenizer": "o200k_base",
       "total_cases": 378,
       "transform_ok": 378

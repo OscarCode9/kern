@@ -18,23 +18,29 @@
 <text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">100</text>
 <text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Base + extra tests passed (%)</text>
 <text x="305.5" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">HumanEval+</text>
-<rect x="207.5" y="94.2" width="60.0" height="353.8" rx="5" fill="#64748b"/>
-<text x="237.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.4%</text>
-<rect x="275.5" y="94.2" width="60.0" height="353.8" rx="5" fill="#7c3aed"/>
-<text x="305.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.4%</text>
-<rect x="343.5" y="94.2" width="60.0" height="353.8" rx="5" fill="#06b6d4"/>
-<text x="373.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.4%</text>
+<rect x="173.5" y="94.2" width="60.0" height="353.8" rx="5" fill="#64748b"/>
+<text x="203.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.4%</text>
+<rect x="241.5" y="94.2" width="60.0" height="353.8" rx="5" fill="#22c55e"/>
+<text x="271.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.4%</text>
+<rect x="309.5" y="94.2" width="60.0" height="353.8" rx="5" fill="#7c3aed"/>
+<text x="339.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.4%</text>
+<rect x="377.5" y="94.2" width="60.0" height="353.8" rx="5" fill="#06b6d4"/>
+<text x="407.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.4%</text>
 <text x="732.5" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">MBPP+</text>
-<rect x="634.5" y="92.0" width="60.0" height="356.0" rx="5" fill="#64748b"/>
-<text x="664.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
-<rect x="702.5" y="92.0" width="60.0" height="356.0" rx="5" fill="#7c3aed"/>
-<text x="732.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
-<rect x="770.5" y="92.0" width="60.0" height="356.0" rx="5" fill="#06b6d4"/>
-<text x="800.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
+<rect x="600.5" y="92.0" width="60.0" height="356.0" rx="5" fill="#64748b"/>
+<text x="630.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
+<rect x="668.5" y="92.0" width="60.0" height="356.0" rx="5" fill="#22c55e"/>
+<text x="698.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
+<rect x="736.5" y="92.0" width="60.0" height="356.0" rx="5" fill="#7c3aed"/>
+<text x="766.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
+<rect x="804.5" y="92.0" width="60.0" height="356.0" rx="5" fill="#06b6d4"/>
+<text x="834.5" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
 <rect x="92" y="504" width="14" height="14" rx="3" fill="#64748b"/>
 <text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Python reference</text>
-<rect x="282" y="504" width="14" height="14" rx="3" fill="#7c3aed"/>
-<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern round-trip</text>
-<rect x="472" y="504" width="14" height="14" rx="3" fill="#06b6d4"/>
-<text x="494" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">python-minifier</text>
+<rect x="282" y="504" width="14" height="14" rx="3" fill="#22c55e"/>
+<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern compact</text>
+<rect x="472" y="504" width="14" height="14" rx="3" fill="#7c3aed"/>
+<text x="494" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern round-trip</text>
+<rect x="662" y="504" width="14" height="14" rx="3" fill="#06b6d4"/>
+<text x="684" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">python-minifier</text>
 </svg>

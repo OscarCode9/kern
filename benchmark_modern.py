@@ -9,6 +9,7 @@ Corpora:
 Representations:
 - Python source (reference)
 - Kern v0.4 (reversible Python -> Kern -> Python)
+- Kern v0.4 compact (private-local alpha-renaming, then Kern round-trip)
 - python-minifier (source-to-source market baseline)
 
 Every Python reference is code-only: no-op string expressions/docstrings are
@@ -44,11 +45,12 @@ from evalplus.data import (
     get_mbpp_plus_hash,
 )
 
+from kern_compact import compact_tree
 from kern_compiler import compile_kern
 from kern_transpiler import transpile
 
 
-REPRESENTATIONS = ("python", "kern", "python_minifier")
+REPRESENTATIONS = ("python", "kern", "kern_compact", "python_minifier")
 TOKENIZERS = ("cl100k_base", "o200k_base")
 BIGCODEBENCH_REVISION = "b74c0d0bf70d2c0bc459be537895cca163007f1a"
 
@@ -211,6 +213,9 @@ def transform(source: str, representation: str) -> tuple[str, str]:
     if representation == "kern":
         encoded = transpile(source)
         return encoded, compile_kern(encoded)
+    if representation == "kern_compact":
+        encoded = transpile(source, compact=True)
+        return encoded, compile_kern(encoded)
     if representation == "python_minifier":
         encoded = python_minifier.minify(
             source,
@@ -238,7 +243,7 @@ def evaluate_case(
             representation=representation,
             transform_ok=False,
             parse_ok=False,
-            ast_equal=False if representation == "kern" else None,
+            ast_equal=False if representation in {"kern", "kern_compact"} else None,
             python_cl100k=source_counts["cl100k_base"],
             representation_cl100k=0,
             python_o200k=source_counts["o200k_base"],
@@ -262,7 +267,7 @@ def evaluate_case(
             representation=representation,
             transform_ok=True,
             parse_ok=False,
-            ast_equal=False if representation == "kern" else None,
+            ast_equal=False if representation in {"kern", "kern_compact"} else None,
             python_cl100k=source_counts["cl100k_base"],
             representation_cl100k=encoded_counts["cl100k_base"],
             python_o200k=source_counts["o200k_base"],
@@ -274,9 +279,12 @@ def evaluate_case(
         )
 
     ast_equal: bool | None = None
-    if representation in {"python", "kern"}:
+    if representation in {"python", "kern", "kern_compact"}:
         try:
-            ast_equal = normalize_ast(task.source) == normalize_ast(decoded)
+            expected = task.source
+            if representation == "kern_compact":
+                expected = ast.unparse(compact_tree(ast.parse(task.source)))
+            ast_equal = normalize_ast(expected) == normalize_ast(decoded)
         except Exception as exc:
             return CaseResult(
                 dataset=task.dataset,
@@ -598,7 +606,15 @@ def write_graphs(
         groups=groups,
         series=[
             (
-                "Kern v0.4",
+                "Kern compact",
+                "#22c55e",
+                [
+                    lookup_summary(summary, group, "kern_compact")["saved_pct"]
+                    for group in groups
+                ],
+            ),
+            (
+                "Kern reversible",
                 "#7c3aed",
                 [
                     lookup_summary(summary, group, "kern")["saved_pct"]
@@ -635,6 +651,16 @@ def write_graphs(
                 [
                     functional[group]["python"]["plus_pass"]
                     / functional[group]["python"]["total"]
+                    * 100
+                    for group in eval_groups
+                ],
+            ),
+            (
+                "Kern compact",
+                "#22c55e",
+                [
+                    functional[group]["kern_compact"]["plus_pass"]
+                    / functional[group]["kern_compact"]["total"]
                     * 100
                     for group in eval_groups
                 ],
@@ -715,6 +741,10 @@ def main() -> None:
             "generated_at_utc": datetime.now(timezone.utc).isoformat(),
             "python": sys.version.split()[0],
             "kern_grammar": "v0.4",
+            "kern_compact": (
+                "opt-in local alpha-renaming; module names and function "
+                "parameters preserved; AST checked against compact_tree"
+            ),
             "evalplus": package_version("evalplus"),
             "humaneval_plus_hash": get_human_eval_plus_hash(),
             "mbpp_plus_hash": get_mbpp_plus_hash(),

@@ -100,10 +100,15 @@ class KernEmitter(ast.NodeVisitor):
         self._implicit_self_depth = 0
         self._fstring_depth = 0
 
-    def transpile(self, source: str) -> str:
+    def transpile(self, source: str, compact: bool = False) -> str:
         tree = ast.parse(source)
+        if compact:
+            from kern_compact import compact_tree
+
+            tree = compact_tree(tree)
+        nodes = self._strip_nonsemantic_string_exprs(list(tree.body))
         parts = []
-        for node in self._strip_nonsemantic_string_exprs(list(tree.body)):
+        for node in nodes:
             parts.append(self._stmt(node))
         rendered = "\n".join(p for p in parts if p)
         # EOF closes the final chain of statement blocks. Any earlier block
@@ -547,6 +552,13 @@ class KernEmitter(ast.NodeVisitor):
     def _expr_Constant(self, node) -> str:
         if node.value is Ellipsis:
             return "..."
+        if (
+            isinstance(node.value, float)
+            and 0 <= node.value < 1
+        ):
+            rendered = repr(node.value)
+            if rendered.startswith("0."):
+                return rendered[1:]
         return repr(node.value)
 
     def _expr_Name(self, node) -> str:
@@ -828,9 +840,9 @@ class KernEmitter(ast.NodeVisitor):
 
 # ── Public API ─────────────────────────────────────────────────────
 
-def transpile(source: str) -> str:
-    """Convert Python source code to Kern."""
-    return KernEmitter().transpile(source)
+def transpile(source: str, compact: bool = False) -> str:
+    """Convert Python to Kern, optionally alpha-renaming private locals."""
+    return KernEmitter().transpile(source, compact=compact)
 
 
 # ── CLI ────────────────────────────────────────────────────────────

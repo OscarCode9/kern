@@ -6,6 +6,8 @@ Core idea:
 - `Python -> Kern` for token-efficient reasoning/edit loops.
 - `Kern -> Python` for execution and ecosystem compatibility.
 - Deterministic round-trip to preserve semantics.
+- Optional `compact=True` mode for minifier-style local alpha-renaming while
+  the default mode remains identifier-reversible.
 - Project blog (live updates): `https://oscarcode9.github.io/kern-language.html`
 
 ## System architecture
@@ -85,6 +87,7 @@ flowchart LR
 Implemented:
 - Grammar v0.4 (v0.2/v0.3 syntax remains accepted by the compiler)
 - Transpiler: `kern_transpiler.py` (Python -> Kern)
+- Optional compact profile: `kern_compact.py` (conservative local renaming)
 - Inverse compiler: `kern_compiler.py` (Kern -> Python)
 - Round-trip and functional benchmarks on HumanEval
 - Multi-tokenizer benchmark on HumanEval + MBPP
@@ -93,7 +96,7 @@ Implemented:
 
 ## Modern benchmark (July 23, 2026)
 
-Kern v0.4 was evaluated on the current
+Kern v0.4, including its new optional compact profile, was evaluated on the current
 [EvalPlus](https://github.com/evalplus/evalplus) HumanEval+ and MBPP+ suites
 and [BigCodeBench](https://github.com/bigcode-project/bigcodebench) v0.1.4.
 The reproducible market baseline is
@@ -102,6 +105,17 @@ The reproducible market baseline is
 This benchmark transforms known canonical solutions. It measures
 representation density and preservation through `Python -> Kern -> Python`;
 it is **not** a model-generation Pass@1 result.
+
+Two Kern contracts are reported:
+
+- **Kern reversible** is the default `transpile(source)` path and preserves
+  source identifiers.
+- **Kern compact** is opt-in with `transpile(source, compact=True)`. It keeps
+  module-level names, entry points, and function parameters stable, but
+  alpha-renames eligible function, lambda, and comprehension locals. Like a
+  conventional minifier, it does not restore the original private identifiers.
+  Renaming is disabled in scopes that use `dir`, `eval`, `exec`, `locals`, or
+  `vars`.
 
 ### Protocol
 
@@ -124,37 +138,47 @@ it is **not** a model-generation Pass@1 result.
 
 `cl100k_base` aggregate results:
 
-| Dataset | Python | Kern v0.4 | Kern saved | python-minifier | Minifier saved | Kern normalized AST |
-|---|---:|---:|---:|---:|---:|---:|
-| HumanEval+ | `10,571` | `7,747` | `26.71%` | `7,813` | `26.09%` | `164/164` |
-| MBPP+ | `15,183` | `11,030` | `27.35%` | `11,565` | `23.83%` | `378/378` |
-| BigCodeBench | `163,786` | `129,139` | `21.15%` | `123,109` | `24.84%` | `1,115/1,140` |
+| Dataset | Python | Kern compact | Compact saved | Kern reversible | Reversible saved | python-minifier | Minifier saved |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| HumanEval+ | `10,571` | **`7,398`** | **`30.02%`** | `7,736` | `26.82%` | `7,813` | `26.09%` |
+| MBPP+ | `15,183` | **`10,620`** | **`30.05%`** | `11,023` | `27.40%` | `11,565` | `23.83%` |
+| BigCodeBench | `163,786` | **`119,387`** | **`27.11%`** | `128,909` | `21.29%` | `123,107` | `24.84%` |
+| Combined | `189,540` | **`137,405`** | **`27.51%`** | `147,668` | `22.09%` | `142,485` | `24.83%` |
+
+Kern compact uses `5,080` fewer tokens than python-minifier across the three
+corpora (`3.57%` fewer relative to the minified output). It wins each dataset
+individually: `415` tokens on HumanEval+, `945` on MBPP+, and `3,720` on
+BigCodeBench. The same ordering holds under `o200k_base`, where Kern compact
+uses `4,614` fewer tokens overall.
 
 ![EvalPlus functional preservation](benchmark_results/modern/modern-evalplus-correctness.svg)
 
 Official EvalPlus base + extra-test preservation:
 
-| Dataset | Python reference | Kern round-trip | python-minifier |
-|---|---:|---:|---:|
-| HumanEval+ | `163/164` | `163/164` | `163/164` |
-| MBPP+ | `378/378` | `378/378` | `378/378` |
-| Combined | `541/542` | `541/542` | `541/542` |
+| Dataset | Python reference | Kern compact | Kern reversible | python-minifier |
+|---|---:|---:|---:|---:|
+| HumanEval+ | `163/164` | `163/164` | `163/164` | `163/164` |
+| MBPP+ | `378/378` | `378/378` | `378/378` | `378/378` |
+| Combined | `541/542` | `541/542` | `541/542` | `541/542` |
 
-All three representations fail the same `HumanEval/32` numeric oracle in the
-local runtime. Kern therefore preserves the Python reference outcome on all
-`542/542` tasks; it does not introduce a functional regression in EvalPlus.
+All four representations fail the same `HumanEval/32` numeric oracle in the
+local runtime. Both Kern modes therefore preserve the Python reference outcome
+on all `542/542` tasks; neither introduces a functional regression in EvalPlus.
 
-On BigCodeBench, Kern produced parseable Python for `1,128/1,140` tasks and
-preserved normalized AST on `1,115/1,140` (`97.81%`). The 25 incompatibilities
-identify the next optimization targets: 16 attribute/call precedence cases,
-8 f-string cases, and 1 grouped-lambda case.
+On BigCodeBench, both Kern modes produced parseable Python for `1,128/1,140`
+tasks and preserved their reference AST on `1,115/1,140` (`97.81%`). For
+reversible mode the reference is the original normalized AST; for compact mode
+it is the intentionally alpha-renamed compact AST. The 25 incompatibilities
+remain explicit next targets: 16 attribute/call precedence cases, 8 f-string
+cases, and 1 grouped-lambda case.
 
 ### Market context
 
 | Project / benchmark | Public position | Comparison used here |
 |---|---|---|
-| Kern v0.4 | Reversible compact Python representation | Reproduced locally with shared tokenizers, AST checks, and EvalPlus tests |
-| [python-minifier 3.2.0](https://pypi.org/project/python-minifier/) | Python source-to-source minifier | Reproduced on the same code and tokenizers; it is a minifier, not a reversible language |
+| Kern v0.4 reversible | Identifier-reversible compact Python representation | Reproduced locally with shared tokenizers, AST checks, and EvalPlus tests |
+| Kern v0.4 compact | Optional semantic-minifier profile over the Kern grammar | Beats python-minifier on all three shared corpora and both shared tokenizers while matching its EvalPlus outcomes |
+| [python-minifier 3.2.0](https://pypi.org/project/python-minifier/) | Python source-to-source minifier | Current PyPI release, reproduced on the same source, interpreter, and tokenizers |
 | [Toke](https://www.tokelang.dev/) | Independent compiled language; reports 52% average reduction on 42 programs with its own trained BPE | Kept out of the graph because its corpus and tokenizer are not shared or reproduced here |
 | [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |
 | [SWE-bench](https://www.swebench.com/) | Repository-level issue resolution | Requires the same agent/model in Python and Kern modes; gold-patch compression would not be a valid comparison |
@@ -333,7 +357,9 @@ Observed legacy-harness result:
 ## Repository layout
 
 - `kern_transpiler.py`: Python AST to Kern emitter
+- `kern_compact.py`: optional conservative local alpha-renaming pass
 - `kern_compiler.py`: Kern parser/compiler to Python
+- `test_compact.py`: compact-profile scope and behavior regressions
 - `test_transpiler.py`: transpiler smoke tests
 - `test_roundtrip_full.py`: executable round-trip checks
 - `test_optimizations.py`: v0.3/v0.4 grammar and backward-compatibility regressions
@@ -379,7 +405,7 @@ Run tests:
 ```bash
 python3 test_transpiler.py
 python3 test_roundtrip_full.py
-python3 -m unittest -v test_optimizations.py
+python3 -m unittest -v test_compact.py test_optimizations.py
 python3 test_baseline_adapters.py
 ```
 
