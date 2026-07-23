@@ -201,6 +201,8 @@ Artifacts:
 - [`modern-benchmark-details.csv`](benchmark_results/modern/modern-benchmark-details.csv)
 - [`modern-token-efficiency.svg`](benchmark_results/modern/modern-token-efficiency.svg)
 - [`modern-evalplus-correctness.svg`](benchmark_results/modern/modern-evalplus-correctness.svg)
+- [`optimization-discovery-2026-07-23.md`](benchmark_results/modern/optimization-discovery-2026-07-23.md):
+  measured candidates for the next compression iteration
 
 ## Latest update (March 5, 2026)
 
