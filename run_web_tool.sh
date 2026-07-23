@@ -6,6 +6,19 @@ API_PORT="${API_PORT:-8000}"
 WEB_PORT="${WEB_PORT:-5173}"
 API_STARTED_BY_SCRIPT=0
 
+if [[ -n "${API_PYTHON:-}" ]]; then
+  API_RUNNER=("${API_PYTHON}" -m uvicorn)
+elif command -v uv >/dev/null 2>&1; then
+  API_RUNNER=(
+    uv run
+    --python 3.11
+    --with-requirements backend/requirements.txt
+    python -m uvicorn
+  )
+else
+  API_RUNNER=(python3 -m uvicorn)
+fi
+
 cleanup() {
   if [[ "${API_STARTED_BY_SCRIPT}" == "1" && -n "${API_PID:-}" ]]; then
     kill "${API_PID}" >/dev/null 2>&1 || true
@@ -26,7 +39,7 @@ else
     exit 1
   fi
 
-  python3 -m uvicorn backend.main:app --reload --port "${API_PORT}" >/tmp/kern_api.log 2>&1 &
+  "${API_RUNNER[@]}" backend.main:app --reload --port "${API_PORT}" >/tmp/kern_api.log 2>&1 &
   API_PID=$!
   API_STARTED_BY_SCRIPT=1
 
