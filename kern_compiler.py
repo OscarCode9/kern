@@ -23,12 +23,13 @@ EXPR_NAME_MAP = {
 
 # ── Lexer ────────────────────────────────────────────────────────────
 _TOK = re.compile(r"""
+  (?P<SELF_FN> fn[ \t]+\. )                                |  # fn .method
   (?P<FSTR>  f(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'))  |  # f"..."
   (?P<STR>   (?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'))   |  # "..." '...'
   (?P<NUM>   \d+(?:\.\d+)?(?:[eE][+-]?\d+)?)            |  # numbers
   (?P<OP>    &&|\|\||->>|->|:=|//|\*\*|<<|>>|
              \+=|-=|\*=|/=|//=|%=|\*\*=|\|=|&=|\^=|<<=|>>=|
-             ==|!=|<=|>=|[+\-*/%@&|^~<>=!])              |  # operators
+             ==|!=|<=|>=|[+\-*/%@&|^~<>=!?])             |  # operators
   (?P<SPEC>  [{}\[\]().,;:\\])                           |  # specials
   (?P<NAME>  [a-zA-Z_]\w*)                               |  # identifiers
   (?P<NL>    \n)                                         |  # newlines
@@ -48,7 +49,8 @@ def _lex(src: str):
     for m in _TOK.finditer(src):
         k, v = m.lastgroup, m.group()
         if k == 'WS': continue
-        if k == 'NL': toks.append(Token('NL', '\n'))
+        if k == 'SELF_FN': toks.append(Token('SELF_FN', 'fn'))
+        elif k == 'NL': toks.append(Token('NL', '\n'))
         elif k in ('FSTR', 'STR'): toks.append(Token('STR', v))
         elif k == 'NUM': toks.append(Token('NUM', v))
         elif k in ('OP', 'SPEC'): toks.append(Token('OP', v))
@@ -63,6 +65,7 @@ class Parser:
         self.toks = tokens
         self.pos  = 0
         self.ind  = 0          # current indent level
+        self.implicit_self_depth = 0
 
     # ── Token helpers ──────────────────────────────────────────────
     @property
@@ -93,12 +96,17 @@ class Parser:
         lines = []
         self.skip_nl()
         while self.cur.t != 'EOF':
+            start = self.pos
             s = self._stmt()
+            if self.pos == start:
+                raise SyntaxError(
+                    f"Unexpected token {self.cur.v!r} at pos {self.pos}"
+                )
             if s: lines.append(s)
             self.skip_nl()
         return '\n'.join(lines)
 
-    # ── Block: {stmts} → ":\n    stmt\n    stmt" ──────────────────
+    # ── Block: {stmts}[}] → ":\n    stmt\n    stmt" ────────────────
     def _block(self) -> str:
         self.eat('{')
         self.ind += 1
@@ -106,21 +114,53 @@ class Parser:
         stmts = []
         self.skip_nl()
         while self.cur.v != '}' and self.cur.t != 'EOF':
+            start = self.pos
             s = self._stmt()
+            if self.pos == start:
+                raise SyntaxError(
+                    f"Unexpected token {self.cur.v!r} at pos {self.pos}"
+                )
             if s: stmts.append(ind + s)
             # skip ; and NL between stmts
             while self.cur.v == ';' or self.cur.t == 'NL':
                 self.pos += 1
-        self.eat('}')
+        # Kern v0.4 lets EOF close every still-open statement block. Explicit
+        # v0.2/v0.3 braces remain accepted for backwards compatibility.
+        if self.cur.v == '}':
+            self.eat('}')
         self.ind -= 1
         if not stmts:
             return ':\n' + self._i() + '    pass'
         return ':\n' + '\n'.join(stmts)
 
+    def _suite(self) -> str:
+        """Compile either a braced suite or v0.4's one-statement ``:suite``."""
+        if self.cur.v == '{':
+            return self._block()
+        self.eat(':')
+        self.ind += 1
+        try:
+            statement = self._stmt()
+            if not statement:
+                statement = 'pass'
+            return ':\n' + self._i() + statement
+        finally:
+            self.ind -= 1
+
+    def _skip_continuation_separator(self, words: set[str]) -> None:
+        """Consume ``;`` only when it introduces a compound continuation."""
+        if self.cur.v == ';' and self.peek().v in words:
+            self.eat(';')
+
     # ── Statements ─────────────────────────────────────────────────
     def _stmt(self) -> str:
         c = self.cur
         v = c.v
+
+        if c.t == 'SELF_FN':
+            return self._fn(False)
+        if self._looks_like_bare_fn():
+            return self._fn(False, bare=True)
 
         if c.t == 'NAME':
             # "fn" is a definition keyword only for: fn NAME(...)
@@ -160,25 +200,106 @@ class Parser:
 
         if c.t == 'OP' and v == '@':
             return self._decorated()
+        if c.t == 'OP' and v == '>':
+            return self._return('>')
 
         return self._expr_stmt()
 
-    def _fn(self, is_async: bool) -> str:
-        self.eat('fn')
-        name = self.eat().v    # function name
+    def _looks_like_bare_fn(self, start: int | None = None) -> bool:
+        """Whether tokens at ``start`` have the reversible v0.4 def shape."""
+        pos = self.pos if start is None else start
+        token = self.toks[pos]
+
+        if token.v == '.':
+            if (
+                self.toks[min(pos + 1, len(self.toks) - 1)].t != 'NAME'
+                or self.toks[min(pos + 2, len(self.toks) - 1)].v != '('
+            ):
+                return False
+            open_pos = pos + 2
+        else:
+            if token.t != 'NAME':
+                return False
+            # These are real Python statement keywords, so ``if(x){...}``
+            # must remain an if statement rather than looking like a def.
+            if token.v in {
+                'if', 'for', 'while', 'try', 'raise', 'with', 'del',
+                'assert', 'pass', 'break', 'continue', 'global',
+                'nonlocal', 'async', 'yield', 'from', 'else', 'elif',
+            }:
+                return False
+            if self.toks[min(pos + 1, len(self.toks) - 1)].v != '(':
+                return False
+            open_pos = pos + 1
+
+        depth = 1
+        index = open_pos + 1
+        while index < len(self.toks):
+            value = self.toks[index].v
+            if value in ('(', '[', '{'):
+                depth += 1
+            elif value in (')', ']', '}'):
+                depth -= 1
+                if depth == 0:
+                    break
+            index += 1
+        if depth:
+            return False
+
+        index += 1
+        if self.toks[min(index, len(self.toks) - 1)].v == '->':
+            index += 1
+            annotation_depth = 0
+            while index < len(self.toks):
+                value = self.toks[index].v
+                if annotation_depth == 0 and value in ('{', '='):
+                    return True
+                if value in ('(', '[', '{'):
+                    annotation_depth += 1
+                elif value in (')', ']', '}'):
+                    if annotation_depth == 0:
+                        return False
+                    annotation_depth -= 1
+                if self.toks[index].t in ('NL', 'EOF') and annotation_depth == 0:
+                    return False
+                index += 1
+            return False
+        return self.toks[min(index, len(self.toks) - 1)].v in ('{', '=')
+
+    def _fn(self, is_async: bool, bare: bool = False) -> str:
+        if bare:
+            implicit_self = self.cur.v == '.'
+            if implicit_self:
+                self.eat('.')
+            name = self.eat().v
+        else:
+            implicit_self = self.cur.t == 'SELF_FN'
+            if implicit_self:
+                self.eat()
+            else:
+                self.eat('fn')
+            name = self.eat().v
         self.eat('(')
         params = self._params()
         self.eat(')')
+        if implicit_self:
+            params = 'self' + (', ' + params if params else '')
         ret_ann = ''
         if self.cur.v == '->':
             self.eat('->')
             ret_ann = ' -> ' + self._expr_until({'{', '='})
         prefix = 'async def' if is_async else 'def'
-        if self.cur.v == '=':
-            self.eat('=')
-            body = self._expr_line()
-            return f'{prefix} {name}({params}){ret_ann}:\n{self._i()}    return {body}'
-        block = self._block()
+        if implicit_self:
+            self.implicit_self_depth += 1
+        try:
+            if self.cur.v == '=':
+                self.eat('=')
+                body = self._expr_line()
+                return f'{prefix} {name}({params}){ret_ann}:\n{self._i()}    return {body}'
+            block = self._block()
+        finally:
+            if implicit_self:
+                self.implicit_self_depth -= 1
         return f'{prefix} {name}({params}){ret_ann}{block}'
 
     def _cls(self) -> str:
@@ -204,51 +325,62 @@ class Parser:
         names = self._csv_names()
         return f'from {mod} import {names}'
 
-    def _return(self) -> str:
-        self.eat('ret')
+    def _return(self, marker: str = 'ret') -> str:
+        self.eat(marker)
         if self.cur.v in (';', '}') or self.cur.t in ('NL', 'EOF'):
             return 'return'
+        # Reversible fusion: >x=expr expands to x=expr; return x.
+        if self.cur.t == 'NAME' and self.peek().v == '=':
+            name = self.eat().v
+            self.eat('=')
+            value = self._expr_line()
+            return f'{name} = {value}\n{self._i()}return {name}'
         return 'return ' + self._expr_line()
 
     def _if(self) -> str:
         self.eat('if')
-        cond = self._expr_until({'{', ';'})
-        block = self._block()
+        cond = self._expr_until({'{', ':', ';'})
+        block = self._suite()
         s = 'if ' + cond + block
+        self._skip_continuation_separator({'elif', 'else'})
         while self.cur.v == 'elif':
             self.eat('elif')
-            cond = self._expr_until({'{', ';'})
-            s += '\n' + self._i() + 'elif ' + cond + self._block()
+            cond = self._expr_until({'{', ':', ';'})
+            s += '\n' + self._i() + 'elif ' + cond + self._suite()
+            self._skip_continuation_separator({'elif', 'else'})
         if self.cur.v == 'else':
             self.eat('else')
-            s += '\n' + self._i() + 'else' + self._block()
+            s += '\n' + self._i() + 'else' + self._suite()
         return s
 
     def _for(self) -> str:
         self.eat('for')
         target = self._expr_until({'in'})
         self.eat('in')
-        iter_ = self._expr_until({'{', ';'})
-        block = self._block()
+        iter_ = self._expr_until({'{', ':', ';'})
+        block = self._suite()
         s = f'for {target} in {iter_}{block}'
+        self._skip_continuation_separator({'else'})
         if self.cur.v == 'else':
             self.eat('else')
-            s += '\n' + self._i() + 'else' + self._block()
+            s += '\n' + self._i() + 'else' + self._suite()
         return s
 
     def _while(self) -> str:
         self.eat('while')
-        cond = self._expr_until({'{', ';'})
-        block = self._block()
+        cond = self._expr_until({'{', ':', ';'})
+        block = self._suite()
         s = 'while ' + cond + block
+        self._skip_continuation_separator({'else'})
         if self.cur.v == 'else':
             self.eat('else')
-            s += '\n' + self._i() + 'else' + self._block()
+            s += '\n' + self._i() + 'else' + self._suite()
         return s
 
     def _try(self) -> str:
         self.eat('try')
-        s = 'try' + self._block()
+        s = 'try' + self._suite()
+        self._skip_continuation_separator({'exc', 'else', 'fin'})
         while self.cur.v == 'exc':
             self.eat('exc')
             exc_clause = ''
@@ -258,20 +390,22 @@ class Parser:
                 types = self._expr_list(')')
                 self.eat(')')
                 exc_clause = '(' + types + ')'
-            elif self.cur.v not in ('{', ';') and self.cur.t != 'NL':
-                exc_type = self._expr_until({'as', '{', ';'})
+            elif self.cur.v not in ('{', ':', ';') and self.cur.t != 'NL':
+                exc_type = self._expr_until({'as', '{', ':', ';'})
                 exc_clause = ' ' + exc_type
             as_name = ''
             if self.cur.v == 'as':
                 self.eat('as')
                 as_name = ' as ' + self.eat().v
-            s += '\n' + self._i() + 'except' + exc_clause + as_name + self._block()
+            s += '\n' + self._i() + 'except' + exc_clause + as_name + self._suite()
+            self._skip_continuation_separator({'exc', 'else', 'fin'})
         if self.cur.v == 'else':
             self.eat('else')
-            s += '\n' + self._i() + 'else' + self._block()
+            s += '\n' + self._i() + 'else' + self._suite()
+            self._skip_continuation_separator({'fin'})
         if self.cur.v == 'fin':
             self.eat('fin')
-            s += '\n' + self._i() + 'finally' + self._block()
+            s += '\n' + self._i() + 'finally' + self._suite()
         return s
 
     def _raise(self) -> str:
@@ -288,15 +422,15 @@ class Parser:
     def _with(self) -> str:
         self.eat('with')
         items = self._with_items()
-        return 'with ' + items + self._block()
+        return 'with ' + items + self._suite()
 
     def _with_items(self) -> str:
         parts = []
         while True:
-            ctx = self._expr_until({'as', ',', '{'})
+            ctx = self._expr_until({'as', ',', '{', ':'})
             if self.cur.v == 'as':
                 self.eat('as')
-                var = self._expr_until({',', '{'})
+                var = self._expr_until({',', '{', ':'})
                 parts.append(ctx + ' as ' + var)
             else:
                 parts.append(ctx)
@@ -329,7 +463,10 @@ class Parser:
 
     def _async(self) -> str:
         self.eat('async')
-        if self.cur.v == 'fn': return 'async ' + self._fn(False)
+        if self.cur.v == 'fn' or self.cur.t == 'SELF_FN':
+            return self._fn(True)
+        if self._looks_like_bare_fn():
+            return self._fn(True, bare=True)
         if self.cur.v == 'for': return 'async ' + self._for()
         if self.cur.v == 'with': return 'async ' + self._with()
         return 'async ' + self._stmt()
@@ -430,27 +567,90 @@ class Parser:
     def _expr_until(self, stops: set) -> str:
         """Collect tokens until we hit a stop token (not inside brackets)."""
         parts = []
-        depth = 0
+        delimiters = []
+        expect_operand = True
+        previous_value = None
         while self.cur.t != 'EOF':
             v = self.cur.v
             # Always check stops before depth tracking
-            if depth == 0 and v in stops: break
-            if depth == 0 and self.cur.t == 'NL': break
-            if v in ('{', '(', '['):  depth += 1
+            if not delimiters and v in stops: break
+            if not delimiters and self.cur.t == 'NL': break
+
+            # In a direct call argument position, ``:x`` is Kern v0.4's
+            # compact spelling of the Python keyword argument ``x=x``.
+            # Requiring the innermost delimiter to be ``(`` keeps slices such
+            # as ``items[:x]`` untouched.
+            if (
+                v == ':'
+                and self.peek().t == 'NAME'
+                and delimiters
+                and delimiters[-1] == '('
+                and previous_value in ('(', ',')
+            ):
+                self.eat(':')
+                name = self.eat().v
+                parts.append(name + '=' + name)
+                expect_operand = False
+                previous_value = name
+                continue
+
+            if v in ('{', '(', '['):
+                delimiters.append(v)
             elif v in ('}', ')', ']'):
-                if depth == 0: break   # unmatched close — stop
-                depth -= 1
+                if not delimiters:
+                    break   # unmatched close — stop
+                expected = {')': '(', ']': '[', '}': '{'}[v]
+                if delimiters[-1] != expected:
+                    raise SyntaxError(
+                        f"Mismatched delimiter {v!r} at pos {self.pos}"
+                    )
+                delimiters.pop()
             # Lambda: \params:body — can appear at any depth
             if v == '\\':
                 self.pos += 1
                 parts.append(self._lambda_with_stops(stops))
+                expect_operand = False
+                previous_value = v
                 continue
+            if v == '.' and self.implicit_self_depth and expect_operand:
+                self.pos += 1
+                if (
+                    self.cur.t == 'NAME'
+                    and self.cur.v not in self._SPACED_EXPR_KW
+                ):
+                    parts.append('self.')
+                    expect_operand = True
+                else:
+                    parts.append('self')
+                    expect_operand = False
+                previous_value = v
+                continue
+            token = self.cur
             parts.append(self._next_tok())
+            previous_value = token.v
+            if token.t in ('NAME', 'NUM', 'STR') or token.v in (')', ']', '}'):
+                expect_operand = (
+                    token.t == 'NAME' and token.v in self._SPACED_EXPR_KW
+                )
+            elif token.v in ('?', '!'):
+                expect_operand = False
+            elif token.v == '.':
+                expect_operand = True
+            elif token.v in ('(', '[', '{', ',', ':'):
+                expect_operand = True
+            else:
+                expect_operand = True
+        if self.cur.t == 'EOF' and delimiters:
+            raise SyntaxError(
+                f"Unclosed delimiter {delimiters[-1]!r} at EOF"
+            )
         return ''.join(parts)
 
     def _lambda_with_stops(self, stops: set) -> str:
         r"""Parse \params:body inheriting the parent expression's stops."""
-        # Collect raw param tokens until ':' at depth 0
+        # Collect parameter tokens until ':' at depth 0. Defaults are emitted
+        # with Python expression keywords, whose required spaces the lexer
+        # discards, so rebuild them through the normal token translator.
         param_toks = []
         d = 0
         while self.cur.t != 'EOF':
@@ -458,8 +658,7 @@ class Parser:
             if v == ':' and d == 0: break
             if v in ('(', '[', '{'): d += 1
             elif v in (')', ']', '}'): d -= 1
-            param_toks.append(v)
-            self.pos += 1
+            param_toks.append(self._next_tok())
         self.eat(':')
         # Join params, add space after comma for readability
         params_str = ''.join(param_toks).replace(',', ', ')
@@ -475,7 +674,7 @@ class Parser:
     # Keywords that need surrounding spaces when used inside expressions
     _SPACED_EXPR_KW = {
         'not', 'in', 'is', 'if', 'else', 'for', 'from', 'as', 'await', 'and', 'or',
-        'yield',
+        'yield', 'lambda',
     }
 
     def _next_tok(self) -> str:
@@ -489,6 +688,8 @@ class Parser:
         if t.t == 'OP':
             if t.v == '&&': return ' and '
             if t.v == '||': return ' or '
+            if t.v == '?': return ' is None'
+            if t.v == '!': return ' is not None'
             return t.v
         return t.v
 

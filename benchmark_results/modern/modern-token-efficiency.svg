@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+<title id="title">Token reduction on modern Python benchmarks</title>
+<desc id="desc">Aggregate cl100k_base tokens vs the same Python sources; higher is better</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">Token reduction on modern Python benchmarks</text>
+<text x="92" y="65" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">Aggregate cl100k_base tokens vs the same Python sources; higher is better</text>
+<line x1="92" y1="448.0" x2="946" y2="448.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="453.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="359.0" x2="946" y2="359.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="364.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">10</text>
+<line x1="92" y1="270.0" x2="946" y2="270.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="275.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">20</text>
+<line x1="92" y1="181.0" x2="946" y2="181.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="186.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">30</text>
+<line x1="92" y1="92.0" x2="946" y2="92.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">40</text>
+<text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Tokens saved (%)</text>
+<text x="234.3" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">HumanEval+</text>
+<rect x="170.3" y="210.2" width="60.0" height="237.8" rx="5" fill="#7c3aed"/>
+<text x="200.3" y="202.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">26.7%</text>
+<rect x="238.3" y="215.8" width="60.0" height="232.2" rx="5" fill="#06b6d4"/>
+<text x="268.3" y="207.8" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">26.1%</text>
+<text x="519.0" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">MBPP+</text>
+<rect x="455.0" y="204.6" width="60.0" height="243.4" rx="5" fill="#7c3aed"/>
+<text x="485.0" y="196.6" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">27.4%</text>
+<rect x="523.0" y="235.9" width="60.0" height="212.1" rx="5" fill="#06b6d4"/>
+<text x="553.0" y="227.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">23.8%</text>
+<text x="803.7" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">BigCodeBench</text>
+<rect x="739.7" y="259.7" width="60.0" height="188.3" rx="5" fill="#7c3aed"/>
+<text x="769.7" y="251.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">21.2%</text>
+<rect x="807.7" y="227.0" width="60.0" height="221.0" rx="5" fill="#06b6d4"/>
+<text x="837.7" y="219.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">24.8%</text>
+<rect x="92" y="504" width="14" height="14" rx="3" fill="#7c3aed"/>
+<text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern v0.4</text>
+<rect x="282" y="504" width="14" height="14" rx="3" fill="#06b6d4"/>
+<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">python-minifier 3.2.0</text>
+</svg>

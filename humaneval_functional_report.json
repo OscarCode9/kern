@@ -7,9 +7,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 168,
-    "kern_tokens": 65,
-    "token_saved": 103,
-    "token_saved_pct": 61.30952380952381
+    "kern_tokens": 60,
+    "token_saved": 108,
+    "token_saved_pct": 64.28571428571429
   },
   {
     "task_id": "HumanEval/1",
@@ -19,9 +19,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 196,
-    "kern_tokens": 87,
-    "token_saved": 109,
-    "token_saved_pct": 55.61224489795919
+    "kern_tokens": 85,
+    "token_saved": 111,
+    "token_saved_pct": 56.63265306122449
   },
   {
     "task_id": "HumanEval/2",
@@ -31,9 +31,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 89,
-    "kern_tokens": 14,
-    "token_saved": 75,
-    "token_saved_pct": 84.26966292134831
+    "kern_tokens": 13,
+    "token_saved": 76,
+    "token_saved_pct": 85.39325842696628
   },
   {
     "task_id": "HumanEval/3",
@@ -43,9 +43,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 145,
-    "kern_tokens": 40,
-    "token_saved": 105,
-    "token_saved_pct": 72.41379310344827
+    "kern_tokens": 35,
+    "token_saved": 110,
+    "token_saved_pct": 75.86206896551724
   },
   {
     "task_id": "HumanEval/4",
@@ -55,9 +55,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 138,
-    "kern_tokens": 38,
-    "token_saved": 100,
-    "token_saved_pct": 72.46376811594203
+    "kern_tokens": 37,
+    "token_saved": 101,
+    "token_saved_pct": 73.18840579710145
   },
   {
     "task_id": "HumanEval/5",
@@ -67,9 +67,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 128,
-    "kern_tokens": 56,
-    "token_saved": 72,
-    "token_saved_pct": 56.25
+    "kern_tokens": 52,
+    "token_saved": 76,
+    "token_saved_pct": 59.375
   },
   {
     "task_id": "HumanEval/6",
@@ -79,9 +79,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 189,
-    "kern_tokens": 84,
-    "token_saved": 105,
-    "token_saved_pct": 55.55555555555556
+    "kern_tokens": 79,
+    "token_saved": 110,
+    "token_saved_pct": 58.201058201058196
   },
   {
     "task_id": "HumanEval/7",
@@ -91,9 +91,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 100,
-    "kern_tokens": 31,
-    "token_saved": 69,
-    "token_saved_pct": 69.0
+    "kern_tokens": 30,
+    "token_saved": 70,
+    "token_saved_pct": 70.0
   },
   {
     "task_id": "HumanEval/8",
@@ -103,9 +103,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 144,
-    "kern_tokens": 53,
-    "token_saved": 91,
-    "token_saved_pct": 63.19444444444444
+    "kern_tokens": 48,
+    "token_saved": 96,
+    "token_saved_pct": 66.66666666666666
   },
   {
     "task_id": "HumanEval/9",
@@ -115,9 +115,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 148,
-    "kern_tokens": 60,
-    "token_saved": 88,
-    "token_saved_pct": 59.45945945945946
+    "kern_tokens": 54,
+    "token_saved": 94,
+    "token_saved_pct": 63.51351351351351
   },
   {
     "task_id": "HumanEval/10",
@@ -127,9 +127,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 189,
-    "kern_tokens": 71,
-    "token_saved": 118,
-    "token_saved_pct": 62.43386243386243
+    "kern_tokens": 68,
+    "token_saved": 121,
+    "token_saved_pct": 64.02116402116403
   },
   {
     "task_id": "HumanEval/11",
@@ -139,9 +139,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 116,
-    "kern_tokens": 53,
-    "token_saved": 63,
-    "token_saved_pct": 54.310344827586206
+    "kern_tokens": 47,
+    "token_saved": 69,
+    "token_saved_pct": 59.48275862068966
   },
   {
     "task_id": "HumanEval/12",
@@ -151,9 +151,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 135,
-    "kern_tokens": 50,
-    "token_saved": 85,
-    "token_saved_pct": 62.96296296296296
+    "kern_tokens": 47,
+    "token_saved": 88,
+    "token_saved_pct": 65.18518518518519
   },
   {
     "task_id": "HumanEval/13",
@@ -163,9 +163,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 84,
-    "kern_tokens": 25,
-    "token_saved": 59,
-    "token_saved_pct": 70.23809523809523
+    "kern_tokens": 23,
+    "token_saved": 61,
+    "token_saved_pct": 72.61904761904762
   },
   {
     "task_id": "HumanEval/14",
@@ -175,9 +175,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 78,
-    "kern_tokens": 37,
-    "token_saved": 41,
-    "token_saved_pct": 52.56410256410257
+    "kern_tokens": 34,
+    "token_saved": 44,
+    "token_saved_pct": 56.41025641025641
   },
   {
     "task_id": "HumanEval/15",
@@ -187,9 +187,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 81,
-    "kern_tokens": 22,
-    "token_saved": 59,
-    "token_saved_pct": 72.8395061728395
+    "kern_tokens": 21,
+    "token_saved": 60,
+    "token_saved_pct": 74.07407407407408
   },
   {
     "task_id": "HumanEval/16",
@@ -199,9 +199,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 72,
-    "kern_tokens": 14,
-    "token_saved": 58,
-    "token_saved_pct": 80.55555555555556
+    "kern_tokens": 13,
+    "token_saved": 59,
+    "token_saved_pct": 81.94444444444444
   },
   {
     "task_id": "HumanEval/17",
@@ -211,9 +211,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 207,
-    "kern_tokens": 49,
-    "token_saved": 158,
-    "token_saved_pct": 76.32850241545893
+    "kern_tokens": 47,
+    "token_saved": 160,
+    "token_saved_pct": 77.29468599033817
   },
   {
     "task_id": "HumanEval/18",
@@ -223,9 +223,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 128,
-    "kern_tokens": 48,
-    "token_saved": 80,
-    "token_saved_pct": 62.5
+    "kern_tokens": 44,
+    "token_saved": 84,
+    "token_saved_pct": 65.625
   },
   {
     "task_id": "HumanEval/19",
@@ -235,9 +235,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 202,
-    "kern_tokens": 81,
-    "token_saved": 121,
-    "token_saved_pct": 59.900990099009896
+    "kern_tokens": 79,
+    "token_saved": 123,
+    "token_saved_pct": 60.89108910891089
   },
   {
     "task_id": "HumanEval/20",
@@ -247,9 +247,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 268,
-    "kern_tokens": 118,
-    "token_saved": 150,
-    "token_saved_pct": 55.970149253731336
+    "kern_tokens": 112,
+    "token_saved": 156,
+    "token_saved_pct": 58.2089552238806
   },
   {
     "task_id": "HumanEval/21",
@@ -259,9 +259,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 152,
-    "kern_tokens": 44,
-    "token_saved": 108,
-    "token_saved_pct": 71.05263157894737
+    "kern_tokens": 43,
+    "token_saved": 109,
+    "token_saved_pct": 71.71052631578947
   },
   {
     "task_id": "HumanEval/22",
@@ -271,9 +271,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 99,
-    "kern_tokens": 29,
-    "token_saved": 70,
-    "token_saved_pct": 70.70707070707071
+    "kern_tokens": 28,
+    "token_saved": 71,
+    "token_saved_pct": 71.71717171717171
   },
   {
     "task_id": "HumanEval/23",
@@ -283,9 +283,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 43,
-    "kern_tokens": 9,
-    "token_saved": 34,
-    "token_saved_pct": 79.06976744186046
+    "kern_tokens": 8,
+    "token_saved": 35,
+    "token_saved_pct": 81.3953488372093
   },
   {
     "task_id": "HumanEval/24",
@@ -295,9 +295,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 68,
-    "kern_tokens": 25,
-    "token_saved": 43,
-    "token_saved_pct": 63.23529411764706
+    "kern_tokens": 23,
+    "token_saved": 45,
+    "token_saved_pct": 66.17647058823529
   },
   {
     "task_id": "HumanEval/25",
@@ -307,9 +307,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 191,
-    "kern_tokens": 66,
-    "token_saved": 125,
-    "token_saved_pct": 65.44502617801047
+    "kern_tokens": 62,
+    "token_saved": 129,
+    "token_saved_pct": 67.5392670157068
   },
   {
     "task_id": "HumanEval/26",
@@ -319,9 +319,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 105,
-    "kern_tokens": 37,
-    "token_saved": 68,
-    "token_saved_pct": 64.76190476190476
+    "kern_tokens": 35,
+    "token_saved": 70,
+    "token_saved_pct": 66.66666666666666
   },
   {
     "task_id": "HumanEval/27",
@@ -331,9 +331,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 49,
-    "kern_tokens": 12,
-    "token_saved": 37,
-    "token_saved_pct": 75.51020408163265
+    "kern_tokens": 11,
+    "token_saved": 38,
+    "token_saved_pct": 77.55102040816327
   },
   {
     "task_id": "HumanEval/28",
@@ -355,9 +355,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 94,
-    "kern_tokens": 30,
-    "token_saved": 64,
-    "token_saved_pct": 68.08510638297872
+    "kern_tokens": 29,
+    "token_saved": 65,
+    "token_saved_pct": 69.14893617021278
   },
   {
     "task_id": "HumanEval/30",
@@ -367,9 +367,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 122,
-    "kern_tokens": 17,
-    "token_saved": 105,
-    "token_saved_pct": 86.0655737704918
+    "kern_tokens": 16,
+    "token_saved": 106,
+    "token_saved_pct": 86.88524590163934
   },
   {
     "task_id": "HumanEval/31",
@@ -379,9 +379,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 135,
-    "kern_tokens": 37,
-    "token_saved": 98,
-    "token_saved_pct": 72.5925925925926
+    "kern_tokens": 31,
+    "token_saved": 104,
+    "token_saved_pct": 77.03703703703704
   },
   {
     "task_id": "HumanEval/32",
@@ -391,9 +391,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 357,
-    "kern_tokens": 110,
-    "token_saved": 247,
-    "token_saved_pct": 69.187675070028
+    "kern_tokens": 104,
+    "token_saved": 253,
+    "token_saved_pct": 70.86834733893558
   },
   {
     "task_id": "HumanEval/33",
@@ -403,9 +403,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 168,
-    "kern_tokens": 24,
-    "token_saved": 144,
-    "token_saved_pct": 85.71428571428571
+    "kern_tokens": 22,
+    "token_saved": 146,
+    "token_saved_pct": 86.90476190476191
   },
   {
     "task_id": "HumanEval/34",
@@ -415,9 +415,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 75,
-    "kern_tokens": 10,
-    "token_saved": 65,
-    "token_saved_pct": 86.66666666666667
+    "kern_tokens": 9,
+    "token_saved": 66,
+    "token_saved_pct": 88.0
   },
   {
     "task_id": "HumanEval/35",
@@ -427,9 +427,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 105,
-    "kern_tokens": 27,
-    "token_saved": 78,
-    "token_saved_pct": 74.28571428571429
+    "kern_tokens": 22,
+    "token_saved": 83,
+    "token_saved_pct": 79.04761904761905
   },
   {
     "task_id": "HumanEval/36",
@@ -439,9 +439,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 144,
-    "kern_tokens": 63,
-    "token_saved": 81,
-    "token_saved_pct": 56.25
+    "kern_tokens": 60,
+    "token_saved": 84,
+    "token_saved_pct": 58.333333333333336
   },
   {
     "task_id": "HumanEval/37",
@@ -451,9 +451,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 188,
-    "kern_tokens": 66,
-    "token_saved": 122,
-    "token_saved_pct": 64.8936170212766
+    "kern_tokens": 62,
+    "token_saved": 126,
+    "token_saved_pct": 67.02127659574468
   },
   {
     "task_id": "HumanEval/38",
@@ -463,9 +463,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 164,
-    "kern_tokens": 78,
-    "token_saved": 86,
-    "token_saved_pct": 52.4390243902439
+    "kern_tokens": 76,
+    "token_saved": 88,
+    "token_saved_pct": 53.65853658536586
   },
   {
     "task_id": "HumanEval/39",
@@ -475,9 +475,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 205,
-    "kern_tokens": 95,
-    "token_saved": 110,
-    "token_saved_pct": 53.65853658536586
+    "kern_tokens": 86,
+    "token_saved": 119,
+    "token_saved_pct": 58.048780487804876
   },
   {
     "task_id": "HumanEval/40",
@@ -487,9 +487,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 213,
-    "kern_tokens": 55,
-    "token_saved": 158,
-    "token_saved_pct": 74.17840375586854
+    "kern_tokens": 51,
+    "token_saved": 162,
+    "token_saved_pct": 76.05633802816901
   },
   {
     "task_id": "HumanEval/41",
@@ -499,9 +499,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 152,
-    "kern_tokens": 10,
-    "token_saved": 142,
-    "token_saved_pct": 93.42105263157895
+    "kern_tokens": 9,
+    "token_saved": 143,
+    "token_saved_pct": 94.07894736842105
   },
   {
     "task_id": "HumanEval/42",
@@ -511,9 +511,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 116,
-    "kern_tokens": 15,
-    "token_saved": 101,
-    "token_saved_pct": 87.06896551724138
+    "kern_tokens": 14,
+    "token_saved": 102,
+    "token_saved_pct": 87.93103448275862
   },
   {
     "task_id": "HumanEval/43",
@@ -523,9 +523,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 195,
-    "kern_tokens": 40,
-    "token_saved": 155,
-    "token_saved_pct": 79.48717948717949
+    "kern_tokens": 35,
+    "token_saved": 160,
+    "token_saved_pct": 82.05128205128204
   },
   {
     "task_id": "HumanEval/44",
@@ -535,9 +535,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 117,
-    "kern_tokens": 31,
-    "token_saved": 86,
-    "token_saved_pct": 73.50427350427351
+    "kern_tokens": 28,
+    "token_saved": 89,
+    "token_saved_pct": 76.06837606837607
   },
   {
     "task_id": "HumanEval/45",
@@ -547,9 +547,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 52,
-    "kern_tokens": 12,
-    "token_saved": 40,
-    "token_saved_pct": 76.92307692307693
+    "kern_tokens": 11,
+    "token_saved": 41,
+    "token_saved_pct": 78.84615384615384
   },
   {
     "task_id": "HumanEval/46",
@@ -559,9 +559,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 240,
-    "kern_tokens": 65,
-    "token_saved": 175,
-    "token_saved_pct": 72.91666666666666
+    "kern_tokens": 60,
+    "token_saved": 180,
+    "token_saved_pct": 75.0
   },
   {
     "task_id": "HumanEval/47",
@@ -571,9 +571,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 130,
-    "kern_tokens": 47,
-    "token_saved": 83,
-    "token_saved_pct": 63.84615384615384
+    "kern_tokens": 43,
+    "token_saved": 87,
+    "token_saved_pct": 66.92307692307692
   },
   {
     "task_id": "HumanEval/48",
@@ -583,9 +583,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 98,
-    "kern_tokens": 32,
-    "token_saved": 66,
-    "token_saved_pct": 67.3469387755102
+    "kern_tokens": 28,
+    "token_saved": 70,
+    "token_saved_pct": 71.42857142857143
   },
   {
     "task_id": "HumanEval/49",
@@ -595,9 +595,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 128,
-    "kern_tokens": 28,
-    "token_saved": 100,
-    "token_saved_pct": 78.125
+    "kern_tokens": 26,
+    "token_saved": 102,
+    "token_saved_pct": 79.6875
   },
   {
     "task_id": "HumanEval/50",
@@ -607,9 +607,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 117,
-    "kern_tokens": 66,
-    "token_saved": 51,
-    "token_saved_pct": 43.58974358974359
+    "kern_tokens": 64,
+    "token_saved": 53,
+    "token_saved_pct": 45.2991452991453
   },
   {
     "task_id": "HumanEval/51",
@@ -619,9 +619,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 149,
-    "kern_tokens": 34,
-    "token_saved": 115,
-    "token_saved_pct": 77.18120805369128
+    "kern_tokens": 33,
+    "token_saved": 116,
+    "token_saved_pct": 77.85234899328859
   },
   {
     "task_id": "HumanEval/52",
@@ -631,9 +631,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 94,
-    "kern_tokens": 25,
-    "token_saved": 69,
-    "token_saved_pct": 73.40425531914893
+    "kern_tokens": 20,
+    "token_saved": 74,
+    "token_saved_pct": 78.72340425531915
   },
   {
     "task_id": "HumanEval/53",
@@ -643,9 +643,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 54,
-    "kern_tokens": 9,
-    "token_saved": 45,
-    "token_saved_pct": 83.33333333333334
+    "kern_tokens": 8,
+    "token_saved": 46,
+    "token_saved_pct": 85.18518518518519
   },
   {
     "task_id": "HumanEval/54",
@@ -655,9 +655,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 146,
-    "kern_tokens": 18,
-    "token_saved": 128,
-    "token_saved_pct": 87.67123287671232
+    "kern_tokens": 17,
+    "token_saved": 129,
+    "token_saved_pct": 88.35616438356165
   },
   {
     "task_id": "HumanEval/55",
@@ -667,9 +667,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 86,
-    "kern_tokens": 34,
-    "token_saved": 52,
-    "token_saved_pct": 60.46511627906976
+    "kern_tokens": 28,
+    "token_saved": 58,
+    "token_saved_pct": 67.44186046511628
   },
   {
     "task_id": "HumanEval/56",
@@ -679,9 +679,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 138,
-    "kern_tokens": 46,
-    "token_saved": 92,
-    "token_saved_pct": 66.66666666666666
+    "kern_tokens": 41,
+    "token_saved": 97,
+    "token_saved_pct": 70.28985507246377
   },
   {
     "task_id": "HumanEval/57",
@@ -691,9 +691,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 106,
-    "kern_tokens": 26,
-    "token_saved": 80,
-    "token_saved_pct": 75.47169811320755
+    "kern_tokens": 25,
+    "token_saved": 81,
+    "token_saved_pct": 76.41509433962264
   },
   {
     "task_id": "HumanEval/58",
@@ -703,9 +703,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 150,
-    "kern_tokens": 45,
-    "token_saved": 105,
-    "token_saved_pct": 70.0
+    "kern_tokens": 42,
+    "token_saved": 108,
+    "token_saved_pct": 72.0
   },
   {
     "task_id": "HumanEval/59",
@@ -715,9 +715,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 150,
-    "kern_tokens": 80,
-    "token_saved": 70,
-    "token_saved_pct": 46.666666666666664
+    "kern_tokens": 73,
+    "token_saved": 77,
+    "token_saved_pct": 51.33333333333333
   },
   {
     "task_id": "HumanEval/60",
@@ -727,9 +727,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 98,
-    "kern_tokens": 13,
-    "token_saved": 85,
-    "token_saved_pct": 86.73469387755102
+    "kern_tokens": 12,
+    "token_saved": 86,
+    "token_saved_pct": 87.75510204081633
   },
   {
     "task_id": "HumanEval/61",
@@ -739,9 +739,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 135,
-    "kern_tokens": 45,
-    "token_saved": 90,
-    "token_saved_pct": 66.66666666666666
+    "kern_tokens": 40,
+    "token_saved": 95,
+    "token_saved_pct": 70.37037037037037
   },
   {
     "task_id": "HumanEval/62",
@@ -763,9 +763,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 205,
-    "kern_tokens": 52,
-    "token_saved": 153,
-    "token_saved_pct": 74.63414634146342
+    "kern_tokens": 43,
+    "token_saved": 162,
+    "token_saved_pct": 79.02439024390245
   },
   {
     "task_id": "HumanEval/64",
@@ -787,9 +787,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 117,
-    "kern_tokens": 40,
-    "token_saved": 77,
-    "token_saved_pct": 65.8119658119658
+    "kern_tokens": 38,
+    "token_saved": 79,
+    "token_saved_pct": 67.52136752136752
   },
   {
     "task_id": "HumanEval/66",
@@ -799,9 +799,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 136,
-    "kern_tokens": 32,
-    "token_saved": 104,
-    "token_saved_pct": 76.47058823529412
+    "kern_tokens": 29,
+    "token_saved": 107,
+    "token_saved_pct": 78.67647058823529
   },
   {
     "task_id": "HumanEval/67",
@@ -811,9 +811,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 238,
-    "kern_tokens": 34,
-    "token_saved": 204,
-    "token_saved_pct": 85.71428571428571
+    "kern_tokens": 31,
+    "token_saved": 207,
+    "token_saved_pct": 86.97478991596638
   },
   {
     "task_id": "HumanEval/68",
@@ -823,9 +823,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 358,
-    "kern_tokens": 48,
-    "token_saved": 310,
-    "token_saved_pct": 86.59217877094973
+    "kern_tokens": 45,
+    "token_saved": 313,
+    "token_saved_pct": 87.43016759776536
   },
   {
     "task_id": "HumanEval/69",
@@ -835,9 +835,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 227,
-    "kern_tokens": 53,
-    "token_saved": 174,
-    "token_saved_pct": 76.65198237885463
+    "kern_tokens": 49,
+    "token_saved": 178,
+    "token_saved_pct": 78.41409691629956
   },
   {
     "task_id": "HumanEval/70",
@@ -847,9 +847,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 160,
-    "kern_tokens": 40,
-    "token_saved": 120,
-    "token_saved_pct": 75.0
+    "kern_tokens": 38,
+    "token_saved": 122,
+    "token_saved_pct": 76.25
   },
   {
     "task_id": "HumanEval/71",
@@ -859,9 +859,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 195,
-    "kern_tokens": 63,
-    "token_saved": 132,
-    "token_saved_pct": 67.6923076923077
+    "kern_tokens": 58,
+    "token_saved": 137,
+    "token_saved_pct": 70.25641025641025
   },
   {
     "task_id": "HumanEval/72",
@@ -871,9 +871,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 282,
-    "kern_tokens": 50,
-    "token_saved": 232,
-    "token_saved_pct": 82.26950354609929
+    "kern_tokens": 44,
+    "token_saved": 238,
+    "token_saved_pct": 84.39716312056737
   },
   {
     "task_id": "HumanEval/73",
@@ -883,9 +883,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 196,
-    "kern_tokens": 38,
-    "token_saved": 158,
-    "token_saved_pct": 80.61224489795919
+    "kern_tokens": 35,
+    "token_saved": 161,
+    "token_saved_pct": 82.14285714285714
   },
   {
     "task_id": "HumanEval/74",
@@ -895,9 +895,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 253,
-    "kern_tokens": 59,
-    "token_saved": 194,
-    "token_saved_pct": 76.6798418972332
+    "kern_tokens": 54,
+    "token_saved": 199,
+    "token_saved_pct": 78.65612648221344
   },
   {
     "task_id": "HumanEval/75",
@@ -907,9 +907,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 178,
-    "kern_tokens": 99,
-    "token_saved": 79,
-    "token_saved_pct": 44.38202247191011
+    "kern_tokens": 89,
+    "token_saved": 89,
+    "token_saved_pct": 50.0
   },
   {
     "task_id": "HumanEval/76",
@@ -919,9 +919,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 184,
-    "kern_tokens": 35,
-    "token_saved": 149,
-    "token_saved_pct": 80.97826086956522
+    "kern_tokens": 32,
+    "token_saved": 152,
+    "token_saved_pct": 82.6086956521739
   },
   {
     "task_id": "HumanEval/77",
@@ -931,9 +931,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 130,
-    "kern_tokens": 26,
-    "token_saved": 104,
-    "token_saved_pct": 80.0
+    "kern_tokens": 24,
+    "token_saved": 106,
+    "token_saved_pct": 81.53846153846153
   },
   {
     "task_id": "HumanEval/78",
@@ -943,9 +943,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 350,
-    "kern_tokens": 48,
-    "token_saved": 302,
-    "token_saved_pct": 86.28571428571429
+    "kern_tokens": 44,
+    "token_saved": 306,
+    "token_saved_pct": 87.42857142857143
   },
   {
     "task_id": "HumanEval/79",
@@ -955,9 +955,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 149,
-    "kern_tokens": 17,
-    "token_saved": 132,
-    "token_saved_pct": 88.59060402684564
+    "kern_tokens": 16,
+    "token_saved": 133,
+    "token_saved_pct": 89.26174496644296
   },
   {
     "task_id": "HumanEval/80",
@@ -967,9 +967,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 183,
-    "kern_tokens": 60,
-    "token_saved": 123,
-    "token_saved_pct": 67.21311475409836
+    "kern_tokens": 55,
+    "token_saved": 128,
+    "token_saved_pct": 69.94535519125684
   },
   {
     "task_id": "HumanEval/81",
@@ -979,9 +979,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 505,
-    "kern_tokens": 206,
-    "token_saved": 299,
-    "token_saved_pct": 59.20792079207921
+    "kern_tokens": 204,
+    "token_saved": 301,
+    "token_saved_pct": 59.603960396039604
   },
   {
     "task_id": "HumanEval/82",
@@ -991,9 +991,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 125,
-    "kern_tokens": 42,
-    "token_saved": 83,
-    "token_saved_pct": 66.4
+    "kern_tokens": 36,
+    "token_saved": 89,
+    "token_saved_pct": 71.2
   },
   {
     "task_id": "HumanEval/83",
@@ -1003,9 +1003,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 64,
-    "kern_tokens": 25,
-    "token_saved": 39,
-    "token_saved_pct": 60.9375
+    "kern_tokens": 21,
+    "token_saved": 43,
+    "token_saved_pct": 67.1875
   },
   {
     "task_id": "HumanEval/84",
@@ -1015,9 +1015,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 144,
-    "kern_tokens": 18,
-    "token_saved": 126,
-    "token_saved_pct": 87.5
+    "kern_tokens": 17,
+    "token_saved": 127,
+    "token_saved_pct": 88.19444444444444
   },
   {
     "task_id": "HumanEval/85",
@@ -1027,9 +1027,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 79,
-    "kern_tokens": 28,
-    "token_saved": 51,
-    "token_saved_pct": 64.55696202531645
+    "kern_tokens": 27,
+    "token_saved": 52,
+    "token_saved_pct": 65.82278481012658
   },
   {
     "task_id": "HumanEval/86",
@@ -1039,9 +1039,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 145,
-    "kern_tokens": 23,
-    "token_saved": 122,
-    "token_saved_pct": 84.13793103448276
+    "kern_tokens": 22,
+    "token_saved": 123,
+    "token_saved_pct": 84.82758620689656
   },
   {
     "task_id": "HumanEval/87",
@@ -1063,9 +1063,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 231,
-    "kern_tokens": 30,
-    "token_saved": 201,
-    "token_saved_pct": 87.01298701298701
+    "kern_tokens": 29,
+    "token_saved": 202,
+    "token_saved_pct": 87.44588744588745
   },
   {
     "task_id": "HumanEval/89",
@@ -1075,9 +1075,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 156,
-    "kern_tokens": 45,
-    "token_saved": 111,
-    "token_saved_pct": 71.15384615384616
+    "kern_tokens": 41,
+    "token_saved": 115,
+    "token_saved_pct": 73.71794871794873
   },
   {
     "task_id": "HumanEval/90",
@@ -1087,9 +1087,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 141,
-    "kern_tokens": 24,
-    "token_saved": 117,
-    "token_saved_pct": 82.97872340425532
+    "kern_tokens": 23,
+    "token_saved": 118,
+    "token_saved_pct": 83.68794326241135
   },
   {
     "task_id": "HumanEval/91",
@@ -1099,9 +1099,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 138,
-    "kern_tokens": 36,
-    "token_saved": 102,
-    "token_saved_pct": 73.91304347826086
+    "kern_tokens": 35,
+    "token_saved": 103,
+    "token_saved_pct": 74.63768115942028
   },
   {
     "task_id": "HumanEval/92",
@@ -1111,9 +1111,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 181,
-    "kern_tokens": 47,
-    "token_saved": 134,
-    "token_saved_pct": 74.03314917127072
+    "kern_tokens": 43,
+    "token_saved": 138,
+    "token_saved_pct": 76.24309392265194
   },
   {
     "task_id": "HumanEval/93",
@@ -1123,9 +1123,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 164,
-    "kern_tokens": 60,
-    "token_saved": 104,
-    "token_saved_pct": 63.41463414634146
+    "kern_tokens": 58,
+    "token_saved": 106,
+    "token_saved_pct": 64.63414634146342
   },
   {
     "task_id": "HumanEval/94",
@@ -1135,9 +1135,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 380,
-    "kern_tokens": 93,
-    "token_saved": 287,
-    "token_saved_pct": 75.52631578947368
+    "kern_tokens": 84,
+    "token_saved": 296,
+    "token_saved_pct": 77.89473684210526
   },
   {
     "task_id": "HumanEval/95",
@@ -1147,9 +1147,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 306,
-    "kern_tokens": 107,
-    "token_saved": 199,
-    "token_saved_pct": 65.0326797385621
+    "kern_tokens": 105,
+    "token_saved": 201,
+    "token_saved_pct": 65.68627450980392
   },
   {
     "task_id": "HumanEval/96",
@@ -1159,9 +1159,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 202,
-    "kern_tokens": 56,
-    "token_saved": 146,
-    "token_saved_pct": 72.27722772277228
+    "kern_tokens": 52,
+    "token_saved": 150,
+    "token_saved_pct": 74.25742574257426
   },
   {
     "task_id": "HumanEval/97",
@@ -1171,9 +1171,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 108,
-    "kern_tokens": 15,
-    "token_saved": 93,
-    "token_saved_pct": 86.11111111111111
+    "kern_tokens": 14,
+    "token_saved": 94,
+    "token_saved_pct": 87.03703703703704
   },
   {
     "task_id": "HumanEval/98",
@@ -1183,9 +1183,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 106,
-    "kern_tokens": 38,
-    "token_saved": 68,
-    "token_saved_pct": 64.15094339622641
+    "kern_tokens": 34,
+    "token_saved": 72,
+    "token_saved_pct": 67.9245283018868
   },
   {
     "task_id": "HumanEval/99",
@@ -1195,9 +1195,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 259,
-    "kern_tokens": 83,
-    "token_saved": 176,
-    "token_saved_pct": 67.95366795366795
+    "kern_tokens": 78,
+    "token_saved": 181,
+    "token_saved_pct": 69.88416988416989
   },
   {
     "task_id": "HumanEval/100",
@@ -1207,9 +1207,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 141,
-    "kern_tokens": 18,
-    "token_saved": 123,
-    "token_saved_pct": 87.2340425531915
+    "kern_tokens": 17,
+    "token_saved": 124,
+    "token_saved_pct": 87.94326241134752
   },
   {
     "task_id": "HumanEval/101",
@@ -1219,9 +1219,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 166,
-    "kern_tokens": 52,
-    "token_saved": 114,
-    "token_saved_pct": 68.67469879518072
+    "kern_tokens": 48,
+    "token_saved": 118,
+    "token_saved_pct": 71.08433734939759
   },
   {
     "task_id": "HumanEval/102",
@@ -1231,9 +1231,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 132,
-    "kern_tokens": 38,
-    "token_saved": 94,
-    "token_saved_pct": 71.21212121212122
+    "kern_tokens": 31,
+    "token_saved": 101,
+    "token_saved_pct": 76.51515151515152
   },
   {
     "task_id": "HumanEval/103",
@@ -1243,9 +1243,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 185,
-    "kern_tokens": 46,
-    "token_saved": 139,
-    "token_saved_pct": 75.13513513513513
+    "kern_tokens": 43,
+    "token_saved": 142,
+    "token_saved_pct": 76.75675675675676
   },
   {
     "task_id": "HumanEval/104",
@@ -1255,9 +1255,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 143,
-    "kern_tokens": 43,
-    "token_saved": 100,
-    "token_saved_pct": 69.93006993006993
+    "kern_tokens": 40,
+    "token_saved": 103,
+    "token_saved_pct": 72.02797202797203
   },
   {
     "task_id": "HumanEval/105",
@@ -1267,9 +1267,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 383,
-    "kern_tokens": 81,
-    "token_saved": 302,
-    "token_saved_pct": 78.85117493472585
+    "kern_tokens": 75,
+    "token_saved": 308,
+    "token_saved_pct": 80.4177545691906
   },
   {
     "task_id": "HumanEval/106",
@@ -1279,9 +1279,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 204,
-    "kern_tokens": 75,
-    "token_saved": 129,
-    "token_saved_pct": 63.23529411764706
+    "kern_tokens": 71,
+    "token_saved": 133,
+    "token_saved_pct": 65.19607843137256
   },
   {
     "task_id": "HumanEval/107",
@@ -1291,9 +1291,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 314,
-    "kern_tokens": 96,
-    "token_saved": 218,
-    "token_saved_pct": 69.42675159235668
+    "kern_tokens": 91,
+    "token_saved": 223,
+    "token_saved_pct": 71.01910828025477
   },
   {
     "task_id": "HumanEval/108",
@@ -1303,9 +1303,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 204,
-    "kern_tokens": 72,
-    "token_saved": 132,
-    "token_saved_pct": 64.70588235294117
+    "kern_tokens": 68,
+    "token_saved": 136,
+    "token_saved_pct": 66.66666666666666
   },
   {
     "task_id": "HumanEval/109",
@@ -1315,9 +1315,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 373,
-    "kern_tokens": 75,
-    "token_saved": 298,
-    "token_saved_pct": 79.89276139410187
+    "kern_tokens": 70,
+    "token_saved": 303,
+    "token_saved_pct": 81.23324396782841
   },
   {
     "task_id": "HumanEval/110",
@@ -1327,9 +1327,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 265,
-    "kern_tokens": 66,
-    "token_saved": 199,
-    "token_saved_pct": 75.09433962264151
+    "kern_tokens": 60,
+    "token_saved": 205,
+    "token_saved_pct": 77.35849056603774
   },
   {
     "task_id": "HumanEval/111",
@@ -1339,9 +1339,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 224,
-    "kern_tokens": 72,
-    "token_saved": 152,
-    "token_saved_pct": 67.85714285714286
+    "kern_tokens": 68,
+    "token_saved": 156,
+    "token_saved_pct": 69.64285714285714
   },
   {
     "task_id": "HumanEval/112",
@@ -1351,9 +1351,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 185,
-    "kern_tokens": 30,
-    "token_saved": 155,
-    "token_saved_pct": 83.78378378378379
+    "kern_tokens": 28,
+    "token_saved": 157,
+    "token_saved_pct": 84.86486486486487
   },
   {
     "task_id": "HumanEval/113",
@@ -1363,9 +1363,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 237,
-    "kern_tokens": 62,
-    "token_saved": 175,
-    "token_saved_pct": 73.83966244725738
+    "kern_tokens": 59,
+    "token_saved": 178,
+    "token_saved_pct": 75.10548523206751
   },
   {
     "task_id": "HumanEval/114",
@@ -1375,9 +1375,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 165,
-    "kern_tokens": 66,
-    "token_saved": 99,
-    "token_saved_pct": 60.0
+    "kern_tokens": 58,
+    "token_saved": 107,
+    "token_saved_pct": 64.84848484848484
   },
   {
     "task_id": "HumanEval/115",
@@ -1387,9 +1387,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 334,
-    "kern_tokens": 27,
-    "token_saved": 307,
-    "token_saved_pct": 91.91616766467065
+    "kern_tokens": 25,
+    "token_saved": 309,
+    "token_saved_pct": 92.51497005988024
   },
   {
     "task_id": "HumanEval/116",
@@ -1411,9 +1411,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 254,
-    "kern_tokens": 75,
-    "token_saved": 179,
-    "token_saved_pct": 70.47244094488188
+    "kern_tokens": 68,
+    "token_saved": 186,
+    "token_saved_pct": 73.22834645669292
   },
   {
     "task_id": "HumanEval/118",
@@ -1423,9 +1423,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 244,
-    "kern_tokens": 90,
-    "token_saved": 154,
-    "token_saved_pct": 63.114754098360656
+    "kern_tokens": 84,
+    "token_saved": 160,
+    "token_saved_pct": 65.57377049180327
   },
   {
     "task_id": "HumanEval/119",
@@ -1435,9 +1435,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 272,
-    "kern_tokens": 92,
-    "token_saved": 180,
-    "token_saved_pct": 66.17647058823529
+    "kern_tokens": 86,
+    "token_saved": 186,
+    "token_saved_pct": 68.38235294117648
   },
   {
     "task_id": "HumanEval/120",
@@ -1447,9 +1447,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 237,
-    "kern_tokens": 26,
-    "token_saved": 211,
-    "token_saved_pct": 89.0295358649789
+    "kern_tokens": 21,
+    "token_saved": 216,
+    "token_saved_pct": 91.13924050632912
   },
   {
     "task_id": "HumanEval/121",
@@ -1459,9 +1459,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 118,
-    "kern_tokens": 27,
-    "token_saved": 91,
-    "token_saved_pct": 77.11864406779661
+    "kern_tokens": 26,
+    "token_saved": 92,
+    "token_saved_pct": 77.96610169491525
   },
   {
     "task_id": "HumanEval/122",
@@ -1471,9 +1471,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 143,
-    "kern_tokens": 23,
-    "token_saved": 120,
-    "token_saved_pct": 83.91608391608392
+    "kern_tokens": 22,
+    "token_saved": 121,
+    "token_saved_pct": 84.61538461538461
   },
   {
     "task_id": "HumanEval/123",
@@ -1483,9 +1483,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 314,
-    "kern_tokens": 74,
-    "token_saved": 240,
-    "token_saved_pct": 76.43312101910828
+    "kern_tokens": 70,
+    "token_saved": 244,
+    "token_saved_pct": 77.70700636942675
   },
   {
     "task_id": "HumanEval/124",
@@ -1495,9 +1495,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 404,
-    "kern_tokens": 124,
-    "token_saved": 280,
-    "token_saved_pct": 69.3069306930693
+    "kern_tokens": 117,
+    "token_saved": 287,
+    "token_saved_pct": 71.03960396039604
   },
   {
     "task_id": "HumanEval/125",
@@ -1507,9 +1507,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 188,
-    "kern_tokens": 52,
-    "token_saved": 136,
-    "token_saved_pct": 72.3404255319149
+    "kern_tokens": 47,
+    "token_saved": 141,
+    "token_saved_pct": 75.0
   },
   {
     "task_id": "HumanEval/126",
@@ -1519,9 +1519,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 325,
-    "kern_tokens": 71,
-    "token_saved": 254,
-    "token_saved_pct": 78.15384615384615
+    "kern_tokens": 67,
+    "token_saved": 258,
+    "token_saved_pct": 79.38461538461539
   },
   {
     "task_id": "HumanEval/127",
@@ -1531,9 +1531,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 364,
-    "kern_tokens": 99,
-    "token_saved": 265,
-    "token_saved_pct": 72.8021978021978
+    "kern_tokens": 88,
+    "token_saved": 276,
+    "token_saved_pct": 75.82417582417582
   },
   {
     "task_id": "HumanEval/128",
@@ -1543,9 +1543,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 167,
-    "kern_tokens": 49,
-    "token_saved": 118,
-    "token_saved_pct": 70.65868263473054
+    "kern_tokens": 48,
+    "token_saved": 119,
+    "token_saved_pct": 71.25748502994011
   },
   {
     "task_id": "HumanEval/129",
@@ -1555,9 +1555,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 557,
-    "kern_tokens": 139,
-    "token_saved": 418,
-    "token_saved_pct": 75.04488330341114
+    "kern_tokens": 131,
+    "token_saved": 426,
+    "token_saved_pct": 76.48114901256733
   },
   {
     "task_id": "HumanEval/130",
@@ -1567,9 +1567,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 325,
-    "kern_tokens": 76,
-    "token_saved": 249,
-    "token_saved_pct": 76.61538461538461
+    "kern_tokens": 70,
+    "token_saved": 255,
+    "token_saved_pct": 78.46153846153847
   },
   {
     "task_id": "HumanEval/131",
@@ -1579,9 +1579,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 137,
-    "kern_tokens": 60,
-    "token_saved": 77,
-    "token_saved_pct": 56.20437956204379
+    "kern_tokens": 55,
+    "token_saved": 82,
+    "token_saved_pct": 59.854014598540154
   },
   {
     "task_id": "HumanEval/132",
@@ -1591,9 +1591,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 248,
-    "kern_tokens": 100,
-    "token_saved": 148,
-    "token_saved_pct": 59.67741935483871
+    "kern_tokens": 95,
+    "token_saved": 153,
+    "token_saved_pct": 61.693548387096776
   },
   {
     "task_id": "HumanEval/133",
@@ -1603,9 +1603,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 181,
-    "kern_tokens": 29,
-    "token_saved": 152,
-    "token_saved_pct": 83.97790055248619
+    "kern_tokens": 28,
+    "token_saved": 153,
+    "token_saved_pct": 84.5303867403315
   },
   {
     "task_id": "HumanEval/134",
@@ -1615,9 +1615,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 168,
-    "kern_tokens": 38,
-    "token_saved": 130,
-    "token_saved_pct": 77.38095238095238
+    "kern_tokens": 36,
+    "token_saved": 132,
+    "token_saved_pct": 78.57142857142857
   },
   {
     "task_id": "HumanEval/135",
@@ -1627,9 +1627,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 137,
-    "kern_tokens": 37,
-    "token_saved": 100,
-    "token_saved_pct": 72.99270072992701
+    "kern_tokens": 33,
+    "token_saved": 104,
+    "token_saved_pct": 75.91240875912408
   },
   {
     "task_id": "HumanEval/136",
@@ -1639,9 +1639,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 184,
-    "kern_tokens": 50,
-    "token_saved": 134,
-    "token_saved_pct": 72.82608695652173
+    "kern_tokens": 51,
+    "token_saved": 133,
+    "token_saved_pct": 72.28260869565217
   },
   {
     "task_id": "HumanEval/137",
@@ -1651,9 +1651,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 211,
-    "kern_tokens": 68,
-    "token_saved": 143,
-    "token_saved_pct": 67.77251184834124
+    "kern_tokens": 64,
+    "token_saved": 147,
+    "token_saved_pct": 69.66824644549763
   },
   {
     "task_id": "HumanEval/138",
@@ -1663,9 +1663,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 86,
-    "kern_tokens": 17,
-    "token_saved": 69,
-    "token_saved_pct": 80.23255813953489
+    "kern_tokens": 16,
+    "token_saved": 70,
+    "token_saved_pct": 81.3953488372093
   },
   {
     "task_id": "HumanEval/139",
@@ -1675,9 +1675,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 134,
-    "kern_tokens": 41,
-    "token_saved": 93,
-    "token_saved_pct": 69.40298507462687
+    "kern_tokens": 38,
+    "token_saved": 96,
+    "token_saved_pct": 71.64179104477611
   },
   {
     "task_id": "HumanEval/140",
@@ -1687,9 +1687,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 250,
-    "kern_tokens": 114,
-    "token_saved": 136,
-    "token_saved_pct": 54.400000000000006
+    "kern_tokens": 106,
+    "token_saved": 144,
+    "token_saved_pct": 57.599999999999994
   },
   {
     "task_id": "HumanEval/141",
@@ -1699,9 +1699,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 327,
-    "kern_tokens": 109,
-    "token_saved": 218,
-    "token_saved_pct": 66.66666666666666
+    "kern_tokens": 97,
+    "token_saved": 230,
+    "token_saved_pct": 70.33639143730886
   },
   {
     "task_id": "HumanEval/142",
@@ -1711,9 +1711,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 232,
-    "kern_tokens": 63,
-    "token_saved": 169,
-    "token_saved_pct": 72.84482758620689
+    "kern_tokens": 57,
+    "token_saved": 175,
+    "token_saved_pct": 75.43103448275862
   },
   {
     "task_id": "HumanEval/143",
@@ -1723,9 +1723,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 234,
-    "kern_tokens": 78,
-    "token_saved": 156,
-    "token_saved_pct": 66.66666666666666
+    "kern_tokens": 73,
+    "token_saved": 161,
+    "token_saved_pct": 68.80341880341881
   },
   {
     "task_id": "HumanEval/144",
@@ -1735,9 +1735,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 210,
-    "kern_tokens": 52,
-    "token_saved": 158,
-    "token_saved_pct": 75.23809523809524
+    "kern_tokens": 51,
+    "token_saved": 159,
+    "token_saved_pct": 75.71428571428571
   },
   {
     "task_id": "HumanEval/145",
@@ -1747,9 +1747,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 182,
-    "kern_tokens": 61,
-    "token_saved": 121,
-    "token_saved_pct": 66.48351648351648
+    "kern_tokens": 56,
+    "token_saved": 126,
+    "token_saved_pct": 69.23076923076923
   },
   {
     "task_id": "HumanEval/146",
@@ -1759,9 +1759,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 195,
-    "kern_tokens": 69,
-    "token_saved": 126,
-    "token_saved_pct": 64.61538461538461
+    "kern_tokens": 65,
+    "token_saved": 130,
+    "token_saved_pct": 66.66666666666666
   },
   {
     "task_id": "HumanEval/147",
@@ -1771,9 +1771,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 248,
-    "kern_tokens": 87,
-    "token_saved": 161,
-    "token_saved_pct": 64.91935483870968
+    "kern_tokens": 84,
+    "token_saved": 164,
+    "token_saved_pct": 66.12903225806451
   },
   {
     "task_id": "HumanEval/148",
@@ -1783,9 +1783,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 338,
-    "kern_tokens": 122,
-    "token_saved": 216,
-    "token_saved_pct": 63.905325443786985
+    "kern_tokens": 116,
+    "token_saved": 222,
+    "token_saved_pct": 65.68047337278107
   },
   {
     "task_id": "HumanEval/149",
@@ -1795,9 +1795,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 222,
-    "kern_tokens": 39,
-    "token_saved": 183,
-    "token_saved_pct": 82.43243243243244
+    "kern_tokens": 35,
+    "token_saved": 187,
+    "token_saved_pct": 84.23423423423422
   },
   {
     "task_id": "HumanEval/150",
@@ -1807,9 +1807,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 125,
-    "kern_tokens": 39,
-    "token_saved": 86,
-    "token_saved_pct": 68.8
+    "kern_tokens": 35,
+    "token_saved": 90,
+    "token_saved_pct": 72.0
   },
   {
     "task_id": "HumanEval/151",
@@ -1819,9 +1819,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 161,
-    "kern_tokens": 33,
-    "token_saved": 128,
-    "token_saved_pct": 79.5031055900621
+    "kern_tokens": 32,
+    "token_saved": 129,
+    "token_saved_pct": 80.12422360248446
   },
   {
     "task_id": "HumanEval/152",
@@ -1831,9 +1831,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 241,
-    "kern_tokens": 20,
-    "token_saved": 221,
-    "token_saved_pct": 91.70124481327801
+    "kern_tokens": 19,
+    "token_saved": 222,
+    "token_saved_pct": 92.11618257261411
   },
   {
     "task_id": "HumanEval/153",
@@ -1843,9 +1843,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 402,
-    "kern_tokens": 128,
-    "token_saved": 274,
-    "token_saved_pct": 68.1592039800995
+    "kern_tokens": 122,
+    "token_saved": 280,
+    "token_saved_pct": 69.65174129353234
   },
   {
     "task_id": "HumanEval/154",
@@ -1855,9 +1855,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 182,
-    "kern_tokens": 52,
-    "token_saved": 130,
-    "token_saved_pct": 71.42857142857143
+    "kern_tokens": 49,
+    "token_saved": 133,
+    "token_saved_pct": 73.07692307692307
   },
   {
     "task_id": "HumanEval/155",
@@ -1867,9 +1867,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 115,
-    "kern_tokens": 50,
-    "token_saved": 65,
-    "token_saved_pct": 56.52173913043478
+    "kern_tokens": 47,
+    "token_saved": 68,
+    "token_saved_pct": 59.130434782608695
   },
   {
     "task_id": "HumanEval/156",
@@ -1879,9 +1879,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 247,
-    "kern_tokens": 107,
-    "token_saved": 140,
-    "token_saved_pct": 56.68016194331984
+    "kern_tokens": 105,
+    "token_saved": 142,
+    "token_saved_pct": 57.48987854251012
   },
   {
     "task_id": "HumanEval/157",
@@ -1891,9 +1891,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 132,
-    "kern_tokens": 31,
-    "token_saved": 101,
-    "token_saved_pct": 76.51515151515152
+    "kern_tokens": 30,
+    "token_saved": 102,
+    "token_saved_pct": 77.27272727272727
   },
   {
     "task_id": "HumanEval/158",
@@ -1903,9 +1903,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 134,
-    "kern_tokens": 20,
-    "token_saved": 114,
-    "token_saved_pct": 85.07462686567165
+    "kern_tokens": 21,
+    "token_saved": 113,
+    "token_saved_pct": 84.32835820895522
   },
   {
     "task_id": "HumanEval/159",
@@ -1915,9 +1915,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 303,
-    "kern_tokens": 34,
-    "token_saved": 269,
-    "token_saved_pct": 88.77887788778878
+    "kern_tokens": 30,
+    "token_saved": 273,
+    "token_saved_pct": 90.0990099009901
   },
   {
     "task_id": "HumanEval/160",
@@ -1927,9 +1927,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 242,
-    "kern_tokens": 44,
-    "token_saved": 198,
-    "token_saved_pct": 81.81818181818183
+    "kern_tokens": 42,
+    "token_saved": 200,
+    "token_saved_pct": 82.64462809917356
   },
   {
     "task_id": "HumanEval/161",
@@ -1939,9 +1939,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 194,
-    "kern_tokens": 75,
-    "token_saved": 119,
-    "token_saved_pct": 61.34020618556701
+    "kern_tokens": 69,
+    "token_saved": 125,
+    "token_saved_pct": 64.43298969072166
   },
   {
     "task_id": "HumanEval/162",
@@ -1951,9 +1951,9 @@
     "stage": "",
     "message": "",
     "py_tokens": 92,
-    "kern_tokens": 26,
-    "token_saved": 66,
-    "token_saved_pct": 71.73913043478261
+    "kern_tokens": 25,
+    "token_saved": 67,
+    "token_saved_pct": 72.82608695652173
   },
   {
     "task_id": "HumanEval/163",
@@ -1963,8 +1963,8 @@
     "stage": "",
     "message": "",
     "py_tokens": 146,
-    "kern_tokens": 43,
-    "token_saved": 103,
-    "token_saved_pct": 70.54794520547945
+    "kern_tokens": 41,
+    "token_saved": 105,
+    "token_saved_pct": 71.91780821917808
   }
 ]

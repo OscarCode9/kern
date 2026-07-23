@@ -14,8 +14,11 @@ Define strict rules so agents can generate Kern reliably and with low ambiguity.
 
 ### Rule: blocks
 
-- Use `{}` for block bodies.
-- Separate statements inside a block with `;`.
+- Use `:stmt` when a suite has exactly one simple statement.
+- Use `{...}` for empty, multi-statement, or nested-compound bodies.
+- Separate adjacent simple statements with `;`.
+- Omit `;` after a structural block close.
+- At EOF, omit all remaining final statement-block closing braces.
 
 ### Rule: booleans
 
@@ -25,8 +28,21 @@ Define strict rules so agents can generate Kern reliably and with low ambiguity.
 
 ### Rule: functions
 
-- Prefer `fn name(args)=expr` for single-expression return.
-- Use `fn name(args){...}` for multi-statement bodies.
+- Prefer `name(args)=expr` for single-expression return.
+- Use `name(args){...}` for multi-statement bodies.
+- Use `.name(args){...}` and `.attr` for an implicit plain `self`.
+- Use `>expr` for return and `>x=expr` for assign-then-return.
+
+### Rule: same-name keyword arguments
+
+- Use `:x` only in a direct call argument slot to mean `x=x`.
+- Keep `x=x` inside f-string expressions and lambda parameter defaults.
+
+### Rule: null identity
+
+- Use `value?` for `value is None`.
+- Use `value!` for `value is not None`.
+- Do not use these forms for equality (`==` / `!=`).
 
 ### Rule: imports
 
@@ -42,10 +58,10 @@ Define strict rules so agents can generate Kern reliably and with low ambiguity.
 
 Before returning output, agent should verify:
 
-1. Brackets and braces balanced.
-2. Every opened block is closed.
+1. Expression brackets and braces are balanced.
+2. Only the final chain of statement blocks may rely on EOF closure.
 3. No mixed boolean style (`and` with `&&` in same expression style pass).
-4. Functions and classes follow canonical keyword forms.
+4. Functions and classes follow canonical v0.4 forms.
 
 ## Required Roundtrip Safety
 
@@ -57,7 +73,7 @@ For benchmark or dataset generation tasks, output must pass:
 
 - Using `&` and `|` when logical operators are intended.
 - Emitting unsupported `match/case` constructs.
-- Omitting separators between statements in `{}` blocks.
+- Omitting separators between adjacent simple statements in `{}` blocks.
 
 ## Change Control
 

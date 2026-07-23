@@ -12,7 +12,7 @@ def add(a, b):
 
 Kern:
 ```kern
-fn add(a,b)=a+b
+add(a,b)=a+b
 ```
 
 ## 2) Multi-statement function
@@ -26,7 +26,7 @@ def clamp(x, lo, hi):
 
 Kern:
 ```kern
-fn clamp(x,lo,hi){v=max(lo,min(x,hi));ret v}
+clamp(x,lo,hi){>v=max(lo,min(x,hi))
 ```
 
 ## 3) If/else block
@@ -42,7 +42,7 @@ def absval(x):
 
 Kern:
 ```kern
-fn absval(x){if x>=0{ret x}else{ret -x}}
+absval(x){if x>=0:>x;else:>-x
 ```
 
 ## 4) For loop
@@ -58,7 +58,7 @@ def sum_n(n):
 
 Kern:
 ```kern
-fn sum_n(n){total=0;for i in range(n){total+=i};ret total}
+sum_n(n){total=0;for i in range(n):total+=i;>total
 ```
 
 ## 5) While loop
@@ -73,7 +73,7 @@ def gcd(a, b):
 
 Kern:
 ```kern
-fn gcd(a,b){while b!=0{a,b=b,a%b};ret a}
+gcd(a,b){while b!=0:a,b=b,a%b;>a
 ```
 
 ## 6) Try/except/finally
@@ -91,7 +91,7 @@ def parse_int(s):
 
 Kern:
 ```kern
-fn parse_int(s){try{ret int(s)}exc ValueError{ret 0}fin{cleanup()}}
+parse_int(s){try:>int(s);exc ValueError:>0;fin:cleanup()
 ```
 
 ## 7) Class + method
@@ -106,7 +106,7 @@ class Point:
 
 Kern:
 ```kern
-cls Point{fn __init__(self,x,y){self.x=x;self.y=y}}
+cls Point{.__init__(x,y){.x=x;.y=y
 ```
 
 ## 8) Imports
@@ -146,5 +146,5 @@ def read_text(path):
 
 Kern:
 ```kern
-fn read_text(path){with open(path) as f{ret f.read()}}
+read_text(path){with open(path) as f:>f.read()
 ```

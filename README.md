@@ -20,7 +20,7 @@ flowchart LR
   subgraph Core
     B1[kern_transpiler.py<br/>Python -> Kern]
     B2[kern_compiler.py<br/>Kern -> Python]
-    B3[kern_grammar_spec.md<br/>Grammar v0.2]
+    B3[kern_grammar_spec.md<br/>Grammar v0.4]
   end
 
   subgraph Validation and Benchmarks
@@ -80,16 +80,103 @@ flowchart LR
   F2 --> F1
 ```
 
-## Current status (March 5, 2026)
+## Current status (July 23, 2026)
 
 Implemented:
-- Grammar v0.2
+- Grammar v0.4 (v0.2/v0.3 syntax remains accepted by the compiler)
 - Transpiler: `kern_transpiler.py` (Python -> Kern)
 - Inverse compiler: `kern_compiler.py` (Kern -> Python)
 - Round-trip and functional benchmarks on HumanEval
 - Multi-tokenizer benchmark on HumanEval + MBPP
 - Unified head-to-head harness vs external baselines (SimPy, Token Sugar)
 - Large-scale dataset builder from CodeSearchNet Python (`prepare_finetune_dataset_csn.py`)
+
+## Modern benchmark (July 23, 2026)
+
+Kern v0.4 was evaluated on the current
+[EvalPlus](https://github.com/evalplus/evalplus) HumanEval+ and MBPP+ suites
+and [BigCodeBench](https://github.com/bigcode-project/bigcodebench) v0.1.4.
+The reproducible market baseline is
+[python-minifier 3.2.0](https://pypi.org/project/python-minifier/).
+
+This benchmark transforms known canonical solutions. It measures
+representation density and preservation through `Python -> Kern -> Python`;
+it is **not** a model-generation Pass@1 result.
+
+### Protocol
+
+- HumanEval+ `164`, MBPP+ `378`, BigCodeBench `1,140`;
+- EvalPlus hashes: HumanEval+
+  `fe585eb4df8c88d844eeb463ea4d0302`, MBPP+
+  `ee43ecabebf20deef4bb776a405ac5b1`;
+- BigCodeBench revision
+  `b74c0d0bf70d2c0bc459be537895cca163007f1a`, split `v0.1.4`;
+- Python `3.11.15`, EvalPlus `0.3.1`, python-minifier `3.2.0`,
+  tiktoken `0.13.0`;
+- Python references exclude benchmark prose and no-op docstrings while
+  preserving the remaining source formatting;
+- identical `cl100k_base` and `o200k_base` tokenizers for every local row;
+- every task stays in the correctness denominator;
+- EvalPlus runs the official base + extra tests; BigCodeBench is structural
+  only because its 139-library suite requires an isolated execution sandbox.
+
+![Token reduction on modern Python benchmarks](benchmark_results/modern/modern-token-efficiency.svg)
+
+`cl100k_base` aggregate results:
+
+| Dataset | Python | Kern v0.4 | Kern saved | python-minifier | Minifier saved | Kern normalized AST |
+|---|---:|---:|---:|---:|---:|---:|
+| HumanEval+ | `10,571` | `7,747` | `26.71%` | `7,813` | `26.09%` | `164/164` |
+| MBPP+ | `15,183` | `11,030` | `27.35%` | `11,565` | `23.83%` | `378/378` |
+| BigCodeBench | `163,786` | `129,139` | `21.15%` | `123,109` | `24.84%` | `1,115/1,140` |
+
+![EvalPlus functional preservation](benchmark_results/modern/modern-evalplus-correctness.svg)
+
+Official EvalPlus base + extra-test preservation:
+
+| Dataset | Python reference | Kern round-trip | python-minifier |
+|---|---:|---:|---:|
+| HumanEval+ | `163/164` | `163/164` | `163/164` |
+| MBPP+ | `378/378` | `378/378` | `378/378` |
+| Combined | `541/542` | `541/542` | `541/542` |
+
+All three representations fail the same `HumanEval/32` numeric oracle in the
+local runtime. Kern therefore preserves the Python reference outcome on all
+`542/542` tasks; it does not introduce a functional regression in EvalPlus.
+
+On BigCodeBench, Kern produced parseable Python for `1,128/1,140` tasks and
+preserved normalized AST on `1,115/1,140` (`97.81%`). The 25 incompatibilities
+identify the next optimization targets: 16 attribute/call precedence cases,
+8 f-string cases, and 1 grouped-lambda case.
+
+### Market context
+
+| Project / benchmark | Public position | Comparison used here |
+|---|---|---|
+| Kern v0.4 | Reversible compact Python representation | Reproduced locally with shared tokenizers, AST checks, and EvalPlus tests |
+| [python-minifier 3.2.0](https://pypi.org/project/python-minifier/) | Python source-to-source minifier | Reproduced on the same code and tokenizers; it is a minifier, not a reversible language |
+| [Toke](https://www.tokelang.dev/) | Independent compiled language; reports 52% average reduction on 42 programs with its own trained BPE | Kept out of the graph because its corpus and tokenizer are not shared or reproduced here |
+| [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |
+| [SWE-bench](https://www.swebench.com/) | Repository-level issue resolution | Requires the same agent/model in Python and Kern modes; gold-patch compression would not be a valid comparison |
+
+The earlier SimPy and Token Sugar table below remains a legacy comparison.
+No claim is made that Kern beats Toke or code-generation models without a
+shared corpus, tokenizer, model, prompt, and execution protocol.
+
+### Reproduce
+
+```bash
+python -m venv .venv
+.venv/bin/pip install -r benchmark-requirements.txt
+.venv/bin/python benchmark_modern.py --run-functional --parallel 8
+```
+
+Artifacts:
+
+- [`modern-benchmark-summary.json`](benchmark_results/modern/modern-benchmark-summary.json)
+- [`modern-benchmark-details.csv`](benchmark_results/modern/modern-benchmark-details.csv)
+- [`modern-token-efficiency.svg`](benchmark_results/modern/modern-token-efficiency.svg)
+- [`modern-evalplus-correctness.svg`](benchmark_results/modern/modern-evalplus-correctness.svg)
 
 ## Latest update (March 5, 2026)
 
@@ -116,6 +203,69 @@ Fine-tuning run #1 status (completed on March 5, 2026):
 - Published adapter (Hugging Face):
   - `https://huggingface.co/Oscarcode99/kern-qwen25-3b-lora-t4-run1`
 - Next immediate step: evaluate `Pass@1` + round-trip/compile success against Python baseline.
+
+## Grammar v0.4 optimization update (July 23, 2026)
+
+The canonical emitter adds four more reversible compactions:
+
+- function definitions omit `fn`: `build(x)=x`, `.method(x){...}`;
+- final statement-block braces close implicitly at EOF;
+- one-simple-statement suites use `:stmt`;
+- same-name keyword arguments use `:x` for `x=x`.
+
+Measured against v0.3 on all 20,000 examples in the original local
+CodeSearchNet corpus:
+
+| Tokenizer | Kern v0.3 | Kern v0.4 | Additional saving | Relative |
+|---|---:|---:|---:|---:|
+| `cl100k_base` | `1,977,185` | `1,911,630` | `65,555` | `3.32%` |
+| `o200k_base` | `2,010,221` | `1,946,174` | `64,047` | `3.19%` |
+
+Validation:
+
+- v0.4 transpile/compile/parse success: `20,000/20,000`;
+- no AST regressions against v0.3 on the independently audited v2 corpus;
+- one pre-existing called-lambda precedence error is now corrected;
+- HumanEval normalized AST and functional: `164/164`;
+- HumanEval full prompt + canonical solution `cl100k_base`:
+  `30,368 -> 7,908` (`73.96%` saved, including removed docstrings);
+- `21/21` targeted v0.3/v0.4 regression tests and `13/13` executable
+  round-trip cases pass.
+
+The same iteration also hardens positional-only parameters, `async for/with`,
+lambda defaults/call boundaries, dict/set expressions in headers, f-string
+expression safety, and fail-fast handling for unmatched delimiters.
+
+## Grammar v0.3 optimization update (July 23, 2026)
+
+The canonical emitter now adds five reversible compactions:
+
+- postfix null identity checks: `x?` / `x!`;
+- compact returns and assign-return fusion: `>expr` / `>x=expr`;
+- implicit method receivers: `fn .method(args){.attr...}`;
+- separator elision after `}`-terminated compound statements;
+- Python-safe expressions inside f-strings.
+
+Measured against the previous emitter on the local CodeSearchNet 20k corpus
+(19,998 cases where the v0.2 baseline also compiled):
+
+| Tokenizer | Kern v0.2 | Kern v0.3 | Additional saving | Relative |
+|---|---:|---:|---:|---:|
+| `cl100k_base` | `2,026,215` | `1,976,878` | `49,337` | `2.44%` |
+| `o200k_base` | `2,056,102` | `2,009,906` | `46,196` | `2.25%` |
+
+Validation:
+
+- v0.3 compile/parse success on the full corpus: `20,000/20,000`;
+- v0.2-comparable compile/parse success: `19,998/19,998`;
+- nested Boolean grouping, Ellipsis, and empty/single-tuple subscripts now
+  reconstruct with their original AST shape;
+- HumanEval normalized AST: `164/164`;
+- HumanEval functional: `164/164`;
+- HumanEval full prompt + canonical solution `cl100k_base`:
+  `30,368 -> 8,245` (`72.85%` saved, including removed docstrings);
+- cached HumanEval + MBPP normalized AST: `538/538`;
+- cached HumanEval + MBPP corpus: `51,570 -> 24,416` (`52.66%` saved).
 
 ## Key results
 
@@ -174,8 +324,11 @@ Statistical view (`overall`, `cl100k_base`, bootstrap 95% CI on saved %):
 - `simpy`: `-20.783%` [`-22.246`, `-19.384`]
 - `token_sugar`: `-100.611%` [`-107.692`, `-94.196`]
 
-Universal claim for the current benchmark scope:
-- Across all evaluated datasets and tokenizers (HumanEval + MBPP train; `cl100k_base`, `o200k_base`, `llama_tinyllama`, `codegen_350m_mono`), `kern` preserves correctness (`538/538` parse, `164/164` HumanEval functional) while sustaining ~`50%` token reduction, outperforming `simpy` and `token_sugar` on robustness and token efficiency in the same harness.
+Observed legacy-harness result:
+- Across the evaluated HumanEval + MBPP train samples and four tokenizers,
+  Kern preserved `538/538` parse results and `164/164` original HumanEval
+  functional checks while reducing tokens by about `50%`. SimPy and Token
+  Sugar were less robust and larger in this specific harness.
 
 ## Repository layout
 
@@ -183,6 +336,7 @@ Universal claim for the current benchmark scope:
 - `kern_compiler.py`: Kern parser/compiler to Python
 - `test_transpiler.py`: transpiler smoke tests
 - `test_roundtrip_full.py`: executable round-trip checks
+- `test_optimizations.py`: v0.3/v0.4 grammar and backward-compatibility regressions
 - `benchmark_grammar.py`: grammar-level token benchmark
 - `benchmark_humaneval_roundtrip.py`: AST/parse round-trip benchmark
 - `benchmark_humaneval_functional.py`: HumanEval functional validation
@@ -225,6 +379,7 @@ Run tests:
 ```bash
 python3 test_transpiler.py
 python3 test_roundtrip_full.py
+python3 -m unittest -v test_optimizations.py
 python3 test_baseline_adapters.py
 ```
 

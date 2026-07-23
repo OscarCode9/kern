@@ -2,9 +2,13 @@
 kern_transpiler.py — Python → Kern
 Convierte código Python a representación Kern compacta usando el módulo ast.
 
-Grammar spec v0.2:
-  fn name(params)=expr          single-expression function
-  fn name(params){stmts}        multi-statement function
+Grammar spec v0.4:
+  name(params)=expr             single-expression function
+  name(params){stmts}           multi-statement function
+  .method(params){.attr}        implicit self receiver
+  call(:x)                      same-name keyword argument (x=x)
+  if cond:stmt                  one-simple-statement suite
+  EOF                           closes any still-open statement blocks
   if cond{stmts}elif...else{}   conditionals
   for x in iter{stmts}          for loops
   while cond{stmts}             while loops
@@ -12,13 +16,20 @@ Grammar spec v0.2:
   cls Name(Base){stmts}         classes
   try{...}exc Type{...}fin{}    try/except/finally
   \\params:expr                 lambda
-  ret expr                      return
+  >expr                         return
+  >x=expr                       assign x, then return x
+  x? / x!                       x is None / x is not None
   x=expr, x+=expr               assignments
-  x>0&y<0  x|y                  and→& or→|
+  x>0&&y<0  x||y                and→&& or→||
 """
 
 import ast
 import sys
+
+
+# Internal-only marker for a statement-block close. Real expression braces keep
+# using ``}``, so only structural closes at the very end can be omitted safely.
+_BLOCK_CLOSE = "\x00"
 
 
 # ── Operator maps ──────────────────────────────────────────────────
@@ -59,8 +70,8 @@ AUGOP = {
 
 # Precedence for non-BinOp nodes
 PREC = {
-    ast.BoolOp: 1,      # and / or
-    ast.IfExp: 2,       # x if c else y
+    ast.IfExp: 0,       # x if c else y
+    ast.BoolOp: 1,      # overridden for and / or
     ast.Compare: 5,     # == != < > etc.
     ast.BinOp: 6,       # base (overridden per-op below)
     ast.UnaryOp: 13,
@@ -85,12 +96,20 @@ BINOP_PREC = {
 
 class KernEmitter(ast.NodeVisitor):
 
+    def __init__(self):
+        self._implicit_self_depth = 0
+        self._fstring_depth = 0
+
     def transpile(self, source: str) -> str:
         tree = ast.parse(source)
         parts = []
         for node in self._strip_nonsemantic_string_exprs(list(tree.body)):
             parts.append(self._stmt(node))
-        return "\n".join(p for p in parts if p)
+        rendered = "\n".join(p for p in parts if p)
+        # EOF closes the final chain of statement blocks. Any earlier block
+        # marker remains explicit so the following statement is unambiguous.
+        rendered = rendered.rstrip(_BLOCK_CLOSE)
+        return rendered.replace(_BLOCK_CLOSE, "}")
 
     # ── Statements ─────────────────────────────────────────────────
 
@@ -105,13 +124,75 @@ class KernEmitter(ast.NodeVisitor):
         return f"# UNSUPPORTED:{node.__class__.__name__}"
 
     def _stmts(self, stmts) -> str:
-        """Render a list of statements, skipping non-semantic string expressions."""
-        parts = []
-        for s in stmts:
-            if self._is_nop_string_expr_stmt(s):
+        """Render statements with compact, structurally unambiguous separators."""
+        nodes = [s for s in stmts if not self._is_nop_string_expr_stmt(s)]
+        rendered = []
+        i = 0
+        while i < len(nodes):
+            node = nodes[i]
+            if i + 1 < len(nodes) and self._can_fuse_assign_return(node, nodes[i + 1]):
+                target = node.targets[0].id
+                rendered.append(
+                    (">" + target + "=" + self._expr_tuple_bare(node.value), node)
+                )
+                i += 2
                 continue
-            parts.append(self._stmt(s))
-        return ";".join(p for p in parts if p)
+            text = self._stmt(node)
+            if text:
+                rendered.append((text, node))
+            i += 1
+
+        out = []
+        for i, (text, node) in enumerate(rendered):
+            out.append(text)
+            if i + 1 < len(rendered) and not self._is_self_delimiting_stmt(node, text):
+                out.append(";")
+        return "".join(out)
+
+    def _can_fuse_assign_return(self, node, next_node) -> bool:
+        """Whether ``x=expr; return x`` can use the reversible ``>x=expr`` form."""
+        return (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and isinstance(next_node, ast.Return)
+            and isinstance(next_node.value, ast.Name)
+            and next_node.value.id == node.targets[0].id
+        )
+
+    def _is_self_delimiting_stmt(self, node, text: str) -> bool:
+        """Statement blocks delimit themselves without a following semicolon."""
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            body = self._strip_pass(
+                self._strip_nonsemantic_string_exprs(list(node.body))
+            )
+            if (
+                len(body) == 1
+                and isinstance(body[0], ast.Return)
+                and body[0].value is not None
+            ):
+                return False
+        return (
+            isinstance(
+                node,
+                (
+                    ast.FunctionDef,
+                    ast.AsyncFunctionDef,
+                    ast.ClassDef,
+                    ast.If,
+                    ast.For,
+                    ast.AsyncFor,
+                    ast.While,
+                    ast.Try,
+                    ast.With,
+                    ast.AsyncWith,
+                ),
+            )
+            # During emission every real statement-block close is represented
+            # by the private marker. A literal ``}`` here can instead belong
+            # to a dict/set expression in an inline suite.
+            and text.endswith(_BLOCK_CLOSE)
+        )
 
     def _strip_leading_docstring(self, stmts):
         """Drop only the first statement if it is a docstring."""
@@ -146,7 +227,28 @@ class KernEmitter(ast.NodeVisitor):
     def _block(self, stmts) -> str:
         """Render {stmts} block."""
         inner = self._stmts(stmts)
-        return "{" + inner + "}"
+        return "{" + inner + _BLOCK_CLOSE
+
+    def _suite(self, stmts, has_continuation: bool = False) -> str:
+        """Render a safe one-statement suite with ``:``; otherwise use braces."""
+        nodes = [s for s in stmts if not self._is_nop_string_expr_stmt(s)]
+        compound = (
+            ast.FunctionDef,
+            ast.AsyncFunctionDef,
+            ast.ClassDef,
+            ast.If,
+            ast.For,
+            ast.AsyncFor,
+            ast.While,
+            ast.Try,
+            ast.With,
+            ast.AsyncWith,
+        )
+        if len(nodes) == 1 and not isinstance(nodes[0], compound):
+            text = self._stmt(nodes[0])
+            if text:
+                return ":" + text + (";" if has_continuation else "")
+        return self._block(stmts)
 
     def _stmt_FunctionDef(self, node) -> str:
         return self._fn(node, is_async=False)
@@ -155,45 +257,64 @@ class KernEmitter(ast.NodeVisitor):
         return self._fn(node, is_async=True)
 
     def _fn(self, node, is_async: bool) -> str:
-        prefix = "async fn" if is_async else "fn"
-        name = node.name
-        params = self._args(node.args)
+        prefix = "async " if is_async else ""
+        implicit_self = self._can_use_implicit_self(node.args)
+        name = ("." if implicit_self else "") + node.name
+        params = self._args(node.args, skip_first=implicit_self)
         ret_ann = ""
         if node.returns:
-            ret_ann = "->" + self._expr(node.returns)
+            ret_ann = "->" + self._header_expr(node.returns)
 
         decorators = "".join("@" + self._expr(d) + "\n" for d in node.decorator_list)
 
         # Real body: drop bare string literal expressions and lone pass stmts.
         body = self._strip_pass(self._strip_nonsemantic_string_exprs(list(node.body)))
 
-        if not body:
-            body_str = "{}"
-        elif len(body) == 1 and isinstance(body[0], ast.Return):
-            # Single-expression form: fn f(x)=expr
-            val = body[0].value
-            if val is not None:
-                body_str = "=" + self._expr(val)
+        if implicit_self:
+            self._implicit_self_depth += 1
+        try:
+            if not body:
+                body_str = self._block([])
+            elif len(body) == 1 and isinstance(body[0], ast.Return):
+                # Single-expression form: fn f(x)=expr
+                val = body[0].value
+                if val is not None:
+                    body_str = "=" + self._expr(val)
+                else:
+                    body_str = self._block(body)
             else:
-                body_str = "{}"
-        else:
-            body_str = self._block(body)
+                body_str = self._block(body)
+        finally:
+            if implicit_self:
+                self._implicit_self_depth -= 1
 
-        return f"{decorators}{prefix} {name}({params}){ret_ann}{body_str}"
+        return f"{decorators}{prefix}{name}({params}){ret_ann}{body_str}"
 
-    def _args(self, args) -> str:
+    def _can_use_implicit_self(self, args) -> bool:
+        if args.posonlyargs or not args.args or args.args[0].arg != "self":
+            return False
+        first = args.args[0]
+        first_has_default = len(args.defaults) == len(args.args)
+        return first.annotation is None and not first_has_default
+
+    def _args(self, args, skip_first: bool = False) -> str:
         parts = []
         # positional args with defaults aligned from the right
+        positional = list(args.posonlyargs) + list(args.args)
         n_defaults = len(args.defaults)
-        n_args = len(args.args)
-        for i, arg in enumerate(args.args):
+        n_args = len(positional)
+        for i, arg in enumerate(positional):
             default_idx = i - (n_args - n_defaults)
             s = arg.arg
             if arg.annotation:
                 s += ":" + self._expr(arg.annotation)
             if default_idx >= 0:
                 s += "=" + self._expr(args.defaults[default_idx])
+            if skip_first and i == 0:
+                continue
             parts.append(s)
+            if i + 1 == len(args.posonlyargs):
+                parts.append("/")
         # *args
         if args.vararg:
             s = "*" + args.vararg.arg
@@ -221,8 +342,8 @@ class KernEmitter(ast.NodeVisitor):
 
     def _stmt_Return(self, node) -> str:
         if node.value is None:
-            return "ret"
-        return "ret " + self._expr_tuple_bare(node.value)
+            return ">"
+        return ">" + self._expr_tuple_bare(node.value)
 
     def _stmt_Assign(self, node) -> str:
         parts = [self._expr_tuple_bare(t) for t in node.targets]
@@ -240,33 +361,53 @@ class KernEmitter(ast.NodeVisitor):
         return self._expr(node.target) + op + self._expr(node.value)
 
     def _stmt_If(self, node) -> str:
-        parts = ["if " + self._expr(node.test) + self._block(node.body)]
+        parts = [
+            "if "
+            + self._header_expr(node.test)
+            + self._suite(node.body, has_continuation=bool(node.orelse))
+        ]
         # Flatten elif chains
         orelse = node.orelse
         while orelse:
             if len(orelse) == 1 and isinstance(orelse[0], ast.If):
                 inner = orelse[0]
-                parts.append("elif " + self._expr(inner.test) + self._block(inner.body))
+                parts.append(
+                    "elif "
+                    + self._header_expr(inner.test)
+                    + self._suite(
+                        inner.body,
+                        has_continuation=bool(inner.orelse),
+                    )
+                )
                 orelse = inner.orelse
             else:
-                parts.append("else" + self._block(orelse))
+                parts.append("else" + self._suite(orelse))
                 break
         return "".join(parts)
 
     def _stmt_For(self, node) -> str:
         target = self._expr_tuple_bare(node.target)
-        iter_ = self._expr(node.iter)
-        body = self._block(node.body)
+        iter_ = self._header_expr(node.iter)
+        body = self._suite(node.body, has_continuation=bool(node.orelse))
         s = f"for {target} in {iter_}{body}"
         if node.orelse:
-            s += "else" + self._block(node.orelse)
+            s += "else" + self._suite(node.orelse)
+        return s
+
+    def _stmt_AsyncFor(self, node) -> str:
+        target = self._expr_tuple_bare(node.target)
+        iter_ = self._header_expr(node.iter)
+        body = self._suite(node.body, has_continuation=bool(node.orelse))
+        s = f"async for {target} in {iter_}{body}"
+        if node.orelse:
+            s += "else" + self._suite(node.orelse)
         return s
 
     def _stmt_While(self, node) -> str:
-        body = self._block(node.body)
-        s = "while " + self._expr(node.test) + body
+        body = self._suite(node.body, has_continuation=bool(node.orelse))
+        s = "while " + self._header_expr(node.test) + body
         if node.orelse:
-            s += "else" + self._block(node.orelse)
+            s += "else" + self._suite(node.orelse)
         return s
 
     def _stmt_Import(self, node) -> str:
@@ -292,26 +433,41 @@ class KernEmitter(ast.NodeVisitor):
         decorators = "".join("@" + self._expr(d) + "\n" for d in node.decorator_list)
         # Drop bare string literal expressions and lone pass in class body.
         body = self._strip_pass(self._strip_nonsemantic_string_exprs(list(node.body)))
-        body_str = self._block(body) if body else "{}"
+        body_str = self._block(body)
         return f"{decorators}cls {node.name}{base_str}{body_str}"
 
     def _stmt_Try(self, node) -> str:
-        s = "try" + self._block(node.body)
-        for handler in node.handlers:
+        continuations = len(node.handlers) + bool(node.orelse) + bool(node.finalbody)
+        s = "try" + self._suite(
+            node.body,
+            has_continuation=bool(continuations),
+        )
+        for index, handler in enumerate(node.handlers):
             exc_str = "exc"
             if handler.type:
                 if isinstance(handler.type, ast.Tuple):
                     types = ",".join(self._expr(t) for t in handler.type.elts)
                     exc_str += "(" + types + ")"
                 else:
-                    exc_str += " " + self._expr(handler.type)
+                    exc_str += " " + self._header_expr(handler.type)
                 if handler.name:
                     exc_str += " as " + handler.name
-            s += exc_str + self._block(handler.body)
+            remaining = (
+                len(node.handlers) - index - 1
+                + bool(node.orelse)
+                + bool(node.finalbody)
+            )
+            s += exc_str + self._suite(
+                handler.body,
+                has_continuation=bool(remaining),
+            )
         if node.orelse:
-            s += "else" + self._block(node.orelse)
+            s += "else" + self._suite(
+                node.orelse,
+                has_continuation=bool(node.finalbody),
+            )
         if node.finalbody:
-            s += "fin" + self._block(node.finalbody)
+            s += "fin" + self._suite(node.finalbody)
         return s
 
     def _stmt_Raise(self, node) -> str:
@@ -324,13 +480,24 @@ class KernEmitter(ast.NodeVisitor):
 
     def _stmt_With(self, node) -> str:
         items = ",".join(self._withitem(i) for i in node.items)
-        return f"with {items}" + self._block(node.body)
+        return f"with {items}" + self._suite(node.body)
+
+    def _stmt_AsyncWith(self, node) -> str:
+        items = ",".join(self._withitem(i) for i in node.items)
+        return f"async with {items}" + self._suite(node.body)
 
     def _withitem(self, item) -> str:
-        s = self._expr(item.context_expr)
+        s = self._header_expr(item.context_expr)
         if item.optional_vars:
             s += " as " + self._expr(item.optional_vars)
         return s
+
+    def _header_expr(self, node) -> str:
+        """Protect a leading expression brace from block/suite lookahead."""
+        rendered = self._expr(node)
+        if rendered.startswith("{"):
+            return "(" + rendered + ")"
+        return rendered
 
     def _stmt_Delete(self, node) -> str:
         return "del " + ",".join(self._expr(t) for t in node.targets)
@@ -378,19 +545,39 @@ class KernEmitter(ast.NodeVisitor):
         return f"<{node.__class__.__name__}>"
 
     def _expr_Constant(self, node) -> str:
+        if node.value is Ellipsis:
+            return "..."
         return repr(node.value)
 
     def _expr_Name(self, node) -> str:
+        if (
+            node.id == "self"
+            and self._implicit_self_depth
+            and not self._fstring_depth
+        ):
+            return "."
         return node.id
 
     def _expr_Attribute(self, node) -> str:
+        if (
+            isinstance(node.value, ast.Name)
+            and node.value.id == "self"
+            and self._implicit_self_depth
+            and not self._fstring_depth
+        ):
+            return "." + node.attr
         return self._expr(node.value) + "." + node.attr
 
     def _expr_Subscript(self, node) -> str:
         # In subscripts, tuple slices must be emitted without parentheses:
         # arr[:,0] instead of arr[(:,0)].
         if isinstance(node.slice, ast.Tuple):
-            inner = ",".join(self._expr(e) for e in node.slice.elts)
+            if not node.slice.elts:
+                inner = "()"
+            elif len(node.slice.elts) == 1:
+                inner = "(" + self._expr(node.slice.elts[0]) + ",)"
+            else:
+                inner = ",".join(self._expr(e) for e in node.slice.elts)
         else:
             inner = self._expr(node.slice)
         return self._expr(node.value) + "[" + inner + "]"
@@ -426,6 +613,8 @@ class KernEmitter(ast.NodeVisitor):
 
     def _node_prec(self, node) -> int:
         """Return the effective precedence of an expression node."""
+        if isinstance(node, ast.BoolOp):
+            return 2 if isinstance(node.op, ast.And) else 1
         if isinstance(node, ast.BinOp):
             return BINOP_PREC.get(type(node.op), 6)
         return PREC.get(type(node), 15)
@@ -436,22 +625,54 @@ class KernEmitter(ast.NodeVisitor):
         return op_str + operand
 
     def _expr_BoolOp(self, node) -> str:
-        op_str = BOOLOP[type(node.op)]
-        parts = [self._expr_with_parens(v, node) for v in node.values]
+        if self._fstring_depth:
+            op_str = " and " if isinstance(node.op, ast.And) else " or "
+        else:
+            op_str = BOOLOP[type(node.op)]
+        parts = []
+        for value in node.values:
+            # Preserve explicit grouping even for a nested identical BoolOp.
+            if isinstance(value, ast.BoolOp):
+                part = "(" + self._expr(value) + ")"
+            else:
+                part = self._expr_with_parens(value, node)
+            parts.append(part)
         return op_str.join(parts)
 
     def _expr_Compare(self, node) -> str:
-        s = self._expr(node.left)
+        s = self._compare_operand(node.left)
         for op, comp in zip(node.ops, node.comparators):
-            s += CMPOP.get(type(op), "?") + self._expr(comp)
+            if (
+                not self._fstring_depth
+                and isinstance(comp, ast.Constant)
+                and comp.value is None
+            ):
+                if isinstance(op, ast.Is):
+                    s += "?"
+                    continue
+                if isinstance(op, ast.IsNot):
+                    s += "!"
+                    continue
+            s += CMPOP.get(type(op), "?") + self._compare_operand(comp)
+        return s
+
+    def _compare_operand(self, node) -> str:
+        s = self._expr(node)
+        if self._node_prec(node) < PREC[ast.Compare] or isinstance(node, ast.Compare):
+            return "(" + s + ")"
         return s
 
     def _expr_Call(self, node) -> str:
         func = self._expr(node.func)
+        if isinstance(node.func, ast.Lambda):
+            func = "(" + func + ")"
         all_args = []
         for a in node.args:
             if isinstance(a, ast.Starred):
                 all_args.append("*" + self._expr(a.value))
+                continue
+            if isinstance(a, ast.Lambda):
+                all_args.append("(" + self._expr(a) + ")")
                 continue
             # list((x for ...)) -> list(x for ...) when generator is sole arg.
             if (
@@ -462,10 +683,20 @@ class KernEmitter(ast.NodeVisitor):
                 all_args.append(self._expr_generator_inner(a))
                 continue
             all_args.append(self._expr(a))
-        all_args.extend(
-            k.arg + "=" + self._expr(k.value) if k.arg else "**" + self._expr(k.value)
-            for k in node.keywords
-        )
+        for keyword in node.keywords:
+            if keyword.arg is None:
+                all_args.append("**" + self._expr(keyword.value))
+            elif (
+                not self._fstring_depth
+                and isinstance(keyword.value, ast.Name)
+                and keyword.value.id == keyword.arg
+            ):
+                all_args.append(":" + keyword.arg)
+            else:
+                value = self._expr(keyword.value)
+                if isinstance(keyword.value, ast.Lambda):
+                    value = "(" + value + ")"
+                all_args.append(keyword.arg + "=" + value)
         return func + "(" + ",".join(all_args) + ")"
 
     def _expr_Starred(self, node) -> str:
@@ -478,8 +709,20 @@ class KernEmitter(ast.NodeVisitor):
                 self._expr(node.orelse))
 
     def _expr_Lambda(self, node) -> str:
-        params = self._args(node.args)
+        # Lambda parameters are parsed as a compact raw segment by the inverse
+        # compiler, so keep every expression in defaults Python-compatible.
+        implicit_self_depth = self._implicit_self_depth
+        fstring_depth = self._fstring_depth
+        self._implicit_self_depth = 0
+        self._fstring_depth += 1
+        try:
+            params = self._args(node.args)
+        finally:
+            self._implicit_self_depth = implicit_self_depth
+            self._fstring_depth = fstring_depth
         body = self._expr(node.body)
+        if self._fstring_depth:
+            return "(lambda " + params + ":" + body + ")"
         return "\\" + params + ":" + body
 
     def _expr_List(self, node) -> str:
@@ -533,25 +776,29 @@ class KernEmitter(ast.NodeVisitor):
     def _expr_JoinedStr(self, node) -> str:
         # f-string: reconstruct as f"..."
         parts = []
-        for v in node.values:
-            if isinstance(v, ast.Constant):
-                parts.append(str(v.value))
-            elif isinstance(v, ast.FormattedValue):
-                inner = self._expr(v.value)
-                fmt = ""
-                if v.format_spec:
-                    fmt = ":" + "".join(
-                        str(x.value) if isinstance(x, ast.Constant) else self._expr(x)
-                        for x in v.format_spec.values
-                    )
-                conv = ""
-                if v.conversion == ord('s'):
-                    conv = "!s"
-                elif v.conversion == ord('r'):
-                    conv = "!r"
-                elif v.conversion == ord('a'):
-                    conv = "!a"
-                parts.append("{" + inner + conv + fmt + "}")
+        self._fstring_depth += 1
+        try:
+            for v in node.values:
+                if isinstance(v, ast.Constant):
+                    parts.append(str(v.value))
+                elif isinstance(v, ast.FormattedValue):
+                    inner = self._expr(v.value)
+                    fmt = ""
+                    if v.format_spec:
+                        fmt = ":" + "".join(
+                            str(x.value) if isinstance(x, ast.Constant) else self._expr(x)
+                            for x in v.format_spec.values
+                        )
+                    conv = ""
+                    if v.conversion == ord('s'):
+                        conv = "!s"
+                    elif v.conversion == ord('r'):
+                        conv = "!r"
+                    elif v.conversion == ord('a'):
+                        conv = "!a"
+                    parts.append("{" + inner + conv + fmt + "}")
+        finally:
+            self._fstring_depth -= 1
         return 'f"' + "".join(parts) + '"'
 
     def _expr_Await(self, node) -> str:

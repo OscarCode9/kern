@@ -1,4 +1,4 @@
-# KERN GRAMMAR SPEC v0.2 (synced with implementation - Mar 2026)
+# KERN GRAMMAR SPEC v0.4 (synced with implementation - Jul 2026)
 > Compact Python-transpilable language for LLMs · Token-first design
 
 ---
@@ -18,7 +18,16 @@
 | Remove space after `,` | `(a, b)` → `(a,b)` | -1 per comma |
 | Remove space around operators | `a + b` → `a+b` | -1 per op |
 | Inline block (no newline+indent) | `:\n    return x` → `=x` | -3 to -5 |
-| Single-expr function | `def f(x):\n    return x+1` → `fn f(x)=x+1` | -5 total |
+| Single-expr function | `def f(x):\n    return x+1` → `f(x)=x+1` | -6 total |
+| Compact return | `return x` → `>x` | context-dependent, positive in aggregate |
+| Assign + return fusion | `x=build(); return x` → `>x=build()` | -2 typical |
+| Omit function keyword | `fn f(x)=x` → `f(x)=x` | -1 to -2 per definition |
+| Implicit `self` receiver | `f(self){self.x}` → `.f(){.x}` | -1 per direct attribute typical |
+| Inline simple suite | `if x{>x}` → `if x:>x` | context-dependent |
+| Same-name keyword arg | `send(x=x)` → `send(:x)` | -1 typical |
+| Implicit EOF block close | `f(){if x{>x}}` → `f(){if x:>x` | -1 per final open block |
+| Null checks | `x is None` / `x is not None` → `x?` / `x!` | -1 / -2 typical |
+| Elide structural separator | `if x{a()};b()` → `if x{a()}b()` | -1 when applicable |
 | Lambda `\` | `lambda x: x+1` → `\x:x+1` | -2 to -3 |
 | `and` → `&&` (in context) | `x > 0 and x < 10` → `x>0&&x<10` | -2 |
 | `or` → `\|\|` (in context) | `x < 0 or x > 10` → `x<0\|\|x>10` | -3 |
@@ -49,12 +58,15 @@ def f(x):
     return y
 
 # Kern (can be inline OR multi-line)
-fn f(x){y=x+1;ret y}
+f(x){>y=x+1
 ```
 
-**Rule**: `{` immediately follows a block-introducing construct. `;` separates statements.
+**Rule**: `{` immediately follows a block-introducing construct. `;` separates
+simple statements. A one-simple-statement suite may instead use `:stmt`.
+A braced compound statement is self-delimiting, so the canonical emitter omits
+a following `;`. At EOF, every still-open statement block closes implicitly.
 `{}` in expression context = dict/set literal (same as Python). Unambiguous because
-blocks only follow: `fn`, `if`, `else`, `elif`, `while`, `for`, `cls`, `try`, `exc`, `fin`, `with`.
+blocks only follow a definition or compound-statement header.
 
 ---
 
@@ -62,79 +74,94 @@ blocks only follow: `fn`, `if`, `else`, `elif`, `while`, `for`, `cls`, `try`, `e
 
 ---
 
-### 1. Function Definition: `def` → `fn`
+### 1. Function Definition: omit `def`
 
 ```
-fn NAME([PARAMS])[->TYPE] = EXPR      # single expression (implicit return)
-fn NAME([PARAMS])[->TYPE] { STMTS }  # multi-statement body
-async fn NAME([PARAMS]) { STMTS }    # async
+NAME([PARAMS])[->TYPE] = EXPR      # single expression (implicit return)
+NAME([PARAMS])[->TYPE] { STMTS }  # multi-statement body
+.NAME([PARAMS])[->TYPE] { STMTS } # implicit first parameter `self`
+async NAME([PARAMS]) { STMTS }    # async
 ```
 
 **Params**: `NAME[:TYPE][=DEFAULT]` — no spaces after commas.
 
+When the first positional parameter is an unannotated, non-defaulted `self`,
+the canonical form moves that fact into a `.` before the function name. The
+parameter is omitted and direct receiver references use a leading dot:
+`.set(x){.value=x` reconstructs as
+`def set(self, x): self.value = x`.
+The inverse compiler still accepts the v0.2/v0.3 `fn` forms.
+
 ```python
 # Python                              # Kern
-def add(a, b):                        fn add(a,b)=a+b
+def add(a, b):                        add(a,b)=a+b
     return a + b
 
-def greet(name="World"):              fn greet(name="World")=f"Hello {name}"
+def greet(name="World"):              greet(name="World")=f"Hello {name}"
     return f"Hello {name}"
 
-def clamp(x, lo, hi):                 fn clamp(x,lo,hi){res=max(lo,min(x,hi));ret res}
+def clamp(x, lo, hi):                 clamp(x,lo,hi){>res=max(lo,min(x,hi))
     res = max(lo, min(x, hi))
     return res
 
-def factorial(n: int) -> int:         fn factorial(n:int)->int{if n<=1{ret 1};ret n*factorial(n-1)}
+def factorial(n: int) -> int:         factorial(n:int)->int{if n<=1:>1;>n*factorial(n-1)
     if n <= 1:
         return 1
     return n * factorial(n - 1)
 
-async def fetch(url):                  async fn fetch(url){ret await session.get(url)}
+async def fetch(url):                  async fetch(url)=await session.get(url)
     return await session.get(url)
 ```
 
 **Token count** (first example):
 - Python: `def`, ` add`, `(a`, `,`, ` b`, `):`, `\n`, `    `, `return`, ` a`, ` +`, ` b` = **12 tokens**
-- Kern: `fn`, ` add`, `(a`, `,b`, `)=`, `a`, `+b` = **7 tokens** → **-42%**
+- Kern: `add`, `(a`, `,b`, `)=`, `a`, `+b` = **6 tokens** → **-50%**
 
 ---
 
-### 2. Return: `return` → `ret`
+### 2. Return: `return` → `>`
 
 ```
-ret [EXPR]
+> [EXPR]
+> NAME = EXPR
 ```
 
-`return` and `ret` are both 1 BPE token — savings come from the surrounding
-context (no newline+indent before `ret`, no space before its argument fusing).
+`>` is unambiguous at statement start because a Python comparison cannot begin
+with it. If a local assignment is immediately followed by returning the same
+name, `>x=expr` reversibly expands to `x=expr; return x`.
 
 ```python
 # Python          # Kern
-return            ret
-return x          ret x
-return x + y      ret x+y
-return x, y       ret x,y
+return            >
+return x          >x
+return x + y      >x+y
+return x, y       >x,y
+x = build()       >x=build()
+return x
 ```
+
+The compiler continues to accept v0.2 `ret` syntax for compatibility.
 
 ---
 
 ### 3. Conditional: `if/elif/else` (keywords unchanged)
 
 ```
-if EXPR { STMTS } [elif EXPR { STMTS }]* [else { STMTS }]
+if EXPR SUITE [elif EXPR SUITE]* [else SUITE]
+SUITE := : SIMPLE_STMT | { STMTS }
 ```
 
 `if`, `elif`, `else` are already short — kept as-is. Savings come from removing
-`:` and the newline+indent that follow them.
+the newline+indent, and from using `:stmt` instead of braces for simple suites.
 
 ```python
 # Python                              # Kern
-if x > 0:                             if x>0{ret x}else{ret -x}
+if x > 0:                             if x>0:>x;else:>-x
     return x
 else:
     return -x
 
-if x > 0:                             if x>0{print("pos")}elif x<0{print("neg")}else{print("zero")}
+if x > 0:                             if x>0:print("pos");elif x<0:print("neg");else:print("zero")
     print("pos")
 elif x < 0:
     print("neg")
@@ -146,7 +173,7 @@ else:
 
 **Token count** (if/else example, full body):
 - Python: ~14 tokens (with newlines, indentation, colons)
-- Kern: `if`, ` x`, `>`, `0`, `{`, `ret`, ` x`, `}`, `else`, `{`, `ret`, ` -`, `x`, `}` = **14... wait**
+- Kern canonical: `if x>0:>x;else:>-x`
 
 Savings are clearer in nested code where Kern avoids multiple indentation levels.
 
@@ -155,15 +182,15 @@ Savings are clearer in nested code where Kern avoids multiple indentation levels
 ### 4. For loop: `for` (keyword unchanged)
 
 ```
-for NAME [, NAME]* in EXPR { STMTS }
+for NAME [, NAME]* in EXPR SUITE
 ```
 
 ```python
 # Python                              # Kern
-for i in range(10):                   for i in range(10){print(i)}
+for i in range(10):                   for i in range(10):print(i)
     print(i)
 
-for k, v in d.items():                for k,v in d.items(){total+=v}
+for k, v in d.items():                for k,v in d.items():total+=v
     total += v
 ```
 
@@ -178,7 +205,7 @@ for k, v in d.items():                for k,v in d.items(){total+=v}
 ### 5. While loop: `while` (keyword unchanged — do NOT abbreviate)
 
 ```
-while EXPR { STMTS }
+while EXPR SUITE
 ```
 
 > **Warning**: `whl` tokenizes as `[wh][l]` = 2 tokens in cl100k_base.
@@ -186,10 +213,10 @@ while EXPR { STMTS }
 
 ```python
 # Python                              # Kern
-while x > 0:                          while x>0{x-=1}
+while x > 0:                          while x>0:x-=1
     x -= 1
 
-while True:                           while True{data=queue.pop();process(data)}
+while True:                           while True{data=queue.pop();process(data)
     data = queue.pop()
     process(data)
 ```
@@ -224,22 +251,26 @@ from . import utils                   from . imp utils
 cls NAME [(BASE [, BASE]*)] { STMTS }
 ```
 
-Methods inside the body use the same `fn` syntax, separated by `;`.
+Methods whose first parameter is plain `self` use the implicit receiver form.
+Adjacent block-bodied methods need no `;`.
 
 ```python
 # Python                              # Kern
-class Point:                          cls Point{fn __init__(self,x,y){self.x=x;self.y=y};fn __str__(self)=f"({self.x},{self.y})"}
+class Point:                          cls Point{.__init__(x,y){.x=x;.y=y}.__str__()=f"({self.x},{self.y})"
     def __init__(self, x, y):
         self.x = x
         self.y = y
     def __str__(self):
         return f"({self.x},{self.y})"
 
-class Dog(Animal):                    cls Dog(Animal){sound="Woof";fn speak(self)=self.sound}
+class Dog(Animal):                    cls Dog(Animal){sound="Woof";.speak()=.sound
     sound = "Woof"
     def speak(self):
         return self.sound
 ```
+
+Receiver references inside an f-string remain spelled `self.attr`, because the
+compiler treats the complete f-string as one lexical token.
 
 **Decorators**: unchanged — `@decorator` already compact.
 
@@ -248,23 +279,23 @@ class Dog(Animal):                    cls Dog(Animal){sound="Woof";fn speak(self
 ### 8. Try/Except: `except` → `exc`, `finally` → `fin`
 
 ```
-try { STMTS }
-  exc [EXCTYPE [as NAME]] { STMTS }
-  [exc [EXCTYPE] { STMTS }]*
-  [else { STMTS }]
-  [fin { STMTS }]
+try SUITE
+  exc [EXCTYPE [as NAME]] SUITE
+  [exc [EXCTYPE] SUITE]*
+  [else SUITE]
+  [fin SUITE]
 ```
 
 Multiple exception types use a tuple: `exc(TypeError,ValueError)`.
 
 ```python
 # Python                              # Kern
-try:                                  try{x=int(s)}exc ValueError{x=0}
+try:                                  try:x=int(s);exc ValueError:x=0
     x = int(s)
 except ValueError:
     x = 0
 
-try:                                  try{f=open("data.txt")}exc FileNotFoundError as e{log(e)}fin{cleanup()}
+try:                                  try:f=open("data.txt");exc FileNotFoundError as e:log(e);fin:cleanup()
     f = open("data.txt")
 except FileNotFoundError as e:
     log(e)
@@ -290,8 +321,8 @@ short names. Net savings: **2-3 tokens per lambda**.
 lambda x: x + 1                       \x:x+1
 lambda x, y: x + y                    \x,y:x+y
 lambda: 42                            \:42
-sorted(lst, key=lambda x: x[1])       sorted(lst,key=\x:x[1])
-map(lambda s: s.strip(), lines)        map(\s:s.strip(),lines)
+sorted(lst, key=lambda x: x[1])       sorted(lst,key=(\x:x[1]))
+map(lambda s: s.strip(), lines)        map((\s:s.strip()),lines)
 ```
 
 **Token count** (`lambda x: x + 1` vs `\x:x+1`):
@@ -347,7 +378,7 @@ around operators.
 # Python                              # Kern                    Savings
 x > 0 and x < 10                      x>0&&x<10                 -2 tokens
 x < 0 or x > 10                       x<0||x>10                 -3 tokens
-if a > 0 and b > 0:                   if a>0&&b>0{              -2 tokens
+if a > 0 and b > 0:                   if a>0&&b>0:              -2 tokens
 x >= 0 and x <= 100                   x>=0&&x<=100              -2 tokens
 ```
 
@@ -359,7 +390,29 @@ expressions. For hand-written Kern, compiler also accepts name aliases
 
 ---
 
-### 12. Comments and docstrings: stripped on transpile
+### 12. Null identity checks: postfix `?` / `!`
+
+The two most frequent identity checks against `None` use postfix markers:
+
+```
+EXPR?    # EXPR is None
+EXPR!    # EXPR is not None
+```
+
+These forms preserve identity semantics; they are not replacements for
+`== None` or `!= None`.
+
+```python
+# Python                              # Kern
+if value is None:                     if value?:>fallback
+    return fallback
+if value is not None:                 if value!:>value
+    return value
+```
+
+---
+
+### 13. Comments and docstrings: stripped on transpile
 
 **Rule**: `#` comments and docstrings are **not emitted** in Kern output.
 
@@ -390,7 +443,7 @@ def is_palindrome(s: str) -> bool:
     return s == s[::-1]
 
 # Kern (stripped):                     23 tokens → -41%
-fn is_palindrome(s:str)->bool{s=s.lower().replace(" ","");ret s==s[::-1]}
+is_palindrome(s:str)->bool{s=s.lower().replace(" ","");>s==s[::-1]
 ```
 
 ---
@@ -399,13 +452,20 @@ fn is_palindrome(s:str)->bool{s=s.lower().replace(" ","");ret s==s[::-1]}
 
 | Situation | Resolution rule |
 |-----------|----------------|
-| `{` after block keyword | Block (not dict) |
-| `{` after `=`, `(`, `[`, `,`, `ret` | Dict/set literal |
+| `{` after a compound header | Block; leading dict/set header expressions are parenthesized |
+| `{` after `=`, `(`, `[`, `,`, `>` | Dict/set literal |
+| `:` after a compound header | One-simple-statement suite |
+| `>` at statement start | Return; `>x=expr` is assign-and-return |
+| `.` before a function name | Function has an implicit first parameter `self` |
+| `.` at operand start inside an implicit-self function | The identifier `self` |
+| `?` / `!` postfix | `is None` / `is not None` |
 | `\` at expression start | Lambda |
 | `:` after `\...` params | Lambda body separator |
 | `:` in `{k:v}` | Dict separator (inside `{}` = dict context) |
 | `:` in `[a:b]` | Slice (inside `[]`) |
-| `;` at statement level | Statement separator (NOT inside string) |
+| `:x` in a call argument slot | Same-name keyword argument `x=x` |
+| EOF with open statement blocks | Closes the final block chain implicitly |
+| `;` at statement level | Required between adjacent simple statements; omitted after structural block closes |
 
 ---
 
@@ -425,7 +485,7 @@ def find_max(numbers: list) -> int:
 
 ```
 # Kern (compact)
-fn find_max(numbers:list)->int{if not numbers{raise ValueError("empty list")};result=numbers[0];for n in numbers[1:]{if n>result{result=n}};ret result}
+find_max(numbers:list)->int{if not numbers:raise ValueError("empty list");result=numbers[0];for n in numbers[1:]:if n>result:result=n;>result
 ```
 
 Token estimate:
@@ -434,18 +494,18 @@ Token estimate:
 
 ---
 
-## Implementation Status (Compiler + Transpiler, Mar 2026)
+## Implementation Status (Compiler + Transpiler, Jul 2026)
 
 | Python | Kern | Notes |
 |--------|------|-------|
-| `with X as y:` | `with X as y{...}` | implemented |
+| `with X as y:` | `with X as y SUITE` | implemented |
 | `yield x` | `yield x` (`yld` accepted by compiler) | implemented |
 | `yield from x` | `yield from x` (`yld from` accepted by compiler) | implemented |
 | `@decorator` | `@decorator` | implemented |
 | f-strings | `f"..."` | implemented |
-| `async def` | `async fn` | implemented |
-| `async for` | `async for` | compiler supports; transpiler `AsyncFor` pending |
-| `async with` | `async with` | compiler supports; transpiler `AsyncWith` pending |
+| `async def` | `async name(...)` | implemented |
+| `async for` | `async for` | implemented both directions |
+| `async with` | `async with` | implemented both directions |
 | `match/case` (3.10+) | TBD | not implemented |
 
 Extended statements now implemented in both directions: `raise`, `del`,
@@ -466,8 +526,6 @@ def tok(s):
     return len(tokens), tokens
 
 # Verify keyword token counts
-assert tok("fn")[0] == 1        # must be single token
-assert tok("ret")[0] == 1       # must be single token
 assert tok("cls")[0] == 1       # must be single token
 assert tok("imp")[0] == 1       # must be single token
 assert tok("exc")[0] == 1       # must be single token
@@ -484,4 +542,4 @@ assert tok(r"\x:x+1")[0] < tok("lambda x: x+1")[0]   # True: 4 < 6
 
 ---
 
-*Spec synchronized with compiler/transpiler behavior (Mar 2026).*
+*Spec synchronized with compiler/transpiler behavior (Jul 2026).*

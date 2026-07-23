@@ -18,16 +18,23 @@ cat input.kern | python3 kern_compiler.py
 3. Reconstructs Python indentation and block structure.
 4. Outputs readable Python source.
 
-## Block Rule
+## Suite and EOF Rules
 
-Kern blocks use `{ ... }`.
+Kern blocks use `{ ... }`; a one-simple-statement suite may use `:stmt`.
 Compiler converts blocks into `:\n` + proper Python indentation.
 Empty block becomes `pass`.
+At EOF, every still-open statement block closes implicitly. Explicit v0.2/v0.3
+closing braces remain accepted.
 
 ## Keyword Mapping (high level)
 
-- `fn` -> `def`
-- `ret` -> `return`
+- `name(...)` / legacy `fn name(...)` -> `def`
+- `>` -> `return` (`ret` remains accepted as v0.2 input)
+- `>x=expr` -> `x=expr` followed by `return x`
+- `.method(...)` / legacy `fn .method(...)` -> `def method(self, ...)`
+- leading `.attr` in an implicit-receiver function -> `self.attr`
+- postfix `?` / `!` -> `is None` / `is not None`
+- `:x` in a call argument slot -> `x=x`
 - `cls` -> `class`
 - `imp` -> `import`
 - `exc` -> `except`
@@ -56,6 +63,12 @@ Compatibility aliases accepted in expressions:
 
 ## Parser Stability Notes
 
-- `fn` is treated as function keyword only in function-definition context.
+- A bare `name(...)` is a definition only when followed by `=`, `->...=`, or
+  a statement suite.
+- Legacy `fn` is treated as a function keyword only in definition context.
 - `cls` is treated as class keyword only in class-definition context.
 - `ret` can still be used as identifier where syntactically valid.
+- Braced compounds are self-delimiting; inline suites use `;` where a following
+  sibling or continuation would otherwise be ambiguous.
+- Unmatched or unclosed expression delimiters fail immediately with
+  `SyntaxError`.

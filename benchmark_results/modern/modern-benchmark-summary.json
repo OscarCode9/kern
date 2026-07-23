@@ -1,0 +1,495 @@
+{
+  "failures": [
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 18) (<unknown>, line 18)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/15"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid decimal literal (<unknown>, line 6)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/36"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 16) (<unknown>, line 16)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/113"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/120"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: f-string: unmatched '[' (<unknown>, line 17)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/190"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/256"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/271"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/485"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/491"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/493"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid decimal literal (<unknown>, line 6)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/512"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid decimal literal (<unknown>, line 7)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/537"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid syntax (<unknown>, line 13)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/571"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/635"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/651"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/713"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 11) (<unknown>, line 11)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/804"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid decimal literal (<unknown>, line 14)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/879"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/947"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 11) (<unknown>, line 11)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/1041"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/1045"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/1077"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: invalid syntax. Perhaps you forgot a comma? (<unknown>, line 11)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/1104"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "normalized AST differs",
+      "representation": "kern",
+      "stage": "ast",
+      "task_id": "BigCodeBench/1119"
+    },
+    {
+      "dataset": "BigCodeBench",
+      "message": "SyntaxError: unterminated string literal (detected at line 16) (<unknown>, line 16)",
+      "representation": "kern",
+      "stage": "parse",
+      "task_id": "BigCodeBench/1134"
+    }
+  ],
+  "functional": {
+    "HumanEval+": {
+      "kern": {
+        "base_pass": 163,
+        "dataset_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+        "error": "",
+        "plus_pass": 163,
+        "total": 164
+      },
+      "python": {
+        "base_pass": 163,
+        "dataset_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+        "error": "",
+        "plus_pass": 163,
+        "total": 164
+      },
+      "python_minifier": {
+        "base_pass": 163,
+        "dataset_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+        "error": "",
+        "plus_pass": 163,
+        "total": 164
+      }
+    },
+    "MBPP+": {
+      "kern": {
+        "base_pass": 378,
+        "dataset_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+        "error": "",
+        "plus_pass": 378,
+        "total": 378
+      },
+      "python": {
+        "base_pass": 378,
+        "dataset_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+        "error": "",
+        "plus_pass": 378,
+        "total": 378
+      },
+      "python_minifier": {
+        "base_pass": 378,
+        "dataset_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+        "error": "",
+        "plus_pass": 378,
+        "total": 378
+      }
+    }
+  },
+  "metadata": {
+    "bigcodebench_revision": "b74c0d0bf70d2c0bc459be537895cca163007f1a",
+    "bigcodebench_split": "v0.1.4",
+    "evalplus": "0.3.1",
+    "evalplus_min_time_limit": 5.0,
+    "generated_at_utc": "2026-07-23T08:01:09.517916+00:00",
+    "humaneval_plus_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+    "kern_grammar": "v0.4",
+    "mbpp_plus_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+    "normalization": "code-only source after removing no-op string expressions/docstrings; remaining formatting preserved",
+    "python": "3.11.15",
+    "python_minifier": "3.2.0",
+    "tiktoken": "0.13.0"
+  },
+  "summary": [
+    {
+      "ast_cases": 1140,
+      "ast_equal": 1140,
+      "dataset": "BigCodeBench",
+      "parse_ok": 1140,
+      "python_tokens": 163786,
+      "representation": "python",
+      "representation_tokens": 163786,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "tokenizer": "cl100k_base",
+      "total_cases": 1140,
+      "transform_ok": 1140
+    },
+    {
+      "ast_cases": 1140,
+      "ast_equal": 1140,
+      "dataset": "BigCodeBench",
+      "parse_ok": 1140,
+      "python_tokens": 166184,
+      "representation": "python",
+      "representation_tokens": 166184,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "tokenizer": "o200k_base",
+      "total_cases": 1140,
+      "transform_ok": 1140
+    },
+    {
+      "ast_cases": 1140,
+      "ast_equal": 1115,
+      "dataset": "BigCodeBench",
+      "parse_ok": 1128,
+      "python_tokens": 163786,
+      "representation": "kern",
+      "representation_tokens": 129139,
+      "saved_pct": 21.1538,
+      "saved_tokens": 34647,
+      "tokenizer": "cl100k_base",
+      "total_cases": 1140,
+      "transform_ok": 1140
+    },
+    {
+      "ast_cases": 1140,
+      "ast_equal": 1115,
+      "dataset": "BigCodeBench",
+      "parse_ok": 1128,
+      "python_tokens": 166184,
+      "representation": "kern",
+      "representation_tokens": 132396,
+      "saved_pct": 20.3317,
+      "saved_tokens": 33788,
+      "tokenizer": "o200k_base",
+      "total_cases": 1140,
+      "transform_ok": 1140
+    },
+    {
+      "ast_cases": 0,
+      "ast_equal": null,
+      "dataset": "BigCodeBench",
+      "parse_ok": 1140,
+      "python_tokens": 163786,
+      "representation": "python_minifier",
+      "representation_tokens": 123107,
+      "saved_pct": 24.8367,
+      "saved_tokens": 40679,
+      "tokenizer": "cl100k_base",
+      "total_cases": 1140,
+      "transform_ok": 1140
+    },
+    {
+      "ast_cases": 0,
+      "ast_equal": null,
+      "dataset": "BigCodeBench",
+      "parse_ok": 1140,
+      "python_tokens": 166184,
+      "representation": "python_minifier",
+      "representation_tokens": 125898,
+      "saved_pct": 24.2418,
+      "saved_tokens": 40286,
+      "tokenizer": "o200k_base",
+      "total_cases": 1140,
+      "transform_ok": 1140
+    },
+    {
+      "ast_cases": 164,
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "parse_ok": 164,
+      "python_tokens": 10571,
+      "representation": "python",
+      "representation_tokens": 10571,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "tokenizer": "cl100k_base",
+      "total_cases": 164,
+      "transform_ok": 164
+    },
+    {
+      "ast_cases": 164,
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "parse_ok": 164,
+      "python_tokens": 10611,
+      "representation": "python",
+      "representation_tokens": 10611,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "tokenizer": "o200k_base",
+      "total_cases": 164,
+      "transform_ok": 164
+    },
+    {
+      "ast_cases": 164,
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "parse_ok": 164,
+      "python_tokens": 10571,
+      "representation": "kern",
+      "representation_tokens": 7747,
+      "saved_pct": 26.7146,
+      "saved_tokens": 2824,
+      "tokenizer": "cl100k_base",
+      "total_cases": 164,
+      "transform_ok": 164
+    },
+    {
+      "ast_cases": 164,
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "parse_ok": 164,
+      "python_tokens": 10611,
+      "representation": "kern",
+      "representation_tokens": 7872,
+      "saved_pct": 25.8128,
+      "saved_tokens": 2739,
+      "tokenizer": "o200k_base",
+      "total_cases": 164,
+      "transform_ok": 164
+    },
+    {
+      "ast_cases": 0,
+      "ast_equal": null,
+      "dataset": "HumanEval+",
+      "parse_ok": 164,
+      "python_tokens": 10571,
+      "representation": "python_minifier",
+      "representation_tokens": 7813,
+      "saved_pct": 26.0902,
+      "saved_tokens": 2758,
+      "tokenizer": "cl100k_base",
+      "total_cases": 164,
+      "transform_ok": 164
+    },
+    {
+      "ast_cases": 0,
+      "ast_equal": null,
+      "dataset": "HumanEval+",
+      "parse_ok": 164,
+      "python_tokens": 10611,
+      "representation": "python_minifier",
+      "representation_tokens": 7875,
+      "saved_pct": 25.7846,
+      "saved_tokens": 2736,
+      "tokenizer": "o200k_base",
+      "total_cases": 164,
+      "transform_ok": 164
+    },
+    {
+      "ast_cases": 378,
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "parse_ok": 378,
+      "python_tokens": 15183,
+      "representation": "python",
+      "representation_tokens": 15183,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "tokenizer": "cl100k_base",
+      "total_cases": 378,
+      "transform_ok": 378
+    },
+    {
+      "ast_cases": 378,
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "parse_ok": 378,
+      "python_tokens": 15270,
+      "representation": "python",
+      "representation_tokens": 15270,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "tokenizer": "o200k_base",
+      "total_cases": 378,
+      "transform_ok": 378
+    },
+    {
+      "ast_cases": 378,
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "parse_ok": 378,
+      "python_tokens": 15183,
+      "representation": "kern",
+      "representation_tokens": 11030,
+      "saved_pct": 27.353,
+      "saved_tokens": 4153,
+      "tokenizer": "cl100k_base",
+      "total_cases": 378,
+      "transform_ok": 378
+    },
+    {
+      "ast_cases": 378,
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "parse_ok": 378,
+      "python_tokens": 15270,
+      "representation": "kern",
+      "representation_tokens": 11203,
+      "saved_pct": 26.6339,
+      "saved_tokens": 4067,
+      "tokenizer": "o200k_base",
+      "total_cases": 378,
+      "transform_ok": 378
+    },
+    {
+      "ast_cases": 0,
+      "ast_equal": null,
+      "dataset": "MBPP+",
+      "parse_ok": 378,
+      "python_tokens": 15183,
+      "representation": "python_minifier",
+      "representation_tokens": 11565,
+      "saved_pct": 23.8293,
+      "saved_tokens": 3618,
+      "tokenizer": "cl100k_base",
+      "total_cases": 378,
+      "transform_ok": 378
+    },
+    {
+      "ast_cases": 0,
+      "ast_equal": null,
+      "dataset": "MBPP+",
+      "parse_ok": 378,
+      "python_tokens": 15270,
+      "representation": "python_minifier",
+      "representation_tokens": 11670,
+      "saved_pct": 23.5756,
+      "saved_tokens": 3600,
+      "tokenizer": "o200k_base",
+      "total_cases": 378,
+      "transform_ok": 378
+    }
+  ]
+}

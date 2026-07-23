@@ -1,4 +1,4 @@
-"""Test suite para el transpilador Kern v0.1"""
+"""Test suite para el transpilador Kern v0.4."""
 import sys
 import os
 sys.path.insert(0, os.path.dirname(__file__))
@@ -28,7 +28,7 @@ tests = [
 
     ("lambda", "f = sorted(lst, key=lambda x: x[1])"),
 
-    ("and/or → &/|", "if x > 0 and x < 10:\n    print(x)"),
+    ("and/or → &&/||", "if x > 0 and x < 10:\n    print(x)"),
 
     ("list comprehension", "result = [x**2 for x in range(10) if x % 2 == 0]"),
 
@@ -67,7 +67,7 @@ tests = [
 ]
 
 print(SEP)
-print("KERN TRANSPILER v0.1 — Test Suite")
+print("KERN TRANSPILER v0.4 — Test Suite")
 print(SEP)
 
 passed = failed = 0

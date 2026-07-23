@@ -33,10 +33,9 @@ const STARTER_PYTHON = `def gcd(a: int, b: int) -> int:
     return a
 `
 
-const STARTER_KERN = `fn gcd(a:int,b:int)->int{
-while b!=0{a,b=b,a%b}
-ret a
-}`
+const STARTER_KERN = `gcd(a:int,b:int)->int{
+while b!=0:a,b=b,a%b;
+>a`
 
 const MONACO_THEME = 'kern-dark'
 
