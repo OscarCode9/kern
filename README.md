@@ -6,8 +6,9 @@ Core idea:
 - `Python -> Kern` for token-efficient reasoning/edit loops.
 - `Kern -> Python` for execution and ecosystem compatibility.
 - Deterministic round-trip to preserve semantics.
-- Optional `compact=True` mode for minifier-style local alpha-renaming while
-  the default mode remains identifier-reversible.
+- Optional `compact=True` mode for BPE-aware local alpha-renaming and
+  conservative semantic simplification while the default mode remains
+  identifier-reversible.
 - Project blog (live updates): `https://oscarcode9.github.io/kern-language.html`
 
 ## System architecture
@@ -82,19 +83,20 @@ flowchart LR
   F2 --> F1
 ```
 
-## Current status (July 23, 2026)
+## Current status (July 28, 2026)
 
 Implemented:
 - Grammar v0.4 (v0.2/v0.3 syntax remains accepted by the compiler)
 - Transpiler: `kern_transpiler.py` (Python -> Kern)
-- Optional compact profile: `kern_compact.py` (conservative local renaming)
+- Optional compact profile: `kern_compact.py` (BPE-aware local renaming and
+  conservative semantic simplification)
 - Inverse compiler: `kern_compiler.py` (Kern -> Python)
 - Round-trip and functional benchmarks on HumanEval
 - Multi-tokenizer benchmark on HumanEval + MBPP
 - Unified head-to-head harness vs external baselines (SimPy, Token Sugar)
 - Large-scale dataset builder from CodeSearchNet Python (`prepare_finetune_dataset_csn.py`)
 
-## Modern benchmark (July 23, 2026)
+## Modern benchmark (July 28, 2026)
 
 Kern v0.4, including its new optional compact profile, was evaluated on the current
 [EvalPlus](https://github.com/evalplus/evalplus) HumanEval+ and MBPP+ suites
@@ -112,10 +114,12 @@ Two Kern contracts are reported:
   source identifiers.
 - **Kern compact** is opt-in with `transpile(source, compact=True)`. It keeps
   module-level names, entry points, and function parameters stable, but
-  alpha-renames eligible function, lambda, and comprehension locals. Like a
-  conventional minifier, it does not restore the original private identifiers.
-  Renaming is disabled in scopes that use `dir`, `eval`, `exec`, `locals`, or
-  `vars`.
+  alpha-renames eligible function, lambda, and comprehension locals using a
+  tokenizer-friendly alias order. It also applies guarded assign-return,
+  empty-return, and terminal-branch simplifications. Like a conventional
+  minifier, it does not restore the original private identifiers. Renaming and
+  rewrites are disabled wherever reflection, closure, exception, or binding
+  behavior could make them observable.
 
 ### Protocol
 
@@ -140,16 +144,16 @@ Two Kern contracts are reported:
 
 | Dataset | Python | Kern compact | Compact saved | Kern reversible | Reversible saved | python-minifier | Minifier saved |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| HumanEval+ | `10,571` | **`7,398`** | **`30.02%`** | `7,736` | `26.82%` | `7,813` | `26.09%` |
-| MBPP+ | `15,183` | **`10,620`** | **`30.05%`** | `11,023` | `27.40%` | `11,565` | `23.83%` |
-| BigCodeBench | `163,786` | **`119,387`** | **`27.11%`** | `128,909` | `21.29%` | `123,107` | `24.84%` |
-| Combined | `189,540` | **`137,405`** | **`27.51%`** | `147,668` | `22.09%` | `142,485` | `24.83%` |
+| HumanEval+ | `10,571` | **`7,342`** | **`30.55%`** | `7,736` | `26.82%` | `7,813` | `26.09%` |
+| MBPP+ | `15,183` | **`10,459`** | **`31.11%`** | `11,023` | `27.40%` | `11,565` | `23.83%` |
+| BigCodeBench | `163,786` | **`118,401`** | **`27.71%`** | `128,909` | `21.29%` | `123,107` | `24.84%` |
+| Combined | `189,540` | **`136,202`** | **`28.14%`** | `147,668` | `22.09%` | `142,485` | `24.83%` |
 
-Kern compact uses `5,080` fewer tokens than python-minifier across the three
-corpora (`3.57%` fewer relative to the minified output). It wins each dataset
-individually: `415` tokens on HumanEval+, `945` on MBPP+, and `3,720` on
+Kern compact uses `6,283` fewer tokens than python-minifier across the three
+corpora (`4.41%` fewer relative to the minified output). It wins each dataset
+individually: `471` tokens on HumanEval+, `1,106` on MBPP+, and `4,706` on
 BigCodeBench. The same ordering holds under `o200k_base`, where Kern compact
-uses `4,614` fewer tokens overall.
+uses `5,887` fewer tokens overall (`4.05%`).
 
 ![EvalPlus functional preservation](benchmark_results/modern/modern-evalplus-correctness.svg)
 
@@ -359,7 +363,8 @@ Observed legacy-harness result:
 ## Repository layout
 
 - `kern_transpiler.py`: Python AST to Kern emitter
-- `kern_compact.py`: optional conservative local alpha-renaming pass
+- `kern_compact.py`: optional BPE-aware local renaming and conservative
+  semantic simplification pass
 - `kern_compiler.py`: Kern parser/compiler to Python
 - `test_compact.py`: compact-profile scope and behavior regressions
 - `test_transpiler.py`: transpiler smoke tests

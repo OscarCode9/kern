@@ -1,10 +1,11 @@
 """Conservative semantic compaction for Kern's optional compact mode.
 
-The normal Kern emitter preserves Python identifiers exactly.  Compact mode
+The normal Kern emitter preserves Python identifiers exactly. Compact mode
 keeps public/module names and function parameters stable, but alpha-renames
-private locals inside function-like scopes.  This gives Kern a comparison
-contract similar to a source minifier while leaving the default reversible
-mode unchanged.
+private locals inside function-like scopes with tokenizer-friendly aliases and
+applies guarded return/control-flow simplifications. This gives Kern a
+comparison contract similar to a source minifier while leaving the default
+reversible mode unchanged.
 """
 
 from __future__ import annotations
@@ -17,7 +18,10 @@ from dataclasses import dataclass, field
 
 
 _INTROSPECTION_NAMES = {"dir", "eval", "exec", "locals", "vars"}
-_ALIAS_BASE = tuple("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+# Measured across cl100k_base and o200k_base on the modern 1,682-program
+# corpus.  The order is tokenizer-friendly, but aliases are still rejected
+# whenever they collide with names visible in the current or a child scope.
+_ALIAS_BASE = tuple("_kxyzijabcmnpqrstuvwlodefghABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 
 @dataclass
@@ -29,7 +33,9 @@ class Scope:
     parameters: set[str] = field(default_factory=set)
     globals: set[str] = field(default_factory=set)
     nonlocals: set[str] = field(default_factory=set)
+    pattern_bindings: set[str] = field(default_factory=set)
     used_names: set[str] = field(default_factory=set)
+    loaded_names: set[str] = field(default_factory=set)
     occurrences: Counter[str] = field(default_factory=Counter)
     mapping: dict[str, str] = field(default_factory=dict)
     unsafe_introspection: bool = False
@@ -91,6 +97,7 @@ class _ScopeBuilder(ast.NodeVisitor):
         # binding captured from this scope. Keep ancestor aliases distinct
         # from every descendant alias so those two names cannot collapse.
         descendant_aliases: set[str] = set()
+        descendant_loaded_names: set[str] = set()
         descendant_uses_introspection = False
         for child in self.scopes.values():
             ancestor = child.parent
@@ -98,6 +105,7 @@ class _ScopeBuilder(ast.NodeVisitor):
                 ancestor = ancestor.parent
             if ancestor is scope:
                 descendant_aliases.update(child.mapping.values())
+                descendant_loaded_names.update(child.loaded_names)
                 descendant_uses_introspection |= child.unsafe_introspection
 
         if scope.unsafe_introspection or descendant_uses_introspection:
@@ -107,15 +115,21 @@ class _ScopeBuilder(ast.NodeVisitor):
             set(scope.used_names)
             | set(scope.bindings)
             | descendant_aliases
+            | descendant_loaded_names
         )
         short_index = 0
         suffixed_index = 0
 
-        def next_alias() -> str:
+        def next_alias(original_name: str) -> str:
             nonlocal short_index, suffixed_index
             while short_index < len(_ALIAS_BASE):
                 candidate = _ALIAS_BASE[short_index]
                 short_index += 1
+                if (
+                    candidate == "_"
+                    and original_name in scope.pattern_bindings
+                ):
+                    continue
                 if candidate not in unavailable:
                     return candidate
             while True:
@@ -143,7 +157,7 @@ class _ScopeBuilder(ast.NodeVisitor):
             reverse=True,
         )
         for name in candidates:
-            alias = next_alias()
+            alias = next_alias(name)
             scope.mapping[name] = alias
             unavailable.add(alias)
 
@@ -170,6 +184,8 @@ class _ScopeBuilder(ast.NodeVisitor):
         assert self.current is not None
         self.current.used_names.add(node.id)
         self.current.occurrences[node.id] += 1
+        if isinstance(node.ctx, ast.Load):
+            self.current.loaded_names.add(node.id)
         if isinstance(node.ctx, (ast.Store, ast.Del)):
             self.current.bindings.add(node.id)
         if (
@@ -314,6 +330,7 @@ class _ScopeBuilder(ast.NodeVisitor):
             return
         assert self.current is not None
         self.current.bindings.add(name)
+        self.current.pattern_bindings.add(name)
         self.current.used_names.add(name)
         self.current.occurrences[name] += 1
 
@@ -495,6 +512,197 @@ class _LocalRenamer(ast.NodeTransformer):
         return node
 
 
+class _CompactSimplifier(ast.NodeTransformer):
+    """Apply behavior-preserving simplifications for compact mode only."""
+
+    def __init__(self) -> None:
+        self._functions: list[ast.FunctionDef | ast.AsyncFunctionDef] = []
+        self._try_descendants: set[int] = set()
+
+    @staticmethod
+    def _uses_introspection(
+        node: ast.FunctionDef | ast.AsyncFunctionDef,
+    ) -> bool:
+        return any(
+            isinstance(item, ast.Name)
+            and isinstance(item.ctx, ast.Load)
+            and item.id in _INTROSPECTION_NAMES
+            for item in ast.walk(node)
+        )
+
+    @staticmethod
+    def _string_bindings(node: ast.AST) -> set[str]:
+        names: set[str] = set()
+        for item in ast.walk(node):
+            if isinstance(item, (ast.MatchAs, ast.MatchStar)) and item.name:
+                names.add(item.name)
+            elif isinstance(item, ast.MatchMapping) and item.rest:
+                names.add(item.rest)
+            elif isinstance(item, ast.ExceptHandler) and item.name:
+                names.add(item.name)
+            elif isinstance(
+                item,
+                (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef),
+            ):
+                names.add(item.name)
+            elif isinstance(item, (ast.Import, ast.ImportFrom)):
+                names.update(
+                    alias.asname or alias.name.split(".", 1)[0]
+                    for alias in item.names
+                )
+        return names
+
+    def _mark_try_descendants(
+        self,
+        node: ast.FunctionDef | ast.AsyncFunctionDef,
+    ) -> None:
+        for item in ast.walk(node):
+            if isinstance(item, (ast.Try, ast.TryStar)):
+                self._try_descendants.update(
+                    id(descendant) for descendant in ast.walk(item)
+                )
+
+    def _can_inline_assign_return(
+        self,
+        assignment: ast.stmt,
+        returned: ast.stmt,
+    ) -> bool:
+        if not self._functions:
+            return False
+        if id(assignment) in self._try_descendants:
+            return False
+        if not (
+            isinstance(assignment, ast.Assign)
+            and len(assignment.targets) == 1
+            and isinstance(assignment.targets[0], ast.Name)
+            and isinstance(returned, ast.Return)
+            and isinstance(returned.value, ast.Name)
+            and returned.value.id == assignment.targets[0].id
+        ):
+            return False
+
+        function = self._functions[-1]
+        target = assignment.targets[0].id
+        parameters = {
+            arg.arg
+            for arg in (
+                list(function.args.posonlyargs)
+                + list(function.args.args)
+                + list(function.args.kwonlyargs)
+                + ([function.args.vararg] if function.args.vararg else [])
+                + ([function.args.kwarg] if function.args.kwarg else [])
+            )
+        }
+        if target in parameters or target in self._string_bindings(function):
+            return False
+
+        occurrences = [
+            item
+            for item in ast.walk(function)
+            if isinstance(item, ast.Name) and item.id == target
+        ]
+        return (
+            len(occurrences) == 2
+            and occurrences[0] in {
+                assignment.targets[0],
+                returned.value,
+            }
+            and occurrences[1] in {
+                assignment.targets[0],
+                returned.value,
+            }
+            and not any(
+                isinstance(item, (ast.Global, ast.Nonlocal))
+                and target in item.names
+                for item in ast.walk(function)
+            )
+        )
+
+    def _inline_assign_returns(
+        self,
+        statements: list[ast.stmt],
+    ) -> list[ast.stmt]:
+        rewritten: list[ast.stmt] = []
+        index = 0
+        while index < len(statements):
+            if (
+                index + 1 < len(statements)
+                and self._can_inline_assign_return(
+                    statements[index],
+                    statements[index + 1],
+                )
+            ):
+                assignment = statements[index]
+                returned = statements[index + 1]
+                assert isinstance(assignment, ast.Assign)
+                assert isinstance(returned, ast.Return)
+                rewritten.append(
+                    ast.copy_location(
+                        ast.Return(value=assignment.value),
+                        returned,
+                    )
+                )
+                index += 2
+                continue
+            rewritten.append(statements[index])
+            index += 1
+        return rewritten
+
+    def generic_visit(self, node: ast.AST) -> ast.AST:
+        visited = super().generic_visit(node)
+        if self._functions:
+            for field, value in ast.iter_fields(visited):
+                if (
+                    isinstance(value, list)
+                    and value
+                    and all(isinstance(item, ast.stmt) for item in value)
+                ):
+                    setattr(
+                        visited,
+                        field,
+                        self._inline_assign_returns(value),
+                    )
+        return visited
+
+    def _visit_function(
+        self,
+        node: ast.FunctionDef | ast.AsyncFunctionDef,
+    ) -> ast.FunctionDef | ast.AsyncFunctionDef:
+        if self._uses_introspection(node):
+            return node
+        self._mark_try_descendants(node)
+        self._functions.append(node)
+        visited = self.generic_visit(node)
+        self._functions.pop()
+        return visited
+
+    visit_FunctionDef = _visit_function
+    visit_AsyncFunctionDef = _visit_function
+
+    def visit_Return(self, node: ast.Return) -> ast.Return:  # noqa: N802
+        node = self.generic_visit(node)
+        if (
+            self._functions
+            and isinstance(node.value, ast.Constant)
+            and node.value.value is None
+        ):
+            node.value = None
+        return node
+
+    def visit_If(self, node: ast.If) -> ast.If | list[ast.stmt]:  # noqa: N802
+        node = self.generic_visit(node)
+        if (
+            self._functions
+            and node.orelse
+            and node.body
+            and isinstance(node.body[-1], (ast.Return, ast.Raise))
+        ):
+            continuation = node.orelse
+            node.orelse = []
+            return [node, *continuation]
+        return node
+
+
 def compact_locals(tree: ast.Module) -> ast.Module:
     """Return a copied AST with conservative function-local alpha-renaming."""
     copied = copy.deepcopy(tree)
@@ -505,6 +713,7 @@ def compact_locals(tree: ast.Module) -> ast.Module:
 def compact_tree(tree: ast.Module) -> ast.Module:
     """Return the exact semantic AST used by Kern compact mode."""
     compacted = compact_locals(tree)
+    compacted = _CompactSimplifier().visit(compacted)
     combined: list[ast.stmt] = []
     index = 0
     while index < len(compacted.body):

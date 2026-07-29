@@ -49,6 +49,19 @@ def calculate(value, scale=2):
         self.assertNotIn("repeated_result", kern)
         self.assertEqual(namespace["calculate"](3, scale=3), 48)
 
+    def test_compact_alias_does_not_capture_descendant_global(self) -> None:
+        source = """
+_ = 9
+def outer():
+    descriptive_value = 3
+    def inner():
+        return _
+    return descriptive_value, inner()
+"""
+        kern, namespace = compile_namespace(source, compact=True)
+        self.assertNotIn("_=3", kern)
+        self.assertEqual(namespace["outer"](), (3, 9))
+
     def test_nested_closure_resolution(self) -> None:
         source = """
 def outer(value):
@@ -135,6 +148,8 @@ def unpack(value):
             namespace["unpack"]({"item": 4, "other": 9}),
             (4, {"other": 9}),
         )
+        compacted = ast.unparse(compact_tree(ast.parse(source)))
+        self.assertNotIn("case {'item': _", compacted)
 
     def test_more_than_twenty_six_locals_get_unique_aliases(self) -> None:
         assignments = "\n".join(
@@ -176,6 +191,86 @@ def inspect_local():
         kern, namespace = compile_namespace(source, compact=True)
         self.assertIn("descriptive_value", kern)
         self.assertEqual(namespace["inspect_local"](), (7, True))
+
+    def test_assign_return_binding_is_removed_when_unobservable(self) -> None:
+        source = """
+def build(value):
+    calculated_result = value * 2
+    return calculated_result
+"""
+        default = transpile(source)
+        kern, namespace = compile_namespace(source, compact=True)
+        self.assertIn(">calculated_result=", default)
+        self.assertNotIn("calculated_result", kern)
+        self.assertEqual(namespace["build"](6), 12)
+
+    def test_assign_return_kept_for_closure_introspection_and_try(self) -> None:
+        closure_source = """
+def closure_case():
+    def read_result():
+        return calculated_result
+    calculated_result = 4
+    return calculated_result
+"""
+        introspection_source = """
+def introspection_case():
+    calculated_result = 5
+    captured_names = locals()
+    return calculated_result
+"""
+        try_source = """
+def try_case(observer):
+    try:
+        calculated_result = 6
+        return calculated_result
+    finally:
+        observer(locals())
+"""
+        closure_tree = compact_tree(ast.parse(closure_source))
+        introspection_kern = transpile(introspection_source, compact=True)
+        try_kern, namespace = compile_namespace(try_source, compact=True)
+        closure_function = closure_tree.body[0]
+        self.assertIsInstance(closure_function, ast.FunctionDef)
+        self.assertTrue(
+            any(isinstance(item, ast.Assign) for item in closure_function.body)
+        )
+        self.assertIn("calculated_result", introspection_kern)
+        self.assertIn(">calculated_result=6", try_kern)
+        observed: list[dict] = []
+        self.assertEqual(namespace["try_case"](observed.append), 6)
+        self.assertIn("calculated_result", observed[0])
+
+    def test_assign_return_kept_when_local_definition_shares_name(self) -> None:
+        source = """
+def build():
+    def calculated_result():
+        return 1
+    calculated_result = 7
+    return calculated_result
+"""
+        compacted = compact_tree(ast.parse(source))
+        function = compacted.body[0]
+        self.assertIsInstance(function, ast.FunctionDef)
+        self.assertTrue(
+            any(isinstance(item, ast.Assign) for item in function.body)
+        )
+
+    def test_compact_return_none_and_terminal_else(self) -> None:
+        source = """
+def choose(value):
+    if value:
+        return None
+    else:
+        calculated_result = value + 2
+        return calculated_result
+"""
+        kern, namespace = compile_namespace(source, compact=True)
+        compacted = ast.unparse(compact_tree(ast.parse(source)))
+        self.assertNotIn("else:", compacted)
+        self.assertIn("return\n", compacted)
+        self.assertNotIn("calculated_result", kern)
+        self.assertIsNone(namespace["choose"](True))
+        self.assertEqual(namespace["choose"](0), 2)
 
     def test_float_spelling_compacts_without_value_change(self) -> None:
         source = """

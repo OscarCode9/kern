@@ -9,7 +9,8 @@ Corpora:
 Representations:
 - Python source (reference)
 - Kern v0.4 (reversible Python -> Kern -> Python)
-- Kern v0.4 compact (private-local alpha-renaming, then Kern round-trip)
+- Kern v0.4 compact (BPE-aware local renaming and conservative semantic
+  simplification, then Kern round-trip)
 - python-minifier (source-to-source market baseline)
 
 Every Python reference is code-only: no-op string expressions/docstrings are
@@ -742,8 +743,10 @@ def main() -> None:
             "python": sys.version.split()[0],
             "kern_grammar": "v0.4",
             "kern_compact": (
-                "opt-in local alpha-renaming; module names and function "
-                "parameters preserved; AST checked against compact_tree"
+                "opt-in BPE-aware local alpha-renaming and conservative "
+                "return/control-flow simplification; module names and "
+                "function parameters preserved; AST checked against "
+                "compact_tree"
             ),
             "evalplus": package_version("evalplus"),
             "humaneval_plus_hash": get_human_eval_plus_hash(),

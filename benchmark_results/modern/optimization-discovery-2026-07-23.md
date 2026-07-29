@@ -13,6 +13,28 @@ They identify candidates for the next implementation iteration. Every accepted
 change must be remeasured by the repository benchmark and must preserve the
 appropriate reversible or compact-mode contract.
 
+## Implementation update — July 28, 2026
+
+The first conservative compact-mode bundle is now implemented and has passed
+the report's full acceptance gate. The validated measurements supersede the
+prototype estimates without changing the historical baseline below:
+
+| Result | `cl100k_base` | `o200k_base` |
+|---|---:|---:|
+| Previous Kern compact | `137,405` | `140,829` |
+| Updated Kern compact | **`136,202`** | **`139,556`** |
+| Realized saving | **`1,203`** | **`1,273`** |
+| Advantage over python-minifier | **`6,283` (`4.41%`)** | **`5,887` (`4.05%`)** |
+
+The implementation combines a tokenizer-friendly alias order with descendant
+load collision protection, a wildcard guard for structural pattern matching,
+guarded assign-return folding, bare returns, and terminal-branch flattening.
+Official EvalPlus outcomes retain per-task parity with Python on all `542/542`
+programs. Structural coverage is also unchanged: HumanEval+ `164/164`, MBPP+
+`378/378`, and BigCodeBench `1,128/1,140` parse plus `1,115/1,140` compact-AST
+matches. The aggressive and reversible-grammar candidates remain unimplemented
+and separately scoped.
+
 ## Current baseline
 
 Aggregate representation tokens:
