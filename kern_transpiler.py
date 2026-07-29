@@ -110,8 +110,15 @@ class KernEmitter(ast.NodeVisitor):
             tree = compact_tree(tree)
         nodes = self._strip_nonsemantic_string_exprs(list(tree.body))
         parts = []
-        for node in nodes:
-            parts.append(self._stmt(node))
+        index = 0
+        while index < len(nodes):
+            recurrence = self._compact_additive_recurrence(nodes, index)
+            if recurrence is not None:
+                parts.append(recurrence)
+                index += 3
+                continue
+            parts.append(self._stmt(nodes[index]))
+            index += 1
         rendered = "\n".join(p for p in parts if p)
         # EOF closes the final chain of statement blocks. Any earlier block
         # marker remains explicit so the following statement is unambiguous.
@@ -137,6 +144,11 @@ class KernEmitter(ast.NodeVisitor):
         i = 0
         while i < len(nodes):
             node = nodes[i]
+            recurrence = self._compact_additive_recurrence(nodes, i)
+            if recurrence is not None:
+                rendered.append((recurrence, node))
+                i += 3
+                continue
             if i + 1 < len(nodes) and self._can_fuse_assign_return(node, nodes[i + 1]):
                 target = node.targets[0].id
                 rendered.append(
@@ -155,6 +167,78 @@ class KernEmitter(ast.NodeVisitor):
             if i + 1 < len(rendered) and not self._is_self_delimiting_stmt(node, text):
                 out.append(";")
         return "".join(out)
+
+    def _compact_additive_recurrence(self, nodes, index: int) -> str | None:
+        """Fuse an exact seeded additive recurrence and starred output."""
+        if not self._compact_mode or index + 2 >= len(nodes):
+            return None
+        assign, loop, output = nodes[index:index + 3]
+        if not (
+            isinstance(assign, ast.Assign)
+            and len(assign.targets) == 1
+            and isinstance(assign.targets[0], ast.Name)
+            and isinstance(assign.value, ast.List)
+            and len(assign.value.elts) == 2
+            and all(
+                self._is_compact_primitive_atom(item)
+                for item in assign.value.elts
+            )
+            and isinstance(loop, ast.For)
+            and not loop.orelse
+            and isinstance(loop.target, ast.Name)
+            and loop.target.id == "_"
+            and isinstance(loop.iter, ast.Call)
+            and isinstance(loop.iter.func, ast.Name)
+            and loop.iter.func.id == "range"
+            and len(loop.iter.args) == 1
+            and not loop.iter.keywords
+            and self._is_compact_primitive_atom(loop.iter.args[0])
+            and len(loop.body) == 1
+            and isinstance(loop.body[0], ast.Expr)
+            and isinstance(loop.body[0].value, ast.Call)
+            and isinstance(loop.body[0].value.func, ast.Attribute)
+            and loop.body[0].value.func.attr == "append"
+            and isinstance(loop.body[0].value.func.value, ast.Name)
+            and len(loop.body[0].value.args) == 1
+            and not loop.body[0].value.keywords
+            and isinstance(output, ast.Expr)
+            and isinstance(output.value, ast.Call)
+            and isinstance(output.value.func, ast.Name)
+            and output.value.func.id == "print"
+            and len(output.value.args) == 1
+            and not output.value.keywords
+            and isinstance(output.value.args[0], ast.Starred)
+            and isinstance(output.value.args[0].value, ast.Name)
+        ):
+            return None
+        name = assign.targets[0].id
+        if (
+            loop.body[0].value.func.value.id != name
+            or output.value.args[0].value.id != name
+        ):
+            return None
+        recurrence = loop.body[0].value.args[0]
+        if not (
+            isinstance(recurrence, ast.BinOp)
+            and isinstance(recurrence.op, ast.Add)
+            and self._is_negative_index(recurrence.left, name, 1)
+            and self._is_negative_index(recurrence.right, name, 2)
+        ):
+            return None
+        seeds = ",".join(self._expr(item) for item in assign.value.elts)
+        return f"${name}=[{seeds}]\\{self._expr(loop.iter.args[0])}"
+
+    @staticmethod
+    def _is_negative_index(node, name: str, amount: int) -> bool:
+        return (
+            isinstance(node, ast.Subscript)
+            and isinstance(node.value, ast.Name)
+            and node.value.id == name
+            and isinstance(node.slice, ast.UnaryOp)
+            and isinstance(node.slice.op, ast.USub)
+            and isinstance(node.slice.operand, ast.Constant)
+            and node.slice.operand.value == amount
+        )
 
     def _can_fuse_assign_return(self, node, next_node) -> bool:
         """Whether ``x=expr; return x`` can use the reversible ``>x=expr`` form."""
@@ -502,7 +586,7 @@ class KernEmitter(ast.NodeVisitor):
     def _header_expr(self, node) -> str:
         """Protect a leading expression brace from block/suite lookahead."""
         rendered = self._expr(node)
-        if rendered.startswith("{"):
+        if rendered.startswith(("{", "!")):
             return "(" + rendered + ")"
         return rendered
 
@@ -629,6 +713,9 @@ class KernEmitter(ast.NodeVisitor):
         return f"{lower}:{upper}{step}"
 
     def _expr_BinOp(self, node) -> str:
+        compact_rotate = self._compact_rotate_left(node)
+        if compact_rotate is not None:
+            return compact_rotate
         op_str = BINOP.get(type(node.op), "?")
         my_prec = BINOP_PREC.get(type(node.op), 6)
         is_pow = isinstance(node.op, ast.Pow)
@@ -647,6 +734,36 @@ class KernEmitter(ast.NodeVisitor):
             right_s = "(" + right_s + ")"
 
         return left_s + op_str + right_s
+
+    def _compact_rotate_left(self, node) -> str | None:
+        """Render ``x[n:] + x[:n]`` as Kern's reversible ``x<<<n``."""
+        if not self._compact_mode or not isinstance(node.op, ast.Add):
+            return None
+        left = node.left
+        right = node.right
+        if not (
+            isinstance(left, ast.Subscript)
+            and isinstance(right, ast.Subscript)
+            and isinstance(left.value, ast.Name)
+            and isinstance(right.value, ast.Name)
+            and left.value.id == right.value.id
+            and isinstance(left.slice, ast.Slice)
+            and isinstance(right.slice, ast.Slice)
+            and left.slice.upper is None
+            and left.slice.step is None
+            and right.slice.lower is None
+            and right.slice.step is None
+            and left.slice.lower is not None
+            and right.slice.upper is not None
+            and ast.dump(left.slice.lower) == ast.dump(right.slice.upper)
+            and self._is_compact_primitive_atom(left.slice.lower)
+        ):
+            return None
+        return (
+            left.value.id
+            + "<<<"
+            + self._expr(left.slice.lower)
+        )
 
     def _node_prec(self, node) -> int:
         """Return the effective precedence of an expression node."""
@@ -700,6 +817,9 @@ class KernEmitter(ast.NodeVisitor):
         return s
 
     def _expr_Call(self, node) -> str:
+        compact_primitive = self._compact_call(node)
+        if compact_primitive is not None:
+            return compact_primitive
         func = self._expr(node.func)
         if isinstance(node.func, ast.Lambda):
             func = "(" + func + ")"
@@ -735,6 +855,192 @@ class KernEmitter(ast.NodeVisitor):
                     value = "(" + value + ")"
                 all_args.append(keyword.arg + "=" + value)
         return func + "(" + ",".join(all_args) + ")"
+
+    def _is_compact_primitive_atom(self, node) -> bool:
+        """Whether a primitive operand has an unambiguous compact boundary."""
+        if isinstance(node, ast.Name):
+            return True
+        if isinstance(node, ast.Constant):
+            return node.value is None or isinstance(
+                node.value,
+                (bool, int, float, str),
+            )
+        if isinstance(node, (ast.List, ast.Tuple, ast.Set)):
+            return True
+        if isinstance(node, ast.Dict):
+            return all(key is not None for key in node.keys)
+        return (
+            isinstance(node, ast.UnaryOp)
+            and isinstance(node.op, (ast.UAdd, ast.USub))
+            and isinstance(node.operand, ast.Constant)
+            and isinstance(node.operand.value, (int, float))
+        )
+
+    def _compact_range(self, node) -> str | None:
+        if not (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id == "range"
+            and not node.keywords
+            and 1 <= len(node.args) <= 3
+            and all(self._is_compact_primitive_atom(arg) for arg in node.args)
+        ):
+            return None
+        return "!" + ":".join(self._expr(arg) for arg in node.args)
+
+    def _compact_dot_product(self, node) -> str | None:
+        """Recognize the exact scalar dot-product generator used by Python."""
+        if not (
+            isinstance(node.func, ast.Name)
+            and node.func.id == "sum"
+            and len(node.args) == 1
+            and not node.keywords
+            and isinstance(node.args[0], ast.GeneratorExp)
+        ):
+            return None
+        generator = node.args[0]
+        if len(generator.generators) != 1:
+            return None
+        clause = generator.generators[0]
+        if clause.ifs or clause.is_async:
+            return None
+        if not (
+            isinstance(clause.target, ast.Tuple)
+            and len(clause.target.elts) == 2
+            and all(isinstance(item, ast.Name) for item in clause.target.elts)
+            and isinstance(clause.iter, ast.Call)
+            and isinstance(clause.iter.func, ast.Name)
+            and clause.iter.func.id == "zip"
+            and len(clause.iter.args) == 2
+            and not clause.iter.keywords
+            and all(
+                self._is_compact_primitive_atom(arg)
+                for arg in clause.iter.args
+            )
+            and isinstance(generator.elt, ast.BinOp)
+            and isinstance(generator.elt.op, ast.Mult)
+            and isinstance(generator.elt.left, ast.Name)
+            and isinstance(generator.elt.right, ast.Name)
+        ):
+            return None
+        left_name = clause.target.elts[0].id
+        right_name = clause.target.elts[1].id
+        if (
+            generator.elt.left.id != left_name
+            or generator.elt.right.id != right_name
+        ):
+            return None
+        return (
+            f"@{left_name},{right_name}:"
+            f"{self._expr(clause.iter.args[0])}:"
+            f"{self._expr(clause.iter.args[1])}"
+        )
+
+    def _compact_call(self, node) -> str | None:
+        """Render exact common calls with reversible array-language sigils."""
+        if not self._compact_mode:
+            return None
+        palindrome = self._compact_integer_palindrome(node)
+        if palindrome is not None:
+            return palindrome
+        dot = self._compact_dot_product(node)
+        if dot is not None:
+            return dot
+        compact_range = self._compact_range(node)
+        if compact_range is not None:
+            return compact_range
+        if (
+            isinstance(node.func, ast.Name)
+            and len(node.args) == 1
+            and not node.keywords
+        ):
+            if (
+                node.func.id == "sum"
+                and (
+                    self._is_compact_primitive_atom(node.args[0])
+                    or self._compact_range(node.args[0]) is not None
+                )
+            ):
+                return "+/" + self._expr(node.args[0])
+            if (
+                node.func.id == "sorted"
+                and self._is_compact_primitive_atom(node.args[0])
+            ):
+                return "^" + self._expr(node.args[0])
+        if (
+            isinstance(node.func, ast.Attribute)
+            and len(node.args) == 1
+            and not node.keywords
+            and self._is_compact_primitive_atom(node.args[0])
+        ):
+            if (
+                isinstance(node.func.value, ast.Name)
+                and node.func.value.id == "dict"
+                and node.func.attr == "fromkeys"
+            ):
+                return "?" + self._expr(node.args[0])
+            if (
+                isinstance(node.func.value, ast.Name)
+                and node.func.value.id == "math"
+                and node.func.attr == "factorial"
+            ):
+                return "%" + self._expr(node.args[0])
+            if (
+                node.func.attr == "count"
+                and self._is_compact_primitive_atom(node.func.value)
+            ):
+                return (
+                    self._expr(node.func.value)
+                    + "#"
+                    + self._expr(node.args[0])
+                )
+        if (
+            isinstance(node.func, ast.Attribute)
+            and isinstance(node.func.value, ast.Name)
+            and node.func.value.id == "math"
+            and node.func.attr == "gcd"
+            and len(node.args) == 2
+            and not node.keywords
+            and all(self._is_compact_primitive_atom(arg) for arg in node.args)
+        ):
+            return (
+                "&"
+                + self._expr(node.args[0])
+                + ":"
+                + self._expr(node.args[1])
+            )
+        return None
+
+    def _compact_integer_palindrome(self, node) -> str | None:
+        """Render ``int(x == x[::-1])`` as reversible ``=~x``."""
+        if not (
+            isinstance(node.func, ast.Name)
+            and node.func.id == "int"
+            and len(node.args) == 1
+            and not node.keywords
+            and isinstance(node.args[0], ast.Compare)
+            and len(node.args[0].ops) == 1
+            and isinstance(node.args[0].ops[0], ast.Eq)
+            and len(node.args[0].comparators) == 1
+        ):
+            return None
+        comparison = node.args[0]
+        value = comparison.left
+        reversed_value = comparison.comparators[0]
+        if not (
+            self._is_compact_primitive_atom(value)
+            and isinstance(reversed_value, ast.Subscript)
+            and ast.dump(reversed_value.value) == ast.dump(value)
+            and isinstance(reversed_value.slice, ast.Slice)
+            and reversed_value.slice.lower is None
+            and reversed_value.slice.upper is None
+            and isinstance(reversed_value.slice.step, ast.UnaryOp)
+            and isinstance(reversed_value.slice.step.op, ast.USub)
+            and isinstance(reversed_value.slice.step.operand, ast.Constant)
+            and reversed_value.slice.step.operand.value == 1
+        ):
+            return None
+        return "=~" + self._expr(value)
 
     def _expr_Starred(self, node) -> str:
         return "*" + self._expr(node.value)
@@ -797,7 +1103,32 @@ class KernEmitter(ast.NodeVisitor):
                 + self._comprehensions(node.generators) + "}")
 
     def _expr_GeneratorExp(self, node) -> str:
+        compact_square = self._compact_square_generator(node)
+        if compact_square is not None:
+            return compact_square
         return "(" + self._expr_generator_inner(node) + ")"
+
+    def _compact_square_generator(self, node) -> str | None:
+        """Render ``(x*x for x in iterable)`` as reversible ``*x:iterable``."""
+        if not self._compact_mode or len(node.generators) != 1:
+            return None
+        clause = node.generators[0]
+        if clause.ifs or clause.is_async:
+            return None
+        if not (
+            isinstance(clause.target, ast.Name)
+            and isinstance(node.elt, ast.BinOp)
+            and isinstance(node.elt.op, ast.Mult)
+            and isinstance(node.elt.left, ast.Name)
+            and isinstance(node.elt.right, ast.Name)
+            and node.elt.left.id == clause.target.id
+            and node.elt.right.id == clause.target.id
+        ):
+            return None
+        compact_range = self._compact_range(clause.iter)
+        if compact_range is None:
+            return None
+        return f"*{clause.target.id}:{compact_range}"
 
     def _expr_generator_inner(self, node) -> str:
         return self._expr(node.elt) + self._comprehensions(node.generators)

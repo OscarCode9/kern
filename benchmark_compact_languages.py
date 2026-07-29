@@ -102,9 +102,14 @@ def write_grouped_bar_svg(
             f'{svg_escape(subtitle)}</text>'
         ),
     ]
-    tick_step = 20 if max_value >= 80 else 10
-    for tick in range(0, int(max_value) + 1, tick_step):
+    for tick_index in range(6):
+        tick = max_value * tick_index / 5
         y = top + plot_h - tick / max_value * plot_h
+        tick_label = (
+            f"{int(tick)}"
+            if float(tick).is_integer()
+            else f"{tick:.1f}"
+        )
         elements.extend(
             [
                 (
@@ -116,7 +121,7 @@ def write_grouped_bar_svg(
                     f'<text x="{left - 12}" y="{y + 5:.1f}" '
                     'fill="#94a3b8" text-anchor="end" '
                     'font-family="Inter,system-ui,sans-serif" font-size="12">'
-                    f'{tick}</text>'
+                    f'{tick_label}</text>'
                 ),
             ]
         )

@@ -1,0 +1,168 @@
+{
+  "corpus": {
+    "authorship": "Benchmark-authored compact programs using documented language primitives; not claimed to be globally minimal",
+    "jelly_code_page_policy": "Every Jelly source character must belong to the official 256-character code page; code-page units are separate from UTF-8 bytes and LLM tokens",
+    "normalization": "Collapse display-only whitespace; preserve value tokens and their order",
+    "sources_and_hashes_published": true
+  },
+  "discovery_evidence": {
+    "interpretation": "Pyth and Jelly are adversarial compact-language baselines; this fixed corpus is a density screen, not a claim about all programs or globally minimal golf solutions",
+    "official_repositories": {
+      "jelly": "https://github.com/DennisMitchell/jellylanguage",
+      "pyth": "https://github.com/isaacg1/pyth"
+    },
+    "source_snapshot_date": "2026-07-29"
+  },
+  "metadata": {
+    "generated_at": "2026-07-29T10:41:55.149654+00:00",
+    "kern_tokenizer_sha256": "d570a49067b2fffca939924527b8daa3c0cc74e687b1ce7026c3193396e570ec",
+    "protocol": "Fourteen fixed matched executable programs; complete public sources; shared production tokenizers; exact normalized stdout; separate native-system and Jelly code-page lanes",
+    "python": "3.12.11",
+    "python_minifier": "3.2.0",
+    "tiktoken": "0.13.0",
+    "tokenizers": "0.22.2"
+  },
+  "results": {
+    "categories": {
+      "array": {
+        "cl100k_base": {
+          "jelly": 77,
+          "kern": 85,
+          "pyth": 83,
+          "python": 153,
+          "python_minifier": 122
+        },
+        "kern_native_16k": 60,
+        "programs": 6
+      },
+      "recurrence": {
+        "cl100k_base": {
+          "jelly": 10,
+          "kern": 7,
+          "pyth": 9,
+          "python": 31,
+          "python_minifier": 27
+        },
+        "kern_native_16k": 6,
+        "programs": 1
+      },
+      "reduction": {
+        "cl100k_base": {
+          "jelly": 4,
+          "kern": 12,
+          "pyth": 5,
+          "python": 19,
+          "python_minifier": 18
+        },
+        "kern_native_16k": 13,
+        "programs": 2
+      },
+      "scalar": {
+        "cl100k_base": {
+          "jelly": 10,
+          "kern": 18,
+          "pyth": 14,
+          "python": 28,
+          "python_minifier": 17
+        },
+        "kern_native_16k": 18,
+        "programs": 2
+      },
+      "text": {
+        "cl100k_base": {
+          "jelly": 27,
+          "kern": 25,
+          "pyth": 21,
+          "python": 34,
+          "python_minifier": 33
+        },
+        "kern_native_16k": 30,
+        "programs": 3
+      }
+    },
+    "cl100k_base": {
+      "jelly": 128,
+      "kern": 147,
+      "pyth": 132,
+      "python": 265,
+      "python_minifier": 217
+    },
+    "comparisons": {
+      "median_per_pair_shared_kern_below_pct": {
+        "jelly": -6.512605042016807,
+        "pyth": -6.512605042016807
+      },
+      "native_kern_below_competitor_cl100k_pct": {
+        "jelly": 0.78125,
+        "pyth": 3.787878787878788
+      },
+      "native_kern_wins": {
+        "jelly": 6,
+        "pyth": 7
+      },
+      "shared_kern_below_pct": {
+        "jelly": -14.84375,
+        "pyth": -11.363636363636363
+      },
+      "shared_kern_wins": {
+        "jelly": 5,
+        "pyth": 4
+      }
+    },
+    "functional": {
+      "jelly": 14,
+      "kern": 14,
+      "pyth": 14,
+      "python": 14,
+      "python_minifier": 14
+    },
+    "jelly_code_page_units": 145,
+    "native_system": {
+      "jelly_cl100k_base": 128,
+      "kern_native_16k": 127,
+      "pyth_cl100k_base": 132
+    },
+    "o200k_base": {
+      "jelly": 115,
+      "kern": 149,
+      "pyth": 130,
+      "python": 263,
+      "python_minifier": 216
+    },
+    "programs": 14,
+    "structural": {
+      "kern_contract_ast": 14,
+      "kern_native_exact_roundtrip": 14
+    },
+    "utf8_bytes": {
+      "jelly": 180,
+      "kern": 243,
+      "pyth": 193,
+      "python": 611,
+      "python_minifier": 537
+    }
+  },
+  "runtime_gates": {
+    "jelly": {
+      "binary_sha256": "9583913220830e76564155dbbc857e5af1a0199441d80103f3e58386ccb73d68",
+      "code_page_characters": 256,
+      "commit": "70c9fd93ab009c05dc396f8cc091f72b212fb188",
+      "expected_commit": "70c9fd93ab009c05dc396f8cc091f72b212fb188",
+      "ok": true,
+      "package_version": "0.1.31",
+      "python_version": "Python 3.12.11",
+      "repository_interpreter_sha256": "b6ff8d28c77ea153876594acf2ce0c35d2a5177136816ea56f01ee3b330a9af5",
+      "runtime_interpreter_sha256": "b6ff8d28c77ea153876594acf2ce0c35d2a5177136816ea56f01ee3b330a9af5",
+      "sympy_version": "1.14.0"
+    },
+    "pyth": {
+      "commit": "97cdf30d749d2a0d6ec1bb4b9bc417c34cce05bb",
+      "expected_commit": "97cdf30d749d2a0d6ec1bb4b9bc417c34cce05bb",
+      "expected_python_version": "3.8.20",
+      "interpreter_sha256": "2a7f166cd9e5db43bd0ef8130d28c7813aa61ee7a3caff55f25afb0581d2ca6a",
+      "ok": true,
+      "python_version": "Python 3.8.20"
+    }
+  },
+  "schema_version": 1
+}

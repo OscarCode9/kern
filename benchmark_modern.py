@@ -744,9 +744,11 @@ def main() -> None:
             "kern_grammar": "v0.4",
             "kern_compact": (
                 "opt-in BPE-aware local alpha-renaming and conservative "
-                "return/control-flow, output, reverse-slice, and stepped-range "
-                "simplification; module names and function parameters "
-                "preserved; AST checked against compact_tree"
+                "return/control-flow simplification plus reversible output, "
+                "reverse-slice, range/reduction, array, scalar, palindrome, "
+                "and additive-recurrence primitives; module names and "
+                "function parameters preserved; AST checked against "
+                "compact_tree"
             ),
             "evalplus": package_version("evalplus"),
             "humaneval_plus_hash": get_human_eval_plus_hash(),

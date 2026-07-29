@@ -5,8 +5,8 @@ from __future__ import annotations
 import ast
 import unittest
 
-from kern_compiler import compile_kern
 from kern_compact import compact_tree
+from kern_compiler import compile_kern
 from kern_transpiler import transpile
 
 
@@ -292,7 +292,7 @@ print(*(x for x in range(1, 21) if x % 2 == 0))
 
         self.assertIn("::text~", kern)
         self.assertIn("~", kern)
-        self.assertIn("$range(2,21,2)", kern)
+        self.assertIn("$!2:21:2", kern)
         self.assertEqual(
             ast.dump(ast.parse(rebuilt), include_attributes=False),
             ast.dump(ast.parse(expected), include_attributes=False),
@@ -301,6 +301,108 @@ print(*(x for x in range(1, 21) if x % 2 == 0))
         exec(rebuilt, namespace)
         self.assertEqual(transpile("print('x')"), "print('x')")
         self.assertEqual(compile_kern("out(1)"), "out(1)")
+
+    def test_compact_array_primitives_are_exactly_reversible(self) -> None:
+        source = """\
+import math
+print(sum(range(1, 101)))
+print(math.factorial(10))
+print(*sorted([3, 1, 2]))
+print(*dict.fromkeys([3, 1, 3, 2]))
+print(*(x * x for x in range(1, 5)))
+print("abracadabra".count("a"))
+print(sum(a * b for a, b in zip([1, 2], [3, 4])))
+print(math.gcd(2706, 410))
+values = [1, 2, 3, 4, 5]
+print(*(values[3:] + values[:3]))
+"""
+        kern = transpile(source, compact=True)
+        rebuilt = compile_kern(kern)
+        expected = ast.unparse(compact_tree(ast.parse(source)))
+
+        for marker in (
+            "+/!1:101",
+            "%10",
+            "$^[3,1,2]",
+            "$?[3,1,3,2]",
+            "$*x:!1:5",
+            "'abracadabra'#'a'",
+            "@a,b:[1,2]:[3,4]",
+            "&2706:410",
+            "$values<<<3",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, kern)
+        self.assertEqual(
+            ast.dump(ast.parse(rebuilt), include_attributes=False),
+            ast.dump(ast.parse(expected), include_attributes=False),
+        )
+
+    def test_compact_primitives_do_not_capture_near_matches(self) -> None:
+        source = """\
+print(sum(value for value in data))
+print(sorted(data, reverse=True))
+print(math.gcd(*values))
+print(sum(a + b for a, b in zip(left, right)))
+print(*(x * y for x, y in pairs))
+print(*(values[3:] + other[:3]))
+"""
+        kern = transpile(source, compact=True)
+
+        self.assertNotIn("+/", kern)
+        self.assertNotIn("$^", kern)
+        self.assertNotIn("&", kern)
+        self.assertNotIn("@a,b:", kern)
+        self.assertNotIn("*x:", kern)
+        self.assertNotIn("<<<", kern)
+
+    def test_existing_none_and_bitwise_syntax_remains_distinct(self) -> None:
+        source = """\
+def f(value, other):
+    return value is not None and (value ^ other)
+"""
+        kern = transpile(source, compact=True)
+        rebuilt = compile_kern(kern)
+        expected = ast.unparse(compact_tree(ast.parse(source)))
+
+        self.assertEqual(
+            ast.dump(ast.parse(rebuilt), include_attributes=False),
+            ast.dump(ast.parse(expected), include_attributes=False),
+        )
+
+    def test_palindrome_and_additive_recurrence_primitives_roundtrip(self) -> None:
+        source = """\
+text = "racecar"
+print(int(text == text[::-1]))
+values = [0, 1]
+for _ in range(10):
+    values.append(values[-1] + values[-2])
+print(*values)
+"""
+        kern = transpile(source, compact=True)
+        rebuilt = compile_kern(kern)
+        expected = ast.unparse(compact_tree(ast.parse(source)))
+
+        self.assertIn("::=~text", kern)
+        self.assertIn("$values=[0,1]\\10", kern)
+        self.assertEqual(
+            ast.dump(ast.parse(rebuilt), include_attributes=False),
+            ast.dump(ast.parse(expected), include_attributes=False),
+        )
+        namespace: dict[str, object] = {}
+        exec(rebuilt, namespace)
+        self.assertEqual(namespace["values"][-1], 89)
+
+    def test_recurrence_primitive_requires_the_exact_loop_shape(self) -> None:
+        source = """\
+values = [0, 1]
+for index in range(10):
+    values.append(values[-1] + values[-2])
+print(*values)
+"""
+        kern = transpile(source, compact=True)
+
+        self.assertNotIn("$values=[0,1]\\10", kern)
 
     def test_stepped_range_rewrite_is_guarded(self) -> None:
         exact = ast.unparse(

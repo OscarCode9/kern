@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+<title id="title">Kern versus Pyth and Jelly</title>
+<desc id="desc">14 matched executable programs · complete sources · lower is better</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">Kern versus Pyth and Jelly</text>
+<text x="92" y="65" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">14 matched executable programs · complete sources · lower is better</text>
+<line x1="92" y1="448.0" x2="946" y2="448.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="453.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="376.8" x2="946" y2="376.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="381.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">60</text>
+<line x1="92" y1="305.6" x2="946" y2="305.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="310.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">120</text>
+<line x1="92" y1="234.4" x2="946" y2="234.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="239.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">180</text>
+<line x1="92" y1="163.2" x2="946" y2="163.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="168.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">240</text>
+<line x1="92" y1="92.0" x2="946" y2="92.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">300</text>
+<text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Aggregate LLM tokens</text>
+<text x="305.5" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">cl100k_base</text>
+<rect x="139.5" y="133.5" width="60.0" height="314.5" rx="5" fill="#94a3b8"/>
+<text x="169.5" y="125.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">265.0</text>
+<rect x="207.5" y="190.5" width="60.0" height="257.5" rx="5" fill="#06b6d4"/>
+<text x="237.5" y="182.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">217.0</text>
+<rect x="275.5" y="291.4" width="60.0" height="156.6" rx="5" fill="#a855f7"/>
+<text x="305.5" y="283.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">132.0</text>
+<rect x="343.5" y="296.1" width="60.0" height="151.9" rx="5" fill="#f97316"/>
+<text x="373.5" y="288.1" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">128.0</text>
+<rect x="411.5" y="273.6" width="60.0" height="174.4" rx="5" fill="#22c55e"/>
+<text x="441.5" y="265.6" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">147.0</text>
+<text x="732.5" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">o200k_base</text>
+<rect x="566.5" y="135.9" width="60.0" height="312.1" rx="5" fill="#94a3b8"/>
+<text x="596.5" y="127.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">263.0</text>
+<rect x="634.5" y="191.7" width="60.0" height="256.3" rx="5" fill="#06b6d4"/>
+<text x="664.5" y="183.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">216.0</text>
+<rect x="702.5" y="293.7" width="60.0" height="154.3" rx="5" fill="#a855f7"/>
+<text x="732.5" y="285.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">130.0</text>
+<rect x="770.5" y="311.5" width="60.0" height="136.5" rx="5" fill="#f97316"/>
+<text x="800.5" y="303.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">115.0</text>
+<rect x="838.5" y="271.2" width="60.0" height="176.8" rx="5" fill="#22c55e"/>
+<text x="868.5" y="263.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">149.0</text>
+<rect x="92" y="504" width="14" height="14" rx="3" fill="#94a3b8"/>
+<text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Python</text>
+<rect x="282" y="504" width="14" height="14" rx="3" fill="#06b6d4"/>
+<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">python-minifier</text>
+<rect x="472" y="504" width="14" height="14" rx="3" fill="#a855f7"/>
+<text x="494" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Pyth</text>
+<rect x="662" y="504" width="14" height="14" rx="3" fill="#f97316"/>
+<text x="684" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Jelly</text>
+<rect x="852" y="504" width="14" height="14" rx="3" fill="#22c55e"/>
+<text x="874" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern compact</text>
+</svg>

@@ -4,7 +4,8 @@ This is Kern's directly reproduced language-level market comparison. It does
 **not** claim that Kern has already beaten every language. It establishes
 audited results against Sigil and Toke—including an equal-vocabulary native
 tokenizer win—paired audits of KARN and NERD, and the first executable screen
-of K, GolfScript, and J, plus an explicit queue for the remaining contenders.
+of K, GolfScript, J, Pyth, and Jelly, plus an explicit queue for the remaining
+contenders.
 
 ## Reproduced Sigil result
 
@@ -202,20 +203,40 @@ The first fixed screen now executes fourteen complete matched programs:
 
 | Aggregate result | Kern compact | K | GolfScript | J |
 |---|---:|---:|---:|---:|
-| Shared `cl100k_base` | **`200`** | `206` | **`169`** | **`163`** |
-| Deployable system lane | **`159`** | `206` | `169` | `163` |
+| Shared `cl100k_base` | **`147`** | `206` | `169` | `163` |
+| Deployable system lane | **`127`** | `206` | `169` | `163` |
 | Exact outputs | **`14/14`** | `14/14` | `14/14` | `14/14` |
 
-Kern beats K by `2.91%` with the same tokenizer but does not beat GolfScript
-or J there. Kern-16K wins the bounded system aggregate by `22.82%`, `5.92%`,
-and `2.45%`, respectively. Kern still loses the UTF-8 byte lane to all three.
+Kern wins this shared aggregate by `28.64%`, `13.02%`, and `9.82%`,
+respectively. Kern-16K extends the bounded system advantages to `38.35%`,
+`24.85%`, and `22.09%`. Kern also uses fewer complete-source UTF-8 bytes:
+`243` versus K `286`, GolfScript `260`, and J `277`.
 
 The [complete compact-language report](../compact-languages/README.md)
 publishes every source, category, hash, runtime gate, graph, and reproduction
 command. Its authorship limitation is material: the competitor programs are
 benchmark-authored and compact, not certified best-known expert solutions.
-Kern also wins only `6/14` individual native-token pairs against GolfScript
-and J, so this is a first screen rather than a global defeat claim.
+Kern wins `9/14` shared pairs against GolfScript but only `6/14` against J, so
+this remains a first screen rather than a global defeat claim.
+
+The second screen pins the current official Pyth and Jelly repositories and
+executes the same fourteen tasks:
+
+| Aggregate result | Kern compact | Pyth | Jelly |
+|---|---:|---:|---:|
+| Shared `cl100k_base` | `147` | **`132`** | **`128`** |
+| Shared `o200k_base` | `149` | **`130`** | **`115`** |
+| Deployable system lane | **`127`** | `132` | `128` |
+| Exact outputs | **`14/14`** | `14/14` | `14/14` |
+
+Pyth and Jelly keep the neutral shared-tokenizer and byte leads. Kern-16K wins
+the separately labeled system aggregate by `3.79%` over Pyth and only `0.78%`
+over Jelly. Jelly's official one-byte code-page score is `145` units and is
+kept separate from its `180` UTF-8 bytes and its LLM-token totals.
+
+The [complete Pyth/Jelly report](../golf-languages/README.md) publishes every
+source, runtime and code-page gate, hash, category, graph, limitation, and
+reproduction command.
 
 The other newly identified direct contender is
 [zerolang](https://github.com/vercel-labs/zerolang), a graph-first language for
@@ -228,8 +249,9 @@ checked-edit loops; no matched token-density claim was located.
 The machine-readable registry is
 [`competitors.json`](competitors.json). Current priority:
 
-1. expert review and expansion of the K, GolfScript, and J sources;
-2. Pyth, Jelly, Uiua, and BQN adversarial screens;
+1. expert review and expansion of the K, GolfScript, J, Pyth, and Jelly
+   sources;
+2. Uiua `0.18.1` and BQN via CBQN `0.12.0` adversarial screens;
 3. zerolang source/graph/edit-loop audit;
 4. exact ShortCoder and Token Sugar method reproduction;
 5. continued monitoring for KARN, NERD, Toke, Ax, and other public version
@@ -270,4 +292,6 @@ Artifacts:
 - `../karn/`: paired KARN benchmark, claim audit, and compiler-target results.
 - `../nerd/`: all deterministic NERD examples, claim-counter audit, and graphs.
 - `../compact-languages/`: K, GolfScript, and J executable sources, runtime
+  gates, results, and graphs.
+- `../golf-languages/`: Pyth and Jelly executable sources, runtime/code-page
   gates, results, and graphs.

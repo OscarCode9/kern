@@ -27,9 +27,9 @@ _TOK = re.compile(r"""
   (?P<FSTR>  f(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'))  |  # f"..."
   (?P<STR>   (?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'))   |  # "..." '...'
   (?P<NUM>   \d+(?:\.\d+)?(?:[eE][+-]?\d+)?)            |  # numbers
-  (?P<OP>    &&|\|\||->>|->|:=|//|\*\*|<<|>>|
+  (?P<OP>    &&|\|\||->>|->|(?<!:):=|//|\*\*|<<<|<<|>>|
              \+=|-=|\*=|/=|//=|%=|\*\*=|\|=|&=|\^=|<<=|>>=|
-             ==|!=|<=|>=|[+\-*/%@&|^~<>=!?$])            |  # operators
+             ==|!=|<=|>=|[+\-*/%@&|^~<>=!?$#])           |  # operators
   (?P<SPEC>  [{}\[\]().,;:\\])                           |  # specials
   (?P<NAME>  [a-zA-Z_]\w*)                               |  # identifiers
   (?P<NL>    \n)                                         |  # newlines
@@ -157,6 +157,8 @@ class Parser:
         c = self.cur
         v = c.v
 
+        if v == '$' and self._looks_like_recurrence_primitive():
+            return self._recurrence()
         if v == '$':
             return self._out(starred=True)
         if v == ':' and self.peek().v == ':':
@@ -202,12 +204,53 @@ class Parser:
             if v == 'async': return self._async()
             if v == 'yld' or v == 'yield':   return self._yield()
 
-        if c.t == 'OP' and v == '@':
+        if c.t == 'OP' and v == '@' and not self._looks_like_dot_primitive():
             return self._decorated()
         if c.t == 'OP' and v == '>':
             return self._return('>')
 
         return self._expr_stmt()
+
+    def _looks_like_recurrence_primitive(self) -> bool:
+        """Whether ``$name=[a,b]\\count`` starts an additive recurrence."""
+        return (
+            self.cur.v == '$'
+            and self.peek().t == 'NAME'
+            and self.peek(2).v == '='
+            and self.peek(3).v == '['
+        )
+
+    def _recurrence(self) -> str:
+        """Expand a seeded additive recurrence while preserving its binding."""
+        self.eat('$')
+        name = self.eat().v
+        self.eat('=')
+        self.eat('[')
+        first = self._expr_until({','})
+        self.eat(',')
+        second = self._expr_until({']'})
+        self.eat(']')
+        self.eat('\\')
+        count = self._expr_line()
+        if not count:
+            raise SyntaxError("Expected an iteration count after recurrence")
+        indent = self._i()
+        return (
+            f'{name} = [{first}, {second}]\n'
+            f'{indent}for _ in range({count}):\n'
+            f'{indent}    {name}.append({name}[-1] + {name}[-2])\n'
+            f'{indent}print(*{name})'
+        )
+
+    def _looks_like_dot_primitive(self) -> bool:
+        """Whether ``@a,b:...:...`` starts a compact dot product."""
+        return (
+            self.cur.v == '@'
+            and self.peek().t == 'NAME'
+            and self.peek(2).v == ','
+            and self.peek(3).t == 'NAME'
+            and self.peek(4).v == ':'
+        )
 
     def _looks_like_bare_fn(self, start: int | None = None) -> bool:
         """Whether tokens at ``start`` have the reversible v0.4 def shape."""
@@ -629,6 +672,102 @@ class Parser:
                 expect_operand = False
                 previous_value = v
                 continue
+            if expect_operand and v == '=' and self.peek().v == '~':
+                self.eat('=')
+                self.eat('~')
+                value = self._compact_primitive_primary()
+                parts.append(f'int({value} == {value}[::-1])')
+                expect_operand = False
+                previous_value = '=~'
+                continue
+            if expect_operand and v == '+' and self.peek().v == '/':
+                self.eat('+')
+                self.eat('/')
+                parts.append('sum(' + self._compact_primitive_primary() + ')')
+                expect_operand = False
+                previous_value = '+/'
+                continue
+            if expect_operand and v == '!':
+                parts.append(self._compact_range())
+                expect_operand = False
+                previous_value = '!'
+                continue
+            if expect_operand and v in ('^', '?', '%'):
+                marker = self.eat().v
+                function = {
+                    '^': 'sorted',
+                    '?': 'dict.fromkeys',
+                    '%': 'math.factorial',
+                }[marker]
+                parts.append(
+                    function + '(' + self._compact_primitive_primary() + ')'
+                )
+                expect_operand = False
+                previous_value = marker
+                continue
+            if expect_operand and v == '&':
+                self.eat('&')
+                left = self._compact_primitive_primary()
+                self.eat(':')
+                right = self._compact_primitive_primary()
+                parts.append(f'math.gcd({left}, {right})')
+                expect_operand = False
+                previous_value = '&'
+                continue
+            if (
+                expect_operand
+                and v == '*'
+                and self.peek().t == 'NAME'
+                and self.peek(2).v == ':'
+            ):
+                self.eat('*')
+                target = self.eat().v
+                self.eat(':')
+                iterable = self._compact_primitive_primary()
+                parts.append(
+                    f'({target} * {target} for {target} in {iterable})'
+                )
+                expect_operand = False
+                previous_value = '*:'
+                continue
+            if expect_operand and v == '@' and self._looks_like_dot_primitive():
+                self.eat('@')
+                left_name = self.eat().v
+                self.eat(',')
+                right_name = self.eat().v
+                self.eat(':')
+                left = self._compact_primitive_primary()
+                self.eat(':')
+                right = self._compact_primitive_primary()
+                parts.append(
+                    f'sum({left_name} * {right_name} for '
+                    f'{left_name}, {right_name} in zip({left}, {right}))'
+                )
+                expect_operand = False
+                previous_value = '@:'
+                continue
+            if not expect_operand and v == '#':
+                self.eat('#')
+                if not parts:
+                    raise SyntaxError("Compact count marker has no left operand")
+                left = parts.pop()
+                right = self._compact_primitive_primary()
+                parts.append(f'{left}.count({right})')
+                expect_operand = False
+                previous_value = '#'
+                continue
+            if not expect_operand and v == '<<<':
+                self.eat('<<<')
+                if not parts or not re.fullmatch(r'[A-Za-z_]\w*', parts[-1]):
+                    raise SyntaxError(
+                        "Compact rotate marker requires a name on the left"
+                    )
+                left = parts.pop()
+                amount = self._compact_primitive_primary()
+                parts.append(f'{left}[{amount}:] + {left}[:{amount}]')
+                expect_operand = False
+                previous_value = '<<<'
+                continue
             if v == '~' and not expect_operand:
                 self.pos += 1
                 parts.append('[::-1]')
@@ -668,6 +807,38 @@ class Parser:
                 f"Unclosed delimiter {delimiters[-1]!r} at EOF"
             )
         return ''.join(parts)
+
+    def _compact_primitive_primary(self) -> str:
+        """Compile one boundary-safe operand used by a compact primitive."""
+        if self.cur.v == '!':
+            return self._compact_range()
+        if self.cur.v in ('+', '-'):
+            marker = self.eat().v
+            if self.cur.t not in ('NUM', 'NAME'):
+                raise SyntaxError(
+                    f"Expected a compact atom after unary {marker!r}"
+                )
+            return marker + self._next_tok()
+        if self.cur.v in ('(', '[', '{'):
+            opening = self.eat().v
+            closing = {'(': ')', '[': ']', '{': '}'}[opening]
+            inner = self._expr_until({closing})
+            self.eat(closing)
+            return opening + inner + closing
+        if self.cur.t not in ('NAME', 'NUM', 'STR'):
+            raise SyntaxError(
+                f"Expected compact primitive operand, got {self.cur.v!r}"
+            )
+        return self._next_tok()
+
+    def _compact_range(self) -> str:
+        """Compile ``!stop`` / ``!start:stop[:step]`` to ``range(...)``."""
+        self.eat('!')
+        args = [self._compact_primitive_primary()]
+        while self.cur.v == ':' and len(args) < 3:
+            self.eat(':')
+            args.append(self._compact_primitive_primary())
+        return 'range(' + ', '.join(args) + ')'
 
     def _lambda_with_stops(self, stops: set) -> str:
         r"""Parse \params:body inheriting the parent expression's stops."""

@@ -25,13 +25,13 @@
     "ranking_snapshot_date": "2026-07-29"
   },
   "metadata": {
-    "generated_at": "2026-07-29T09:32:13.370822+00:00",
+    "generated_at": "2026-07-29T10:38:37.692550+00:00",
     "kern_tokenizer_sha256": "d570a49067b2fffca939924527b8daa3c0cc74e687b1ce7026c3193396e570ec",
     "protocol": "Fourteen fixed matched executable programs; complete public sources; shared production tokenizers; exact normalized stdout; separate native-system lane",
     "python": "3.12.11",
     "python_minifier": "3.2.0",
     "tiktoken": "0.13.0",
-    "tokenizers": "0.23.1"
+    "tokenizers": "0.22.2"
   },
   "results": {
     "categories": {
@@ -40,11 +40,11 @@
           "golfscript": 94,
           "j": 86,
           "k": 107,
-          "kern": 106,
+          "kern": 85,
           "python": 153,
           "python_minifier": 122
         },
-        "kern_native_16k": 70,
+        "kern_native_16k": 60,
         "programs": 6
       },
       "recurrence": {
@@ -52,11 +52,11 @@
           "golfscript": 17,
           "j": 20,
           "k": 17,
-          "kern": 24,
+          "kern": 7,
           "python": 31,
           "python_minifier": 27
         },
-        "kern_native_16k": 19,
+        "kern_native_16k": 6,
         "programs": 1
       },
       "reduction": {
@@ -64,11 +64,11 @@
           "golfscript": 15,
           "j": 13,
           "k": 16,
-          "kern": 18,
+          "kern": 12,
           "python": 19,
           "python_minifier": 18
         },
-        "kern_native_16k": 16,
+        "kern_native_16k": 13,
         "programs": 2
       },
       "scalar": {
@@ -76,11 +76,11 @@
           "golfscript": 19,
           "j": 15,
           "k": 33,
-          "kern": 22,
+          "kern": 18,
           "python": 28,
           "python_minifier": 17
         },
-        "kern_native_16k": 22,
+        "kern_native_16k": 18,
         "programs": 2
       },
       "text": {
@@ -88,11 +88,11 @@
           "golfscript": 24,
           "j": 29,
           "k": 33,
-          "kern": 30,
+          "kern": 25,
           "python": 34,
           "python_minifier": 33
         },
-        "kern_native_16k": 32,
+        "kern_native_16k": 30,
         "programs": 3
       }
     },
@@ -100,35 +100,35 @@
       "golfscript": 169,
       "j": 163,
       "k": 206,
-      "kern": 200,
+      "kern": 147,
       "python": 265,
       "python_minifier": 217
     },
     "comparisons": {
       "median_per_pair_shared_kern_below_pct": {
-        "golfscript": -13.392857142857142,
-        "j": -15.476190476190474,
-        "k": 0.0
+        "golfscript": 10.882352941176471,
+        "j": 0.0,
+        "k": 25.0
       },
       "native_kern_below_competitor_cl100k_pct": {
-        "golfscript": 5.9171597633136095,
-        "j": 2.4539877300613497,
-        "k": 22.815533980582526
+        "golfscript": 24.85207100591716,
+        "j": 22.085889570552148,
+        "k": 38.349514563106794
       },
       "native_kern_wins": {
-        "golfscript": 6,
-        "j": 6,
-        "k": 10
+        "golfscript": 8,
+        "j": 9,
+        "k": 13
       },
       "shared_kern_below_pct": {
-        "golfscript": -18.34319526627219,
-        "j": -22.699386503067483,
-        "k": 2.912621359223301
+        "golfscript": 13.017751479289942,
+        "j": 9.815950920245399,
+        "k": 28.640776699029125
       },
       "shared_kern_wins": {
-        "golfscript": 0,
-        "j": 1,
-        "k": 6
+        "golfscript": 9,
+        "j": 6,
+        "k": 13
       }
     },
     "functional": {
@@ -143,13 +143,13 @@
       "golfscript_cl100k_base": 169,
       "j_cl100k_base": 163,
       "k_cl100k_base": 206,
-      "kern_native_16k": 159
+      "kern_native_16k": 127
     },
     "o200k_base": {
       "golfscript": 172,
       "j": 162,
       "k": 206,
-      "kern": 200,
+      "kern": 149,
       "python": 263,
       "python_minifier": 216
     },
@@ -162,7 +162,7 @@
       "golfscript": 260,
       "j": 277,
       "k": 286,
-      "kern": 429,
+      "kern": 243,
       "python": 611,
       "python_minifier": 537
     }

@@ -144,16 +144,16 @@ Two Kern contracts are reported:
 
 | Dataset | Python | Kern compact | Compact saved | Kern reversible | Reversible saved | python-minifier | Minifier saved |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| HumanEval+ | `10,571` | **`7,324`** | **`30.72%`** | `7,736` | `26.82%` | `7,813` | `26.09%` |
-| MBPP+ | `15,183` | **`10,451`** | **`31.17%`** | `11,023` | `27.40%` | `11,565` | `23.83%` |
-| BigCodeBench | `163,786` | **`118,395`** | **`27.71%`** | `128,909` | `21.29%` | `123,109` | `24.84%` |
-| Combined | `189,540` | **`136,170`** | **`28.16%`** | `147,668` | `22.09%` | `142,487` | `24.82%` |
+| HumanEval+ | `10,571` | **`7,308`** | **`30.87%`** | `7,736` | `26.82%` | `7,813` | `26.09%` |
+| MBPP+ | `15,183` | **`10,415`** | **`31.40%`** | `11,023` | `27.40%` | `11,565` | `23.83%` |
+| BigCodeBench | `163,786` | **`118,306`** | **`27.77%`** | `128,909` | `21.29%` | `123,109` | `24.84%` |
+| Combined | `189,540` | **`136,029`** | **`28.23%`** | `147,668` | `22.09%` | `142,487` | `24.82%` |
 
-Kern compact uses `6,317` fewer tokens than python-minifier across the three
-corpora (`4.43%` fewer relative to the minified output). It wins each dataset
-individually: `489` tokens on HumanEval+, `1,114` on MBPP+, and `4,714` on
+Kern compact uses `6,458` fewer tokens than python-minifier across the three
+corpora (`4.53%` fewer relative to the minified output). It wins each dataset
+individually: `505` tokens on HumanEval+, `1,150` on MBPP+, and `4,803` on
 BigCodeBench. The same ordering holds under `o200k_base`, where Kern compact
-uses `5,936` fewer tokens overall (`4.08%`).
+uses `6,127` fewer tokens overall (`4.21%`).
 
 ![EvalPlus functional preservation](benchmark_results/modern/modern-evalplus-correctness.svg)
 
@@ -183,7 +183,7 @@ public [Sigil 0.1.0](https://pypi.org/project/sigil-lang/) distribution. The
 market harness uses the same 1,682 code-only programs, the same production
 tokenizers, a full denominator, decoded-Python checks, and official EvalPlus
 execution. The table and graph preserve that original pinned Sigil run; the
-newer compact-language iteration is reported separately above at `136,170`
+newer compact-language iteration is reported separately above at `136,029`
 tokens and does not weaken this result.
 
 | Combined result | Kern compact | Sigil 0.1.0 |
@@ -313,18 +313,18 @@ fourteen complete matched programs with exact stdout oracles.
 
 | Aggregate result | Kern compact | K | GolfScript | J |
 |---|---:|---:|---:|---:|
-| Shared `cl100k_base` | **`200`** | `206` | **`169`** | **`163`** |
-| Deployable system lane | **`159`** | `206` | `169` | `163` |
+| Shared `cl100k_base` | **`147`** | `206` | `169` | `163` |
+| Deployable system lane | **`127`** | `206` | `169` | `163` |
 | Exact outputs | **`14/14`** | `14/14` | `14/14` | `14/14` |
 
-Kern is `2.91%` below K in the neutral shared-tokenizer lane. GolfScript and J
-still lead that lane. With the held-out Kern-16K tokenizer, Kern is `22.82%`
-below K, `5.92%` below GolfScript, and `2.45%` below J on this aggregate.
+Kern is `28.64%` below K, `13.02%` below GolfScript, and `9.82%` below J in
+the neutral shared-tokenizer lane. With the held-out Kern-16K tokenizer, those
+bounded aggregate advantages become `38.35%`, `24.85%`, and `22.09%`.
 
-The final iteration added general compact output (`::value` and `$values`),
-postfix reverse (`value~`), and a guarded constant stepped-range rewrite. The
-same changes save another 32 `cl100k_base` tokens across the independent
-1,682-program modern corpus without reducing its contract counts.
+The final iteration added exact reversible range/reduction, array, scalar,
+palindrome, rotation, and additive-recurrence primitives. The same changes
+save another `141` `cl100k_base` tokens across the independent 1,682-program
+modern corpus without reducing its structural or functional contract counts.
 
 ![Kern versus K, GolfScript, and J](benchmark_results/compact-languages/compact-language-token-density.svg)
 
@@ -333,9 +333,35 @@ same changes save another 32 `cl100k_base` tokens across the independent
 The complete
 [compact-language report](benchmark_results/compact-languages/README.md)
 publishes every source, runtime pin, hash, category total, limitation, and
-reproduction command. This is a bounded aggregate win in the native system
-lane, not a world-smallest-language claim: Kern wins only `6/14` individual
-pairs against GolfScript and J, and expert-reviewed solutions remain a gate.
+reproduction command. This remains a bounded aggregate result: Kern wins
+`9/14` shared pairs against GolfScript but only `6/14` against J, and
+expert-reviewed solutions remain a gate.
+
+### Reproduced Pyth and Jelly screen
+
+The next adversarial round executes the same fourteen tasks in pinned Pyth and
+Jelly runtimes. All complete sources pass the exact stdout oracle.
+
+| Aggregate result | Kern compact | Pyth | Jelly |
+|---|---:|---:|---:|
+| Shared `cl100k_base` | `147` | **`132`** | **`128`** |
+| Shared `o200k_base` | `149` | **`130`** | **`115`** |
+| Deployable system lane | **`127`** | `132` | `128` |
+| Exact outputs | **`14/14`** | `14/14` | `14/14` |
+
+Pyth and Jelly retain the neutral shared-tokenizer lead. Kern-16K wins the
+separately labeled system aggregate by five tokens over Pyth and one token over
+Jelly. Jelly also leads complete UTF-8 bytes (`180`) and its official code-page
+score is `145` one-byte units; Kern uses `243` UTF-8 bytes.
+
+![Kern versus Pyth and Jelly](benchmark_results/golf-languages/golf-language-token-density.svg)
+
+![Pyth/Jelly native-system lane](benchmark_results/golf-languages/golf-language-native-system.svg)
+
+The complete
+[Pyth/Jelly report](benchmark_results/golf-languages/README.md) publishes every
+source, hash, runtime gate, code-page check, graph, limitation, and
+reproduction command.
 
 ### Market context
 
@@ -350,7 +376,8 @@ pairs against GolfScript and J, and expert-reviewed solutions remain a gate.
 | [NERD](https://www.nerd-lang.org/) | LLVM-backed machine-authorship language claiming 50–70% fewer tokens | All 7 deterministic examples reproduced: Kern is 9.92% smaller under cl100k; NERD's public counter is lexical, not an LLM tokenizer |
 | [Ax](https://github.com/axlanguage/axlang) | Compact AI-native compiled language | Monitored; no public token-density claim or matched token benchmark located yet |
 | [zerolang](https://github.com/vercel-labs/zerolang) | Graph-first language for agents with token efficiency as a design goal | Newly identified direct contender; source, graph-inspection, and checked-edit token lanes remain to be reproduced |
-| [K](https://codeberg.org/ngn/k), [GolfScript](https://golfscript.com/golfscript/), and [J](https://www.jsoftware.com/) | Current top three languages in code.golf's all-hole bytes ranking | Reproduced on 14 executable pairs: Kern beats K under the shared tokenizer and all three in the native system aggregate; GolfScript and J retain the shared-tokenizer lead |
+| [K](https://codeberg.org/ngn/k), [GolfScript](https://golfscript.com/golfscript/), and [J](https://www.jsoftware.com/) | Current top three languages in code.golf's all-hole bytes ranking | Reproduced on 14 executable pairs: Kern wins the shared and native aggregates against all three; every implementation passes 14/14 |
+| [Pyth](https://github.com/isaacg1/pyth) and [Jelly](https://github.com/DennisMitchell/jellylanguage) | Dedicated procedural and Unicode golfing languages | Reproduced on the same 14 pairs: Pyth/Jelly retain the shared-tokenizer and byte leads; Kern-16K wins the bounded system aggregate 127 vs 132/128 |
 | [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |
 | [CodeGolf Bench](https://arxiv.org/abs/2605.30394) | Dynamic concise-code generation benchmark across 60 languages | Planned for the generation phase with identical model, prompt, correctness, and attempt budgets |
 | [SWE-bench](https://www.swebench.com/) | Repository-level issue resolution | Requires the same agent/model in Python and Kern modes; gold-patch compression would not be a valid comparison |
@@ -360,12 +387,10 @@ No claim is made about code-generation models without a shared corpus,
 tokenizer, model, prompt, and execution protocol.
 
 The market registry is deliberately a living audit, not a declaration that
-every language has already been defeated. K, GolfScript, and J now have a
-first reproducible screen; the next density frontier is expert review of that
-corpus followed by Pyth, Jelly, Uiua, and BQN. Their byte or character
-compactness must be remeasured as actual `cl100k_base`, `o200k_base`, and
-deployable-system tokens; Unicode-heavy syntax can be short to humans while
-fragmenting badly for an LLM tokenizer.
+every language has already been defeated. K, GolfScript, J, Pyth, and Jelly
+now have first reproducible screens. The next density frontier is expert review
+and corpus expansion followed by Uiua `0.18.1` and BQN via CBQN `0.12.0`, then
+the source/graph/edit-loop audit of zerolang.
 
 ### Reproduce
 
@@ -442,14 +467,18 @@ The same iteration also hardens positional-only parameters, `async for/with`,
 lambda defaults/call boundaries, dict/set expressions in headers, f-string
 expression safety, and fail-fast handling for unmatched delimiters.
 
-The optional compact profile adds four further statement/expression rules
-discovered by the K/GolfScript/J screen:
+The optional compact profile adds guarded statement/expression rules
+discovered by the compact-language screens:
 
 - `print(value)` becomes `::value`;
 - `print(*values)` becomes `$values`;
 - `value[::-1]` becomes `value~`;
-- eligible constant `range` + positive modulo filters become exact stepped
-  ranges.
+- eligible ranges become `!start:stop:step`, including exact stepped-range
+  rewrites;
+- exact sum, sort, distinct, square-map, factorial, GCD, count, dot-product,
+  palindrome, and rotation shapes receive reversible sigils;
+- seeded second-order additive recurrences can fuse assignment, loop, and
+  starred output while preserving the final Python binding.
 
 These rules are not emitted by the default reversible profile.
 
@@ -567,12 +596,14 @@ Observed legacy-harness result:
 - `benchmark_karn.py`: pinned paired-corpus KARN and code-target audit
 - `benchmark_nerd.py`: complete deterministic public-example NERD audit
 - `benchmark_compact_languages.py`: executable K, GolfScript, and J density screen
+- `benchmark_golf_languages.py`: executable Pyth and Jelly density screen
 - `market-benchmark-requirements.txt`: pinned optional market dependencies
 - `benchmark_results/market/`: Sigil comparison, graphs, and world-market competitor registry
 - `benchmark_results/toke/`: Toke pair results, integrity audit, and graphs
 - `benchmark_results/karn/`: KARN pairs, compiler audit, claim evidence, and graphs
 - `benchmark_results/nerd/`: NERD pairs, claim-counter audit, and graphs
 - `benchmark_results/compact-languages/`: K/GolfScript/J sources, gates, results, and graphs
+- `benchmark_results/golf-languages/`: Pyth/Jelly sources, code-page gates, results, and graphs
 - `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
 - `test_baseline_adapters.py`: adapter sanity tests (`python`, `kern`, `simpy`, `token_sugar`)
 - `prepare_finetune_dataset.py`: exports `.py` + `.kern` pairs and JSONL for fine-tuning

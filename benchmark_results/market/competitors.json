@@ -80,7 +80,7 @@
       "version_or_reference": "717063f24921d5aff405a39cf7643efedb5bb365",
       "public_claim": "No LLM-token claim; ranked first on the current code.golf all-hole bytes table with 7,755 best-solution bytes",
       "status": "first_adversarial_density_screen_reproduced",
-      "kern_lane": "14 matched executable programs: Kern 200 vs K 206 cl100k tokens; Kern-16K 159 vs K + cl100k 206; both 14/14 exact stdout",
+      "kern_lane": "14 matched executable programs: Kern 147 vs K 206 cl100k tokens; Kern-16K 127 vs K + cl100k 206; both 14/14 exact stdout",
       "next_gate": "Expand with expert-reviewed K solutions and a larger corpus; the current code.golf leaders remain private"
     },
     {
@@ -91,8 +91,8 @@
       "version_or_reference": "6155e9f7860775be53bdc79c6e1c3b9308ebbfe5",
       "public_claim": "No LLM-token claim; ranked second on the current code.golf all-hole bytes table with 8,229 best-solution bytes",
       "status": "first_adversarial_density_screen_reproduced",
-      "kern_lane": "14 matched executable programs: GolfScript 169 vs Kern 200 cl100k tokens; Kern-16K 159 vs GolfScript + cl100k 169; both 14/14 exact stdout",
-      "next_gate": "Expand with expert-reviewed GolfScript solutions; GolfScript retains the shared-tokenizer lead and Kern wins only 6/14 native pairs"
+      "kern_lane": "14 matched executable programs: Kern 147 vs GolfScript 169 cl100k tokens; Kern-16K 127 vs GolfScript + cl100k 169; both 14/14 exact stdout",
+      "next_gate": "Expand with expert-reviewed GolfScript solutions; current Kern wins 9/14 shared and 8/14 native individual pairs"
     },
     {
       "name": "J",
@@ -102,8 +102,8 @@
       "version_or_reference": "9.6.3 in code.golf",
       "public_claim": "No LLM-token claim; ranked third on the current code.golf all-hole bytes table with 8,741 best-solution bytes",
       "status": "first_adversarial_density_screen_reproduced",
-      "kern_lane": "14 matched executable programs: J 163 vs Kern 200 cl100k tokens; Kern-16K 159 vs J + cl100k 163; both 14/14 exact stdout",
-      "next_gate": "Expand with expert-reviewed J solutions and rebalance beyond the current six array tasks; J retains the shared-tokenizer lead"
+      "kern_lane": "14 matched executable programs: Kern 147 vs J 163 cl100k tokens; Kern-16K 127 vs J + cl100k 163; both 14/14 exact stdout",
+      "next_gate": "Expand with expert-reviewed J solutions and rebalance beyond the current six array tasks; current Kern wins 6/14 shared and 9/14 native individual pairs"
     },
     {
       "name": "Pyth",
@@ -111,9 +111,9 @@
       "official_source": "https://github.com/isaacg1/pyth",
       "version_or_reference": "97cdf30d749d2a0d6ec1bb4b9bc417c34cce05bb",
       "public_claim": "Designed to minimize source length; no production-LLM-token benchmark located",
-      "status": "adversarial_density_screen_pending",
-      "kern_lane": "Matched executable problems under shared tokenizers, with built-in and implicit-output advantages disclosed",
-      "next_gate": "Screen after the current code.golf top three"
+      "status": "first_adversarial_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: Pyth 132 vs Kern 147 cl100k tokens; Kern-16K 127 vs Pyth + cl100k 132; both 14/14 exact stdout",
+      "next_gate": "Expert-review Pyth sources and expand the corpus; Pyth retains the neutral shared-tokenizer lead"
     },
     {
       "name": "Jelly",
@@ -121,15 +121,15 @@
       "official_source": "https://github.com/DennisMitchell/jellylanguage",
       "version_or_reference": "70c9fd93ab009c05dc396f8cc091f72b212fb188",
       "public_claim": "Designed for code golf; no production-LLM-token benchmark located",
-      "status": "adversarial_density_screen_pending",
-      "kern_lane": "Matched executable problems under shared tokenizers; report Unicode byte and tokenizer fragmentation separately",
-      "next_gate": "Screen whether glyph fragmentation erases its character-count advantage"
+      "status": "first_adversarial_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: Jelly 128 vs Kern 147 cl100k tokens; Kern-16K 127 vs Jelly + cl100k 128; all 14/14 exact stdout; Jelly code-page total 145 is reported separately",
+      "next_gate": "Expert-review Jelly sources and expand the corpus; Jelly retains the neutral shared-tokenizer and byte/code-page leads"
     },
     {
       "name": "Uiua",
       "kind": "Modern tacit array language",
       "official_source": "https://github.com/uiua-lang/uiua",
-      "version_or_reference": "28ea6507f5e90b0da63e46f23463534aa61929be",
+      "version_or_reference": "0.18.1",
       "public_claim": "Concise array notation, but no matched production-token claim located",
       "status": "array_density_screen_pending",
       "kern_lane": "Matched array workloads plus general control-flow workloads; shared tokenizers and executable oracles",
@@ -140,7 +140,7 @@
       "kind": "Modern array programming language",
       "official_source": "https://mlochbaum.github.io/BQN/",
       "evaluation_source": "https://github.com/dzaima/CBQN",
-      "version_or_reference": "CBQN 2d2337d3b31e8ba1c6625b2c0fb414bc6960154e",
+      "version_or_reference": "CBQN 0.12.0 (b4db324a99d6590d91b9b09bc36847f3254c1543)",
       "public_claim": "Powerful concise array notation, but no matched production-token claim located",
       "status": "array_density_screen_pending",
       "kern_lane": "Matched array workloads plus general control-flow workloads; shared tokenizers and executable oracles",

@@ -1,0 +1,114 @@
+[
+  {
+    "category": "scalar",
+    "expected_stdout": "201",
+    "jelly": "17\u00d723+11H\n",
+    "pyth": "/+*17 23 11 2\n",
+    "python": "print((17 * 23 + 11) // 2)\n",
+    "task_id": "scalar/arithmetic"
+  },
+  {
+    "category": "reduction",
+    "expected_stdout": "5050",
+    "jelly": "100RS\n",
+    "pyth": "sS100\n",
+    "python": "print(sum(range(1, 101)))\n",
+    "task_id": "reduction/sum_1_100"
+  },
+  {
+    "category": "reduction",
+    "expected_stdout": "3628800",
+    "jelly": "10!\n",
+    "pyth": ".!T\n",
+    "python": "import math\nprint(math.factorial(10))\n",
+    "task_id": "reduction/factorial_10"
+  },
+  {
+    "category": "text",
+    "expected_stdout": "egaugnalnrek",
+    "jelly": "\u201ckernlanguage\u201d\u1e5a\n",
+    "pyth": "_\"kernlanguage\"\n",
+    "python": "print(\"kernlanguage\"[::-1])\n",
+    "task_id": "text/reverse"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "1 2 3 4 5 6 7 8 9",
+    "jelly": "9,1,5,3,7,2,8,6,4\u1e62K\n",
+    "pyth": "jdS[9 1 5 3 7 2 8 6 4)\n",
+    "python": "print(*sorted([9, 1, 5, 3, 7, 2, 8, 6, 4]))\n",
+    "task_id": "array/sort"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "3 1 2 4 5",
+    "jelly": "3,1,2,3,2,4,1,5QK\n",
+    "pyth": "jd{[3 1 2 3 2 4 1 5)\n",
+    "python": "print(*dict.fromkeys([3, 1, 2, 3, 2, 4, 1, 5]))\n",
+    "task_id": "array/distinct"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "1 4 9 16 25 36 49 64 81 100",
+    "jelly": "10R\u00b2K\n",
+    "pyth": "jdm*d dST\n",
+    "python": "print(*(x * x for x in range(1, 11)))\n",
+    "task_id": "array/squares"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "2 4 6 8 10 12 14 16 18 20",
+    "jelly": "20R\u1e0am2K\n",
+    "pyth": "jd:2 21 2\n",
+    "python": "print(*(x for x in range(1, 21) if x % 2 == 0))\n",
+    "task_id": "array/evens"
+  },
+  {
+    "category": "text",
+    "expected_stdout": "5",
+    "jelly": "\u201cabracadabra\u201d\u010b\u201da\n",
+    "pyth": "/\"abracadabra\"\\a\n",
+    "python": "print(\"abracadabra\".count(\"a\"))\n",
+    "task_id": "text/count_character"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "32",
+    "jelly": "1,2,3\u1e0b4,5,6\n",
+    "pyth": "s.b*NY[1 2 3)[4 5 6)\n",
+    "python": "print(sum(a * b for a, b in zip([1, 2, 3], [4, 5, 6])))\n",
+    "task_id": "array/dot_product"
+  },
+  {
+    "category": "text",
+    "expected_stdout": "1",
+    "jelly": "\u201cracecar\u201d\u1e5a\u207c\n",
+    "pyth": "sq\"racecar\"_\"racecar\"\n",
+    "python": "text = \"racecar\"\nprint(int(text == text[::-1]))\n",
+    "task_id": "text/palindrome"
+  },
+  {
+    "category": "scalar",
+    "expected_stdout": "82",
+    "jelly": "2706g410\n",
+    "pyth": "i2706 410\n",
+    "python": "import math\nprint(math.gcd(2706, 410))\n",
+    "task_id": "scalar/gcd"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "4 5 1 2 3",
+    "jelly": "1,2,3,4,5\u1e593K\n",
+    "pyth": "jd.<[1 2 3 4 5)3\n",
+    "python": "values = [1, 2, 3, 4, 5]\nprint(*(values[3:] + values[:3]))\n",
+    "task_id": "array/rotate_left"
+  },
+  {
+    "category": "recurrence",
+    "expected_stdout": "0 1 1 2 3 5 8 13 21 34 55 89",
+    "jelly": "11R\u017b\u00c6\u1e1eK\n",
+    "pyth": "A(Z1)V12GA(H+HG\n",
+    "python": "values = [0, 1]\nfor _ in range(10):\n    values.append(values[-1] + values[-2])\nprint(*values)\n",
+    "task_id": "recurrence/fibonacci"
+  }
+]

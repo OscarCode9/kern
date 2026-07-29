@@ -6,50 +6,38 @@
 <text x="92" y="65" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">14 executable pairs · competitor sources use cl100k_base · lower is better</text>
 <line x1="92" y1="448.0" x2="946" y2="448.0" stroke="#25314d" stroke-width="1"/>
 <text x="80" y="453.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
-<line x1="92" y1="417.0" x2="946" y2="417.0" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="422.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">20</text>
-<line x1="92" y1="386.1" x2="946" y2="386.1" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="391.1" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">40</text>
-<line x1="92" y1="355.1" x2="946" y2="355.1" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="360.1" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">60</text>
-<line x1="92" y1="324.2" x2="946" y2="324.2" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="329.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">80</text>
-<line x1="92" y1="293.2" x2="946" y2="293.2" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="298.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">100</text>
-<line x1="92" y1="262.3" x2="946" y2="262.3" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="267.3" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">120</text>
-<line x1="92" y1="231.3" x2="946" y2="231.3" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="236.3" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">140</text>
-<line x1="92" y1="200.3" x2="946" y2="200.3" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="205.3" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">160</text>
-<line x1="92" y1="169.4" x2="946" y2="169.4" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="174.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">180</text>
-<line x1="92" y1="138.4" x2="946" y2="138.4" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="143.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">200</text>
-<line x1="92" y1="107.5" x2="946" y2="107.5" stroke="#25314d" stroke-width="1"/>
-<text x="80" y="112.5" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">220</text>
+<line x1="92" y1="376.8" x2="946" y2="376.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="381.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">46</text>
+<line x1="92" y1="305.6" x2="946" y2="305.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="310.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">92</text>
+<line x1="92" y1="234.4" x2="946" y2="234.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="239.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">138</text>
+<line x1="92" y1="163.2" x2="946" y2="163.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="168.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">184</text>
+<line x1="92" y1="92.0" x2="946" y2="92.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">230</text>
 <text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Aggregate tokens</text>
 <text x="234.3" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">K</text>
 <rect x="136.3" y="129.1" width="60.0" height="318.9" rx="5" fill="#f59e0b"/>
 <text x="166.3" y="121.1" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">206.0</text>
-<rect x="204.3" y="138.4" width="60.0" height="309.6" rx="5" fill="#06b6d4"/>
-<text x="234.3" y="130.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">200.0</text>
-<rect x="272.3" y="201.9" width="60.0" height="246.1" rx="5" fill="#22c55e"/>
-<text x="302.3" y="193.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">159.0</text>
+<rect x="204.3" y="220.5" width="60.0" height="227.5" rx="5" fill="#06b6d4"/>
+<text x="234.3" y="212.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">147.0</text>
+<rect x="272.3" y="251.4" width="60.0" height="196.6" rx="5" fill="#22c55e"/>
+<text x="302.3" y="243.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">127.0</text>
 <text x="519.0" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">GolfScript</text>
 <rect x="421.0" y="186.4" width="60.0" height="261.6" rx="5" fill="#f59e0b"/>
 <text x="451.0" y="178.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">169.0</text>
-<rect x="489.0" y="138.4" width="60.0" height="309.6" rx="5" fill="#06b6d4"/>
-<text x="519.0" y="130.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">200.0</text>
-<rect x="557.0" y="201.9" width="60.0" height="246.1" rx="5" fill="#22c55e"/>
-<text x="587.0" y="193.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">159.0</text>
+<rect x="489.0" y="220.5" width="60.0" height="227.5" rx="5" fill="#06b6d4"/>
+<text x="519.0" y="212.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">147.0</text>
+<rect x="557.0" y="251.4" width="60.0" height="196.6" rx="5" fill="#22c55e"/>
+<text x="587.0" y="243.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">127.0</text>
 <text x="803.7" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">J</text>
 <rect x="705.7" y="195.7" width="60.0" height="252.3" rx="5" fill="#f59e0b"/>
 <text x="735.7" y="187.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">163.0</text>
-<rect x="773.7" y="138.4" width="60.0" height="309.6" rx="5" fill="#06b6d4"/>
-<text x="803.7" y="130.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">200.0</text>
-<rect x="841.7" y="201.9" width="60.0" height="246.1" rx="5" fill="#22c55e"/>
-<text x="871.7" y="193.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">159.0</text>
+<rect x="773.7" y="220.5" width="60.0" height="227.5" rx="5" fill="#06b6d4"/>
+<text x="803.7" y="212.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">147.0</text>
+<rect x="841.7" y="251.4" width="60.0" height="196.6" rx="5" fill="#22c55e"/>
+<text x="871.7" y="243.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">127.0</text>
 <rect x="92" y="504" width="14" height="14" rx="3" fill="#f59e0b"/>
 <text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Competitor + cl100k</text>
 <rect x="282" y="504" width="14" height="14" rx="3" fill="#06b6d4"/>
