@@ -22,10 +22,10 @@
       "native_tokenizer": "toke-tokenizer==0.1.0",
       "native_tokenizer_artifact_sha256": "c33eee7501da85966f969dc0007afd30c9cc2a7f2a6fb5f8b769aa7762210fcb",
       "public_claim": "52% average reduction across 42 programs with a purpose-built 16K BPE",
-      "status": "reproduced_public_pairs",
+      "status": "reproduced_public_pairs_and_native_contest",
       "kern_lane": "60 equivalent JSON-CLI pairs: Kern 3023 vs Toke 6347 cl100k tokens; Kern 60/60 vs Toke 29/60 public smoke probes",
-      "native_observation": "Toke native BPE uses 3906 tokens on the 60 pairs; Kern cl100k uses 3023, but this remains a cross-tokenizer observation",
-      "next_gate": "Train a Kern-native tokenizer on disjoint data and score both native tokenizers on held-out paired programs"
+      "native_observation": "Equal 16K vocabulary held-out contest: Kern native BPE 2870 tokens vs Toke native BPE 3906; Kern is 26.52% smaller and exact-round-trips 60/60",
+      "next_gate": "Monitor Toke compiler, tokenizer, corpus, and public benchmark releases for material changes"
     },
     {
       "name": "KARN",
@@ -36,6 +36,26 @@
       "status": "claim_audit_required",
       "kern_lane": "shared matched programs under cl100k_base and o200k_base",
       "next_gate": "Locate or construct a public paired corpus, verify outputs, and reproduce the claim without relying on LOC ratios"
+    },
+    {
+      "name": "NERD",
+      "kind": "LLVM-backed intermediate language for machine authorship",
+      "official_source": "https://github.com/Nerd-Lang/nerd-lang-core",
+      "version_or_reference": "edeafd53c4282a322bfe882bab05e7890e4766fd",
+      "public_claim": "50-70% fewer tokens generally; its public table shows 32-33% below Python on FizzBuzz and four math functions",
+      "status": "claim_audit_required",
+      "kern_lane": "matched public programs under cl100k_base plus compile-and-run output checks",
+      "next_gate": "Reproduce the two published rows, identify the unstated tokenizer, then expand beyond toy examples"
+    },
+    {
+      "name": "Ax",
+      "kind": "Compact AI-native compiled language",
+      "official_source": "https://github.com/axlanguage/axlang",
+      "version_or_reference": "8623d9f88d582d7ff600bf9d79801a313a0494cc",
+      "public_claim": "Compact AI-native source, but no public token-density claim or paired token benchmark located",
+      "status": "monitoring_no_token_claim",
+      "kern_lane": "only enter the density contest when matched executable programs or a token benchmark are published",
+      "next_gate": "Track benchmark additions and construct pairs only if language semantics overlap"
     },
     {
       "name": "NURL",

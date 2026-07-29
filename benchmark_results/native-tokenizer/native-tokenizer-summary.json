@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-29T07:48:19.912614+00:00",
+    "kern_tokenizer_sha256": "d570a49067b2fffca939924527b8daa3c0cc74e687b1ce7026c3193396e570ec",
+    "kern_vocab_size": 16384,
+    "protocol": "Kern 16K BPE trained on CodeSearchNet train; pre-tokenizer selected on CodeSearchNet validation; final evaluation on excluded modern suites and 60 public Toke pairs",
+    "python": "3.12.11",
+    "python_minifier_version": "3.2.0",
+    "shared_tokenizers": [
+      "cl100k_base",
+      "o200k_base"
+    ],
+    "tiktoken_version": "0.13.0",
+    "toke_commit": "a3adcebddbdf4629b5289a6f317ac6678c6061c8",
+    "toke_eval_commit": "851f6d8b2cfedea22833f3787ad96c19e072e952",
+    "toke_tokenizer_version": "0.1.0",
+    "toke_tokenizer_wheel_sha256": "c33eee7501da85966f969dc0007afd30c9cc2a7f2a6fb5f8b769aa7762210fcb",
+    "toke_vocab_size": 16384,
+    "tokenizers_version": "0.22.2"
+  },
+  "modern_held_out": [
+    {
+      "dataset": "BigCodeBench",
+      "kern_cl100k": 118401,
+      "kern_cl100k_saved_vs_python_pct": 27.709938578388872,
+      "kern_native_16k": 103205,
+      "kern_native_below_kern_cl100k_pct": 12.834351061224144,
+      "kern_native_below_minifier_cl100k_pct": 16.167786270703196,
+      "kern_native_saved_vs_python_cl100k_pct": 36.98789884361301,
+      "native_exact_roundtrips": 1140,
+      "programs": 1140,
+      "python_cl100k": 163786,
+      "python_minifier_cl100k": 123109
+    },
+    {
+      "dataset": "HumanEval+",
+      "kern_cl100k": 7342,
+      "kern_cl100k_saved_vs_python_pct": 30.545832939173213,
+      "kern_native_16k": 5550,
+      "kern_native_below_kern_cl100k_pct": 24.40751838736039,
+      "kern_native_below_minifier_cl100k_pct": 28.96454626903878,
+      "kern_native_saved_vs_python_cl100k_pct": 47.497871535332514,
+      "native_exact_roundtrips": 164,
+      "programs": 164,
+      "python_cl100k": 10571,
+      "python_minifier_cl100k": 7813
+    },
+    {
+      "dataset": "MBPP+",
+      "kern_cl100k": 10459,
+      "kern_cl100k_saved_vs_python_pct": 31.113745636567213,
+      "kern_native_16k": 8471,
+      "kern_native_below_kern_cl100k_pct": 19.007553303375083,
+      "kern_native_below_minifier_cl100k_pct": 26.753134457414614,
+      "kern_native_saved_vs_python_cl100k_pct": 44.207337153395244,
+      "native_exact_roundtrips": 378,
+      "programs": 378,
+      "python_cl100k": 15183,
+      "python_minifier_cl100k": 11565
+    },
+    {
+      "dataset": "Combined",
+      "kern_cl100k": 136202,
+      "kern_cl100k_saved_vs_python_pct": 28.14076184446555,
+      "kern_native_16k": 117226,
+      "kern_native_below_kern_cl100k_pct": 13.93224769092965,
+      "kern_native_below_minifier_cl100k_pct": 17.728634893007783,
+      "kern_native_saved_vs_python_cl100k_pct": 38.15236889310963,
+      "native_exact_roundtrips": 1682,
+      "programs": 1682,
+      "python_cl100k": 189540,
+      "python_minifier_cl100k": 142487
+    }
+  ],
+  "schema_version": 1,
+  "toke_public_pairs_held_out": {
+    "kern_cl100k": 3023,
+    "kern_native_16k": 2870,
+    "kern_native_below_toke_native_pairs": 47,
+    "kern_native_below_toke_native_pct": 26.523297491039425,
+    "kern_native_exact_roundtrips": 60,
+    "median_per_pair_kern_below_toke_native_pct": 21.052631578947366,
+    "programs": 60,
+    "python_cl100k": 3565,
+    "python_minifier_cl100k": 2892,
+    "toke_cl100k": 6347,
+    "toke_native_16k": 3906
+  }
+}

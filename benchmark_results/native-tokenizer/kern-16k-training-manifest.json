@@ -1,0 +1,106 @@
+{
+  "contract": "16K byte-level BPE trained only on valid Kern compact round-trips; validation selects configuration; final benchmark corpora are held out",
+  "dataset": {
+    "files": {
+      "train": {
+        "path": "python/train-00000-of-00001.parquet",
+        "rows": 412178,
+        "sha256": "ad9e3a4ab10c2c1d8926d2b26ca2bfcc3aadda1477ba29a933391f93806b9fed"
+      },
+      "validation": {
+        "path": "python/validation-00000-of-00001.parquet",
+        "rows": 23107,
+        "sha256": "22eaacb46ed7e74d582409b85692ef63f5a43e99f9395c2eb736b5c8451422bb"
+      }
+    },
+    "partition_rule": "official repository-level train/validation partitions",
+    "repository": "code-search-net/code_search_net",
+    "revision": "bd0cf261e357a3eb5c8fba490d23ec1a1cd59555"
+  },
+  "exclusions": {
+    "modern_programs": 1682,
+    "rule": "exclude exact normalized-source SHA-256 and normalized-AST SHA-256 before training/selection; a pinned toke-eval checkout additionally supplies all 60 paired ASTs",
+    "toke_pair_ast_hashes": 60,
+    "toke_pair_source_hashes": 60,
+    "unique_ast_hashes": 1739,
+    "unique_source_hashes": 1739
+  },
+  "generated_at": "2026-07-29T07:48:01.347564+00:00",
+  "runtime": {
+    "datasets": "4.8.5",
+    "huggingface_hub": "1.25.1",
+    "pyarrow": "25.0.0",
+    "python": "3.12.11",
+    "tokenizers": "0.22.2"
+  },
+  "schema_version": 1,
+  "selection": {
+    "candidates": [
+      {
+        "characters_per_token": 2.8126064444056076,
+        "exact_roundtrip_failures": 0,
+        "name": "bytelevel_regex",
+        "validation_characters": 820772,
+        "validation_tokens": 291819
+      },
+      {
+        "characters_per_token": 3.721697492937693,
+        "exact_roundtrip_failures": 0,
+        "name": "bytelevel_no_regex",
+        "validation_characters": 820772,
+        "validation_tokens": 220537
+      }
+    ],
+    "corpus": {
+      "accepted": 2048,
+      "accepted_characters": 820772,
+      "accepted_repositories": 8,
+      "kern_aggregate_sha256": "a8023af86f9952566afea9cb2d5ccdd7c9a2859b64830543a57527dfbab916ac",
+      "rejections": {
+        "python_parse": 128,
+        "roundtrip_ast": 72,
+        "source_too_long": 3,
+        "transform_or_compile": 4
+      },
+      "requested": 2048,
+      "scanned": 2255,
+      "source_aggregate_sha256": "da3bc663e1bd2a451d615011c06da0509d6d28402e09d2c11521cc9624f6a4bb",
+      "split": "validation"
+    },
+    "repository_overlap_with_training": 0,
+    "selection_metric": "fewest exact-roundtrip failures, then fewest aggregate validation tokens, then lexical candidate name",
+    "winner": "bytelevel_no_regex"
+  },
+  "tokenizer": {
+    "byte_fallback": true,
+    "decoder": "ByteLevel",
+    "file": "kern-16k-tokenizer.json",
+    "max_token_length": 64,
+    "min_frequency": 2,
+    "model": "BPE",
+    "normalizer": null,
+    "pre_tokenizer": "bytelevel_no_regex",
+    "sha256": "d570a49067b2fffca939924527b8daa3c0cc74e687b1ce7026c3193396e570ec",
+    "special_tokens": [
+      "<unk>"
+    ],
+    "vocab_size": 16384
+  },
+  "training": {
+    "accepted": 25953,
+    "accepted_characters": 8580016,
+    "accepted_repositories": 1022,
+    "kern_aggregate_sha256": "2d9d460d0f17ad7c1ae7acd6b0429e9b8056a755a49f3c3ce3852539d41cb153",
+    "rejections": {
+      "duplicate_kern": 1,
+      "python_parse": 383,
+      "roundtrip_ast": 1055,
+      "source_too_long": 27,
+      "transform_or_compile": 137
+    },
+    "requested": 25953,
+    "scanned": 27556,
+    "source_aggregate_sha256": "7d98c1e0793a1eb143d10776185aac3beb2a0c9f0bc78e0c7add8b8b18d79c6b",
+    "split": "train"
+  }
+}

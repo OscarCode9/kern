@@ -2,8 +2,8 @@
 
 This is Kern's directly reproduced language-level market comparison. It does
 **not** claim that Kern has already beaten every language. It establishes
-audited results against Sigil and Toke plus an explicit queue for the remaining
-contenders.
+audited results against Sigil and Toke—including an equal-vocabulary native
+tokenizer win—plus an explicit queue for the remaining contenders.
 
 ## Reproduced Sigil result
 
@@ -75,8 +75,8 @@ The evidence supports this bounded statement:
 > v0.4 compact is denser and substantially more reliable than the public Sigil
 > 0.1.0 Python conversion pipeline.
 
-It does not by itself prove superiority over Toke's native tokenizer, KARN's
-unreproduced headline, or model-generation systems.
+It does not by itself prove superiority over KARN's unreproduced headline,
+NERD's newly identified public examples, or model-generation systems.
 
 ## Reproduced Toke public-pair result
 
@@ -106,18 +106,42 @@ passes.
 
 ![Toke public functional smoke probe](../toke/toke-functional-probe.svg)
 
+## Reproduced native-tokenizer result
+
+Kern's purpose-built byte-level BPE is trained on exactly `25,953` valid Kern
+programs from CodeSearchNet train, selected on a repository-disjoint validation
+partition, and evaluated only on excluded final suites. Its vocabulary has
+exactly `16,384` entries, matching Toke's official tokenizer.
+
+| Held-out 60-pair system | Tokens |
+|---|---:|
+| **Kern compact + Kern‑16K** | **`2,870`** |
+| python-minifier + cl100k | `2,892` |
+| Python + cl100k | `3,565` |
+| Toke + Toke‑16K | `3,906` |
+
+Kern is **26.52% below Toke** in the equal-vocabulary native contest, wins
+`47/60` individual pairs, and exactly reconstructs all 60 Kern sources. It
+also closes the earlier aggregate 131-token shared-tokenizer micro-gap to
+python-minifier when each system uses its production tokenizer.
+
+![Native-tokenizer Kern versus Toke](../native-tokenizer/native-tokenizer-toke.svg)
+
+Full training provenance, leakage controls, modern held-out results, artifacts,
+and limitations are in the
+[native-tokenizer report](../native-tokenizer/README.md).
+
 ## Remaining world-market gates
 
 The machine-readable registry is
 [`competitors.json`](competitors.json). Current priority:
 
-1. a separate native-tokenizer contest: Toke BPE versus a trained Kern BPE;
-2. close Kern's 131-token micro-corpus gap to python-minifier without weakening
-   its semantic contract;
-3. KARN paired compile-and-run programs before accepting its 76% claim;
-4. exact ShortCoder and Token Sugar method reproduction;
-5. continued monitoring for new public languages, version changes, and
-   third-party reproduction.
+1. KARN paired compile-and-run programs before accepting its 76% claim;
+2. NERD paired execution and production-tokenizer audit beyond its two public
+   examples;
+3. exact ShortCoder and Token Sugar method reproduction;
+4. continued monitoring for Ax and other new public languages, version
+   changes, and third-party reproduction.
 
 NURL is not an immediate production-tokenizer leader: its own reproducible
 report says it requires a median roughly `1.7x` Python's tokens across eight

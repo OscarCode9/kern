@@ -1,0 +1,4 @@
+-r market-benchmark-requirements.txt
+huggingface-hub==1.25.1
+pyarrow==25.0.0
+tokenizers==0.22.2

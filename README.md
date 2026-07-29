@@ -229,6 +229,33 @@ machine-readable registry are in the
 [world-market report](benchmark_results/market/README.md) and the
 [Toke public-pair audit](benchmark_results/toke/README.md).
 
+### Native 16K tokenizer result (July 29, 2026)
+
+Kern now has a lossless, purpose-built byte-level BPE with exactly `16,384`
+vocabulary entries. It is trained on `25,953` valid Kern compact programs from
+CodeSearchNet train, selected on repository-disjoint CodeSearchNet validation,
+and evaluated only on explicitly excluded final suites.
+
+On the same 60 equivalent public JSON-CLI pairs used in the Toke audit:
+
+| Native-tokenizer system | Tokens |
+|---|---:|
+| **Kern compact + Kern‑16K** | **`2,870`** |
+| python-minifier + cl100k | `2,892` |
+| Python + cl100k | `3,565` |
+| Toke + official Toke‑16K | `3,906` |
+
+Kern is **26.52% smaller than Toke** with equal 16K vocabulary sizes, wins
+`47/60` individual pairs, and exactly reconstructs all 60 Kern sources. On the
+1,682 held-out modern programs, Kern‑16K uses `117,226` tokens versus
+`189,540` for Python + cl100k—a `38.15%` system-level reduction.
+
+![Native-tokenizer Kern versus Toke](benchmark_results/native-tokenizer/native-tokenizer-toke.svg)
+
+The complete [native-tokenizer report](benchmark_results/native-tokenizer/README.md)
+contains the training manifest, dataset hashes, leakage controls, exact
+reproduction commands, modern results, and limitations.
+
 ### Market context
 
 | Project / benchmark | Public position | Comparison used here |
@@ -237,7 +264,9 @@ machine-readable registry are in the
 | Kern v0.4 compact | Optional semantic-minifier profile over the Kern grammar | Beats python-minifier on all three shared corpora and both shared tokenizers while matching its EvalPlus outcomes |
 | [Sigil 0.1.0](https://pypi.org/project/sigil-lang/) | Alpha compact language with a Python converter and compiler | Reproduced on all 1,682 programs; Kern is denser and preserves `541/542` EvalPlus tasks versus Sigil's `4/542` |
 | [python-minifier 3.2.0](https://pypi.org/project/python-minifier/) | Python source-to-source minifier | Current PyPI release, reproduced on the same source, interpreter, and tokenizers |
-| [Toke](https://www.tokelang.dev/) | Independent compiled language; its BPE package reports ~52% fewer tokens than cl100k on Toke source | Reproduced on all 60 public Python/Toke pairs: Kern is 52.37% below Toke with the shared tokenizer; separate native observation and compiler-drift audit are published |
+| [Toke](https://www.tokelang.dev/) | Independent compiled language; its BPE package reports ~52% fewer tokens than cl100k on Toke source | Reproduced on all 60 public pairs: Kern is 52.37% below Toke with the shared tokenizer and 26.52% below it in the equal-16K native contest |
+| [NERD](https://www.nerd-lang.org/) | New LLVM-backed machine-authorship language; public table contains two token examples | Newly identified contender: reproduce its 32–33% Python claim and compiler outputs next |
+| [Ax](https://github.com/axlanguage/axlang) | Compact AI-native compiled language | Monitored; no public token-density claim or matched token benchmark located yet |
 | [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |
 | [SWE-bench](https://www.swebench.com/) | Repository-level issue resolution | Requires the same agent/model in Python and Kern modes; gold-patch compression would not be a valid comparison |
 

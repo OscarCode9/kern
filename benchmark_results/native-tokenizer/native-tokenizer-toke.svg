@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+<title id="title">Held-out native-tokenizer contest</title>
+<desc id="desc">Aggregate tokens on 60 equivalent public JSON-CLI program pairs; lower is better</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">Held-out native-tokenizer contest</text>
+<text x="92" y="66" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">60 equivalent public JSON-CLI pairs; lower is better</text>
+<line x1="92" y1="432.0" x2="946" y2="432.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="437.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="365.6" x2="946" y2="365.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="370.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">898</text>
+<line x1="92" y1="299.2" x2="946" y2="299.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="304.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">1,797</text>
+<line x1="92" y1="232.8" x2="946" y2="232.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="237.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">2,695</text>
+<line x1="92" y1="166.4" x2="946" y2="166.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="171.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">3,594</text>
+<line x1="92" y1="100.0" x2="946" y2="100.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="105.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">4,492</text>
+<rect x="140.8" y="168.5" width="116.0" height="263.5" rx="7" fill="#94a3b8"/>
+<text x="198.8" y="158.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">3,565</text>
+<text x="198.8" y="460" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="13">Python + cl100k</text>
+<rect x="354.2" y="218.2" width="116.0" height="213.8" rx="7" fill="#06b6d4"/>
+<text x="412.2" y="208.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">2,892</text>
+<text x="412.2" y="460" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="13">python-minifier + cl100k</text>
+<rect x="567.8" y="143.3" width="116.0" height="288.7" rx="7" fill="#f59e0b"/>
+<text x="625.8" y="133.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">3,906</text>
+<text x="625.8" y="460" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="13">Toke + native 16K</text>
+<rect x="781.2" y="219.9" width="116.0" height="212.1" rx="7" fill="#22c55e"/>
+<text x="839.2" y="209.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">2,870</text>
+<text x="839.2" y="460" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="13">Kern + native 16K</text>
+</svg>
