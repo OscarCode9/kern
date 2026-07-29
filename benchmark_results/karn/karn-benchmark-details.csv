@@ -1,0 +1,116 @@
+task_id,origin,python_sha256,karn_sha256,python_cl100k,kern_cl100k,python_minifier_cl100k,karn_cl100k,python_o200k,kern_o200k,python_minifier_o200k,karn_o200k,kern_native_16k,kern_native_exact_roundtrip,kern_contract_ast,python_oracle_ok,kern_oracle_ok,python_minifier_oracle_ok,karn_check_ok,karn_interpreter_oracle_ok,karn_python_codegen_ok,karn_python_codegen_oracle_ok,karn_error_stage,karn_error_message
+public/hello,KARN example hello.kn,a2e0d56a636bc21230806d354c6a789236ffcba24ef2339c465db7158d168bea,4002b3f48e4dd6967f148b34bade1f8588c49b836d5829740c5523738271c6ed,7,8,8,7,7,8,8,7,7,True,True,True,True,True,True,True,True,True,,
+public/fibonacci,KARN example fibonacci.kn,914384e8d2af1689ff6a4445521ad66d305ad854a517ff76fc6e3b5a8fed0b08,e826b439a83f6dc7febbca9e42d662e87f2d1c1bb18c4131950f981c4fc08274,49,33,37,47,49,35,37,47,27,True,True,True,True,True,True,True,True,False,generated_python_oracle,"expected '55', got 'None'"
+public/collections,KARN example collections.kn,928163e2f92d478cccdb96c0c860659f2691d92d306ad0ddef7f74939fd56296,f3ca51ed5b2d3c748ccf5c0c4e339547c15a1f76f5482640f124d3d1a96629b1,128,104,103,113,128,104,103,113,80,True,True,True,True,True,True,True,True,False,generated_python_oracle,"expected '42', got ''"
+literal/number,KARN interpreter conformance,c2d6e9060cbe8dee44279258cc8677d7a20ec16eeeccfedd09b840283efd3685,8f313069a2e18d26e7ecae041e3117eca9b29af16ca4427ffa7fe228f5bcafc7,4,4,4,3,4,4,4,3,3,True,True,True,True,True,True,True,True,True,,
+literal/string,KARN interpreter conformance,957e13c0732e48fd5496f935894dc93a9da7dcd5eb8ffea52646fdf178cda1d1,be2058a1809a1df9d2e897043d957f00ee2faf21d5b8e85c371ca8fb844dacd6,4,4,4,4,4,4,4,4,4,True,True,True,True,True,True,True,True,True,,
+arithmetic/precedence,KARN interpreter conformance,95d7a7db05d9241016614dd3ee9a076e68a2ef78513bc3ecf8fec5ac1d2dae81,14594adbce7138fbe44fd7a7100e4b701166bd32a8a26fdeda44d0077aac4250,10,8,4,9,10,8,4,9,5,True,True,True,True,True,True,True,True,True,,
+binding/immutable,KARN interpreter conformance,ea6363e12d771518cd7387553ea1a57ba24c656704d332ae5cf398ea1dabb0ee,b97b5d7c9d4aa8bf35f0c80d77ff8944916d56f08312dc5364d05385989ff988,8,7,7,7,8,7,7,7,6,True,True,True,True,True,True,True,True,True,,
+binding/mutable,KARN interpreter conformance,aedcf5f5f665c42ad6fe3abd91e9116fd291168e7a6b6b759f84b20c25a5db48,2ce528c39c60c28095aec46772c545436fc01e1a096f5ad3fe35e6b9d4e2a5ba,13,11,11,14,13,11,11,14,8,True,True,True,True,True,True,True,True,True,,
+function/add,KARN interpreter conformance,cdaefbcd479589de72a62c2df618f4fe14d8b86dfe6c41a8bb39dfff46217dc9,fbcc4b62fe90d679824dd28e7b66960a1ba3422e9656738b2ff915d50c8d27f7,20,14,16,16,20,14,16,16,11,True,True,True,True,True,True,True,True,False,generated_python_oracle,"expected '7', got 'None'"
+comparison/lt,KARN interpreter conformance,2aa208a3edab7f2758627657dc193b519eb1f7b1fb5a0deda37ceda5f9fe5a67,cf63980f7ce1e974a2451d9260b7ddc2d4ae7c6004ced118b0e86d68eb0ca870,7,6,6,6,7,6,6,6,5,True,True,True,True,True,True,True,True,True,,
+comparison/gt,KARN interpreter conformance,9b7e594885cbac250ca4c5e967dac32c20378b8a38fecf5d20a97d083c610acf,8410dc9238bc613ce5a18112752b3e69f533ea17938341a1b76a50313960770d,7,6,6,6,7,6,6,6,5,True,True,True,True,True,True,True,True,True,,
+comparison/lte,KARN interpreter conformance,e020ce11c47748b38e837bafb05592c69dc81558f5ccc52ce04bb841841c09b9,d6c72e4dfc6739a766b0eacd02b85d892618c2f8bbf426e5b38ada913b77be8d,7,6,6,6,7,6,6,6,5,True,True,True,True,True,True,True,True,True,,
+comparison/gte,KARN interpreter conformance,dbd272946f9449d880363740ec5194279c8a24b0f3e03a5f3a9c3349901f9c8f,6d4fcb6d8574859e1b9a232630d7304bc9186b077cffe4000614f9b54d900b36,7,6,6,6,7,6,6,6,5,True,True,True,True,True,True,True,True,True,,
+comparison/eq,KARN interpreter conformance,174bbe18b7c4f0197f6f6448881abfd9d028f784e71adcbdae3e4c1e0be48f88,3ece494975a51263a8ad872098835c6c04536b6fd107b2f07977f912403a01f9,7,6,6,6,7,6,6,6,5,True,True,True,True,True,True,True,True,True,,
+comparison/neq,KARN interpreter conformance,570fcab1202766628443bc67229aed7d7862f4033f0cea72a5e39c8b4b39f4ca,add9d46ac6703e4d97c67e752a1b20b086f0ebc126614231dbda35a0a0ea90c9,7,6,6,6,7,6,6,6,4,True,True,True,True,True,True,True,True,True,,
+collection/range,KARN interpreter conformance,b2cdfa73afbc21ed3c89e4fadb28beef711e777592393935577f30de4a1c207d,e754fafae3ad157e2dd2b1d579bb197393e46b567fa960b85673a7367c155041,9,8,8,5,9,8,8,5,5,True,True,True,True,True,True,True,True,True,,
+collection/list,KARN interpreter conformance,d97d753e72dd170b0699512fbab00ea4207b82701019c0d6ae7a226b5c503d10,5f98fdd5ce0903c2bbc219656951dd00f142afa58be3adec65ebe3c925d1fa50,10,8,8,10,10,8,8,10,5,True,True,True,True,True,True,True,True,True,,
+collection/map,KARN interpreter conformance,79af69a7470b889ef33122c390d76369f3f29be204509f69e6a6fe092298066c,6419952deb983754229916229fa4953eb817d573da2ba74975a071916497f3cb,13,10,10,10,13,10,10,10,7,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/017-karn-generated.py"", line 20, in <module>
+    print({x: 1, y: 2})
+           ^
+NameError: name 'x' is not defined"
+collection/map_operation,KARN interpreter conformance,bef6e6bce41527b5c96a6a7dd54a1add79499441c3d544bbedd6386f5ef63a66,309ebec1abdf268181377a9249dcc1026465baf0ff4f48205101c8ed7e9084aa,18,15,15,17,18,15,15,17,8,True,True,True,True,True,True,True,True,True,,
+collection/filter_operation,KARN interpreter conformance,bb9500b21f04d1329cc9a32ef5e452db56081ea3e3aaedb19801f602c14e3b3c,7a46d5cd4ebee21fbe89ca1c1203540e11347dd5bc452bf7e9923200eeb2de0f,24,20,20,21,24,20,20,21,10,True,True,True,True,True,True,True,True,True,,
+result/construct_ok,KARN interpreter conformance,14dae7c30b0552faadac4d1aa4d73bbfdc573ff628bd11dc62d7bc217cd37cdf,639f4e943b2d3d2c8225a868ac2e69d51fc4f1f71b86541ac0a5ac494b919d60,22,20,20,5,22,20,20,5,18,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/020-karn-generated.py"", line 20, in <module>
+    print(Ok(42))
+          ^^
+NameError: name 'Ok' is not defined. Did you mean: '_Ok'?"
+result/propagate,KARN interpreter conformance,3fbf3f3904c70ffaacf92349cac07dbf594a82aecdc53ebfb8a65806bd01484e,0c51fea1c3623b8afd27769e51219c30d5f436e6d2c913f6dac63d6ec2ad85fb,13,11,11,5,13,11,11,5,11,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/021-karn-generated.py"", line 20, in <module>
+    print(_prop(Ok(42)))
+                ^^
+NameError: name 'Ok' is not defined. Did you mean: '_Ok'?"
+result/fallback,KARN interpreter conformance,498419dac09878f4a11d788f23f41a9a463513d309cd6008ae739db13be4709a,9f494d3b31568188593922cc078925b5ab436886e95fadb538339b41e6d3162f,25,21,21,7,25,21,21,7,19,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/022-karn-generated.py"", line 20, in <module>
+    print((lambda _v: _v if not isinstance(_v, (_Err, type(None))) else 42)(Err('fail')))
+                                                                            ^^^
+NameError: name 'Err' is not defined. Did you mean: '_Err'?"
+record/field,KARN interpreter conformance,d4fc63cb0c5544bfe31e9b5922c94be236a18e57b15b004381d65a1281cb8862,a8972cc99978aeb51058b67834db0328f600c0ef1b1ef1cc69bcdaf7eaea4305,19,15,15,21,19,15,15,21,15,True,True,True,True,True,True,True,True,True,,
+match/ok,KARN interpreter conformance,de50d1c457a12bca0cd898362835c86dc1a55bf29aea511929583d3a0a6a854d,83ca239451b97b22fefcde5c1c3cc097082e188897c9ae7e5dbf9301dc12671e,26,22,22,19,26,22,22,19,18,True,True,True,True,True,True,True,True,False,generated_python,"File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/024-karn-generated.py"", line 20
+    print(None  # match on Ok(42))
+         ^
+SyntaxError: '(' was never closed"
+match/err,KARN interpreter conformance,c9f3f064a7f8d07c4d5f2972989129de9ffa4544e8997b2d3cedc4a870043849,e922f8e9fbd3851dc059a6b20668360c25d529a41aa57bb89f200bff782ce789,26,22,22,19,26,22,22,19,18,True,True,True,True,True,True,True,True,False,generated_python,"File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/025-karn-generated.py"", line 20
+    print(None  # match on Err('fail'))
+         ^
+SyntaxError: '(' was never closed"
+pipeline/double_twice,KARN interpreter conformance,c903976ce7cdad1ffa1d08de4d0cd1bf75ba5d10c2f7b788810c55be416cb117,7726af997682c24312c36ee0aaefba78b319b222ac9dd9630c9f16a90e7952e8,17,13,15,15,17,13,15,15,11,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/026-karn-generated.py"", line 23, in <module>
+    print(double(double(5)))
+          ^^^^^^^^^^^^^^^^^
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/026-karn-generated.py"", line 21, in double
+    (x * 2)
+     ~~^~~
+TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'"
+recursion/factorial,KARN interpreter conformance,7f461d3e44be8dbdfcf30b5887755e3bcc1097cb2776356ab52a2f0136ffdcb1,1226048594e7cebfc313e9e1527bb6206ee1b394de0282709d0eb81c7585298b,32,24,26,32,32,25,26,32,21,True,True,True,True,True,True,True,True,False,generated_python_oracle,"expected '120', got 'None'"
+string/upper,KARN interpreter conformance,ca5806d5ac4418d1576576ab51d6408ae585d3b9abeb2506a431206c8c5d2894,6ef91c872b14eead7c8e2cdd5f2c40c2c8ca49d5081c0bb51b08d7a9f222f15e,6,6,6,6,6,6,6,6,6,True,True,True,True,True,True,True,True,True,,
+collection/len,KARN interpreter conformance,aef73d86e2cef1a8bc46540bbfc80995ed998ea1040d9105f613f4e399bf0b95,af1f6048bc4869f2c615cbabb90da52592777b7fbc8367d768b02bb8475ee317,11,9,9,12,11,9,9,12,6,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/029-karn-generated.py"", line 20, in <module>
+    print([1, 2, 3].len())
+          ^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'len'"
+collection/first,KARN interpreter conformance,c3e9db37716c10473aabf315906992251856d5b0de7e72415015bab2d954c29b,63512b5e4b190b67d0401e0f32b0c43c262532b51bf25ff376fc3d8d476931e0,12,10,10,12,12,10,10,12,7,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/030-karn-generated.py"", line 20, in <module>
+    print([10, 20, 30].first())
+          ^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'first'"
+collection/spread_list,KARN interpreter conformance,c97c4a24d87be2676358eaf982d10c1980817e57f872a6db6355bcaaefeb6ec4,29c265aa4e920f5c484ec9d04d9f23a43f1588d8ae3e1775061904d7761f2a1b,16,13,13,15,16,13,13,16,10,True,True,True,True,True,True,True,True,False,generated_python_oracle,"expected '[1, 2, 3]', got '[None, 3]'"
+collection/spread_map,KARN interpreter conformance,2a8b111543f4cc8202bd306019a51fae5405f88a833a753c0c721b7c256f688b,999700bdf8e40b8a612f81a6baf4233715b2f91624680580060fb5c08928c86f,19,15,15,15,19,15,15,15,13,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/032-karn-generated.py"", line 20, in <module>
+    a = {x: 1}
+         ^
+NameError: name 'x' is not defined"
+function/lambda,KARN interpreter conformance,6fb7a7b440e9a9c35f83bc562d88d2b771e13a47e1b2efa939f35055cbb2e5b5,d8dfa734a410a5a0c8b1c219349a293230aecad6bb7486234f1b28ebf5bc0c95,14,11,11,13,14,11,11,13,13,True,True,True,True,True,True,True,True,True,,
+stdlib/json,KARN interpreter conformance,bcfb9df4d247e821664fd4996e2e5739ec9fdc989f45565a8ef3442522f79f0c,056fcd0c1cae6e9fca79caaeaa944d740f68cfddf625165f0a422fc140498305,13,13,13,10,13,13,13,10,13,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/034-karn-generated.py"", line 20, in <module>
+    print(_prop(json.parse('{""x"":1}')))
+                ^^^^^^^^^^
+AttributeError: module 'json' has no attribute 'parse'"
+stdlib/sqrt,KARN interpreter conformance,ff04dabaed8410d9a546f66ca9ccba563a5c0b06fccd2828d1eccb2a499e24ff,f48e7025c14163595a2f36d7afe857ab083edef60d81b24e8a67c9eae045d407,9,9,9,6,9,9,9,6,8,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/035-karn-generated.py"", line 20, in <module>
+    print(math.sqrt(16))
+          ^^^^
+NameError: name 'math' is not defined. Did you forget to import 'math'?"
+stdlib/md5,KARN interpreter conformance,b022d33d65938eefa5eb69a7d0d8ab705bd9c068471868ee296e279f324dbdfa,b3bf56845232857693a09389772ca3346e937a1594464eb13c7a797626bb97cc,15,15,15,8,16,16,16,8,14,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/036-karn-generated.py"", line 20, in <module>
+    print(_prop(crypto.md5('hello')))
+                ^^^^^^
+NameError: name 'crypto' is not defined"
+stdlib/join,KARN interpreter conformance,0afe9309f5878fc10266250e68666f1cce23f8748fbca80d27ee660c9c7b0e1d,a00a05236b7acf87d07ecbacd9c3fee385efd5ce035bae52aad26330b6c23e97,13,11,11,15,13,11,11,15,8,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/037-karn-generated.py"", line 20, in <module>
+    print(_prop(str.join(['a', 'b', 'c'], '-')))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: descriptor 'join' for 'str' objects doesn't apply to a 'list' object"
+arithmetic/modulo,KARN interpreter conformance,69e1cb6d8a580ec3d596fd819acd753385bfff3e1b834d05edf66568ed51130b,dca805375f43ceeaa706846f6440598c38aec79984ae4ff2eb8bad34d37594fb,7,6,4,6,7,6,4,6,5,True,True,True,True,True,True,True,True,True,,
+recursion/sum,KARN extended public-feature probe,5775962372bdae6537987d40f49e4ff0f67e56f019605209b27bd441e5c3c75a,6ecb30519e6dfceb04d6710d61e9b6e0d1a3dd55d2317c2cd97071ea295e7b32,31,23,25,32,31,24,25,32,17,True,True,True,True,True,True,True,True,False,generated_python_oracle,"expected '55', got 'None'"
+recursion/gcd,KARN extended public-feature probe,5501972b89a4153b8f8616e383c2dff497b835027a850429c3f91cad959a81a2,5c6b3eec7aafbe47c1296d3911f9af10e2a552eb2e3831dfaa8907007b39e791,35,26,27,35,35,28,26,36,23,True,True,True,True,True,True,True,True,False,generated_python_oracle,"expected '6', got 'None'"
+collection/map_filter_chain,KARN extended public-feature probe,9301a197378661308b6e3c92c2415493d85cdc7e304debd4d10f9de056eea54b,268de64e796c9b69d1b4614d61d078ca60218694a5ab7d17e20fbe99ee44b8c2,31,26,25,22,31,26,25,22,15,True,True,True,True,True,True,True,True,True,,
+string/split,KARN extended public-feature probe,980025e9bc72327dc227b4304ddd2baa5a7d1c47ebfbe4133f7d7e5e148e3e3d,4b4ac7d3a066acde3308899b1f33688c54cd443a89f0bcc2fffcfbf2ab1e5ff4,9,9,9,9,9,9,9,9,6,True,True,True,True,True,True,True,True,True,,
+string/contains,KARN extended public-feature probe,a896f3c97a0c694140d0cbb56d8ee35f66b6198fe4447546958752bcddfe217f,4e944f07968284165d8bc41a7ae1ecf42e38806b719180eca8016a1a9eb6cf8e,9,9,8,9,8,8,7,8,7,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/043-karn-generated.py"", line 20, in <module>
+    print('kern'.contains('er'))
+          ^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'contains'"
+collection/last,KARN extended public-feature probe,8bbc984b62088694e26f824a288873836abfbfc65de06dd20f094ab5a93f0c9d,2372d16b36dfd4b220b16d2a8e5d87b84af72de8c5e02fbf280f71ee1ee8d57c,12,10,10,10,12,10,10,10,7,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/044-karn-generated.py"", line 20, in <module>
+    print([10, 20, 30].last())
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'last'"
+stdlib/pow,KARN extended public-feature probe,176a80af0596bf86beb200bf51bfa54d433825b26656098a324d407202d1739f,b8424ef5d09579d2910c9da14b5b74e7d1c0ddf3cd65fd7577c61d5cd3c57d56,12,11,11,8,12,11,11,8,9,True,True,True,True,True,True,True,True,False,generated_python,"Traceback (most recent call last):
+  File ""/var/folders/6q/z5zj2txs2x3141001z5yrpgm0000gn/T/kern-karn-pairs-6ewlrk4p/045-karn-generated.py"", line 20, in <module>
+    print(math.pow(2, 8))
+          ^^^^
+NameError: name 'math' is not defined. Did you forget to import 'math'?"

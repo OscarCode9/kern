@@ -256,6 +256,28 @@ The complete [native-tokenizer report](benchmark_results/native-tokenizer/README
 contains the training manifest, dataset hashes, leakage controls, exact
 reproduction commands, modern results, and limitations.
 
+### Reproduced KARN audit (July 29, 2026)
+
+KARN v1.0.0's advertised 76% reduction is not reproducible from its public
+artifacts: the approximate `47`-versus-`198` REST sources and tokenizer are not
+published. On a new 46-program matched executable corpus derived from KARN's
+public examples and conformance features:
+
+| `cl100k_base` paired result | Python | Kern compact | python-minifier | KARN |
+|---|---:|---:|---:|---:|
+| Tokens | `813` | **`670`** | `674` | `685` |
+| Exact output | `46/46` | **`46/46`** | `46/46` | **`46/46`** |
+
+Kern is **2.19% smaller than KARN** under the same tokenizer. KARN's
+interpreter is correct on all pairs, but its Python code-generation target
+preserves only `22/46`. Kern‑16K uses `533` tokens in the complete-system lane,
+`22.19%` below KARN + cl100k.
+
+![Shared-tokenizer Kern versus KARN](benchmark_results/karn/karn-token-density.svg)
+
+See the complete [KARN paired audit](benchmark_results/karn/README.md) for
+sources, output oracles, compiler failures, claim evidence, and reproduction.
+
 ### Market context
 
 | Project / benchmark | Public position | Comparison used here |
@@ -265,6 +287,7 @@ reproduction commands, modern results, and limitations.
 | [Sigil 0.1.0](https://pypi.org/project/sigil-lang/) | Alpha compact language with a Python converter and compiler | Reproduced on all 1,682 programs; Kern is denser and preserves `541/542` EvalPlus tasks versus Sigil's `4/542` |
 | [python-minifier 3.2.0](https://pypi.org/project/python-minifier/) | Python source-to-source minifier | Current PyPI release, reproduced on the same source, interpreter, and tokenizers |
 | [Toke](https://www.tokelang.dev/) | Independent compiled language; its BPE package reports ~52% fewer tokens than cl100k on Toke source | Reproduced on all 60 public pairs: Kern is 52.37% below Toke with the shared tokenizer and 26.52% below it in the equal-16K native contest |
+| [KARN](https://github.com/karn-lang/karn) | AI-agent language claiming 76% fewer tokens than Python | Public claim row lacks paired sources/tokenizer; on 46 executable pairs Kern is 2.19% smaller with cl100k and both interpreters pass 46/46 |
 | [NERD](https://www.nerd-lang.org/) | New LLVM-backed machine-authorship language; public table contains two token examples | Newly identified contender: reproduce its 32–33% Python claim and compiler outputs next |
 | [Ax](https://github.com/axlanguage/axlang) | Compact AI-native compiled language | Monitored; no public token-density claim or matched token benchmark located yet |
 | [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |

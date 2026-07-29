@@ -131,16 +131,44 @@ Full training provenance, leakage controls, modern held-out results, artifacts,
 and limitations are in the
 [native-tokenizer report](../native-tokenizer/README.md).
 
+## Reproduced KARN result
+
+KARN v1.0.0 advertises 76% fewer tokens than Python. Its pinned public
+repository does not publish the paired REST API sources, tokenizer, or counting
+script behind the approximate `47`-versus-`198` example. The current short
+README snippet uses `72` `cl100k_base` tokens, and the comment-free public API
+server file uses `118`.
+
+The reproducible lane uses 46 matched executable programs derived from KARN's
+public examples and conformance features:
+
+| Paired aggregate | Python | Kern compact | python-minifier | KARN |
+|---|---:|---:|---:|---:|
+| `cl100k_base` tokens | `813` | **`670`** | `674` | `685` |
+| Exact interpreter output | `46/46` | **`46/46`** | `46/46` | **`46/46`** |
+
+Kern is **2.19% smaller than KARN** with the same tokenizer. KARN's observed
+reduction from the paired Python references is `15.74%`, not its unpublished
+76% row. KARN's interpreter matches all 46 oracles, while its advertised
+Python target preserves only `22/46`.
+
+With each currently deployable language/tokenizer system, Kern‑16K uses `533`
+tokens versus KARN + cl100k at `685`, a **22.19%** Kern advantage.
+
+![Shared-tokenizer Kern versus KARN](../karn/karn-token-density.svg)
+
+The exact sources, output oracles, failure details, claim audit, limitations,
+and reproduction command are in the [KARN report](../karn/README.md).
+
 ## Remaining world-market gates
 
 The machine-readable registry is
 [`competitors.json`](competitors.json). Current priority:
 
-1. KARN paired compile-and-run programs before accepting its 76% claim;
-2. NERD paired execution and production-tokenizer audit beyond its two public
+1. NERD paired execution and production-tokenizer audit beyond its two public
    examples;
-3. exact ShortCoder and Token Sugar method reproduction;
-4. continued monitoring for Ax and other new public languages, version
+2. exact ShortCoder and Token Sugar method reproduction;
+3. continued monitoring for KARN, Toke, Ax, and other public version
    changes, and third-party reproduction.
 
 NURL is not an immediate production-tokenizer leader: its own reproducible

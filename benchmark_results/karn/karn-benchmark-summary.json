@@ -1,0 +1,161 @@
+{
+  "claim_audit": {
+    "current_public_api_server_file": {
+      "cl100k_base": 118,
+      "comments_excluded": true,
+      "o200k_base": 121,
+      "path": "examples/api-server.kn",
+      "sha256": "fc4bda1d44455af10a4c038128d7c08a9a6578f069a1b8b4b8d5053bc0cbd70e"
+    },
+    "current_public_readme_snippet": {
+      "cl100k_base": 72,
+      "o200k_base": 74,
+      "sha256": "cb540ee0a63a2c68e8868e09fb4ba3fbf8b2d876f131c438844723af6b130b5c"
+    },
+    "published_claim": {
+      "approximate_198_hits": [
+        "docs.html"
+      ],
+      "approximate_47_hits": [
+        "docs.html"
+      ],
+      "claim_present": true,
+      "claimed_reduction_pct": 76,
+      "counting_script_hits": [],
+      "description": "Same REST API with auth, DB query, and JSON response",
+      "karn_approximate_tokens": 47,
+      "paired_sources_published": false,
+      "python_approximate_tokens": 198,
+      "source_search": "47 and 198 appear only as approximate HTML values; no paired Python/TypeScript/Rust sources or counting script",
+      "tokenizer_named": false,
+      "tokenizer_reference_hits": []
+    }
+  },
+  "failure_stages": {
+    "generated_python": 17,
+    "generated_python_oracle": 7
+  },
+  "metadata": {
+    "generated_at": "2026-07-29T08:04:53.565640+00:00",
+    "karn_commit": "5208a5f592083c4885281b1d505af06fc58995ba",
+    "karn_version": "1.0.0",
+    "kern_tokenizer_sha256": "d570a49067b2fffca939924527b8daa3c0cc74e687b1ce7026c3193396e570ec",
+    "protocol": "46 fixed matched programs derived from KARN public examples and conformance tests; full denominator; deterministic stdout; same production tokenizer in shared lanes",
+    "python": "3.12.11",
+    "python_minifier": "3.2.0",
+    "tiktoken": "0.13.0",
+    "tokenizers": "0.22.2"
+  },
+  "official_gates": {
+    "official_examples_check": {
+      "checked": 7,
+      "error": "",
+      "implementation_note": "KARN check_file invokes Lexer and Parser only; despite the CLI description, no separate type checker is called",
+      "ok": true,
+      "total": 7
+    },
+    "official_tests": {
+      "error": "",
+      "ok": true,
+      "reported_passes": 91
+    }
+  },
+  "origin_aggregates": [
+    {
+      "karn_cl100k": 113,
+      "karn_interpreter_oracle": 1,
+      "karn_python_codegen_oracle": 0,
+      "kern_cl100k": 104,
+      "kern_cl100k_below_karn_pct": 7.964601769911504,
+      "kern_native_16k": 80,
+      "kern_native_below_karn_cl100k_pct": 29.20353982300885,
+      "origin": "KARN example collections.kn",
+      "programs": 1
+    },
+    {
+      "karn_cl100k": 47,
+      "karn_interpreter_oracle": 1,
+      "karn_python_codegen_oracle": 0,
+      "kern_cl100k": 33,
+      "kern_cl100k_below_karn_pct": 29.78723404255319,
+      "kern_native_16k": 27,
+      "kern_native_below_karn_cl100k_pct": 42.5531914893617,
+      "origin": "KARN example fibonacci.kn",
+      "programs": 1
+    },
+    {
+      "karn_cl100k": 7,
+      "karn_interpreter_oracle": 1,
+      "karn_python_codegen_oracle": 1,
+      "kern_cl100k": 8,
+      "kern_cl100k_below_karn_pct": -14.285714285714285,
+      "kern_native_16k": 7,
+      "kern_native_below_karn_cl100k_pct": 0.0,
+      "origin": "KARN example hello.kn",
+      "programs": 1
+    },
+    {
+      "karn_cl100k": 125,
+      "karn_interpreter_oracle": 7,
+      "karn_python_codegen_oracle": 2,
+      "kern_cl100k": 114,
+      "kern_cl100k_below_karn_pct": 8.799999999999999,
+      "kern_native_16k": 84,
+      "kern_native_below_karn_cl100k_pct": 32.800000000000004,
+      "origin": "KARN extended public-feature probe",
+      "programs": 7
+    },
+    {
+      "karn_cl100k": 393,
+      "karn_interpreter_oracle": 36,
+      "karn_python_codegen_oracle": 19,
+      "kern_cl100k": 411,
+      "kern_cl100k_below_karn_pct": -4.580152671755725,
+      "kern_native_16k": 335,
+      "kern_native_below_karn_cl100k_pct": 14.75826972010178,
+      "origin": "KARN interpreter conformance",
+      "programs": 36
+    }
+  ],
+  "paired_corpus": {
+    "cl100k_base": {
+      "karn": 685,
+      "kern_compact": 670,
+      "python": 813,
+      "python_minifier": 674
+    },
+    "comparisons": {
+      "kern_cl100k_below_karn_pct": 2.18978102189781,
+      "kern_native_below_karn_cl100k_pct": 22.18978102189781,
+      "kern_native_system_wins": 33,
+      "kern_shared_ties": 15,
+      "kern_shared_wins": 18,
+      "median_per_pair_kern_cl100k_below_karn_pct": 0.0
+    },
+    "functional": {
+      "karn_check": 46,
+      "karn_interpreter": 46,
+      "karn_python_codegen": 22,
+      "karn_python_codegen_produced": 46,
+      "kern_compact": 46,
+      "python": 46,
+      "python_minifier": 46
+    },
+    "native_system": {
+      "karn_cl100k_base": 685,
+      "kern_native_16k": 533
+    },
+    "o200k_base": {
+      "karn": 686,
+      "kern_compact": 676,
+      "python": 813,
+      "python_minifier": 673
+    },
+    "programs": 46,
+    "structural": {
+      "kern_contract_ast": 46,
+      "kern_native_exact_roundtrip": 46
+    }
+  },
+  "schema_version": 1
+}

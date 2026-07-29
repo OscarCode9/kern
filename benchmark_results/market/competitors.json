@@ -33,9 +33,11 @@
       "official_source": "https://github.com/karn-lang/karn",
       "version_or_reference": "5208a5f592083c4885281b1d505af06fc58995ba",
       "public_claim": "76% fewer tokens than Python",
-      "status": "claim_audit_required",
-      "kern_lane": "shared matched programs under cl100k_base and o200k_base",
-      "next_gate": "Locate or construct a public paired corpus, verify outputs, and reproduce the claim without relying on LOC ratios"
+      "status": "reproduced_public_features_claim_unsubstantiated",
+      "kern_lane": "46 matched executable programs: Kern 670 vs KARN 685 cl100k tokens; both interpreters 46/46 exact stdout; KARN Python target 22/46",
+      "claim_audit": "The advertised approximate 47-vs-198 REST row has no named tokenizer, paired sources, or counting script; current public KARN snippets use 72 and 118 cl100k tokens",
+      "native_observation": "Kern native 16K uses 533 tokens versus KARN with its deployable cl100k lane at 685, 22.19% lower; shared-tokenizer result remains the neutral language comparison",
+      "next_gate": "Monitor for publication of the exact claimed corpus, tokenizer, or a materially changed compiler"
     },
     {
       "name": "NERD",

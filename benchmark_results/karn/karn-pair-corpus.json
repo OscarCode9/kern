@@ -1,0 +1,324 @@
+[
+  {
+    "expected_stdout": "Hello from KARN!",
+    "karn": "! \"Hello from KARN!\"\n",
+    "origin": "KARN example hello.kn",
+    "python": "print(\"Hello from KARN!\")\n",
+    "task_id": "public/hello"
+  },
+  {
+    "expected_stdout": "55",
+    "karn": "fib->n:N:N\n  match n{\n    0 -> 0\n    1 -> 1\n    x -> fib(x - 1) + fib(x - 2)\n  }\n\n! fib(10)\n",
+    "origin": "KARN example fibonacci.kn",
+    "python": "def fib(n):\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n    return fib(n - 1) + fib(n - 2)\n\nprint(fib(10))\n",
+    "task_id": "public/fibonacci"
+  },
+  {
+    "expected_stdout": "42",
+    "karn": "items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\ndoubled = items*(x -> x * 2)\nevens = items%(x -> x % 2 == 0)\nresult = items*(x -> x * 3)%(x -> x > 10)\none_to_hundred = 1..100\nmatch Ok(42){\n  Ok(v)  -> !v\n  Err(e) -> !(-1)\n}\n",
+    "origin": "KARN example collections.kn",
+    "python": "items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\ndoubled = [x * 2 for x in items]\nevens = [x for x in items if x % 2 == 0]\nresult = [x for x in [x * 3 for x in items] if x > 10]\none_to_hundred = list(range(1, 101))\ntagged = (\"Ok\", 42)\nprint(tagged[1] if tagged[0] == \"Ok\" else -1)\n",
+    "task_id": "public/collections"
+  },
+  {
+    "expected_stdout": "42",
+    "karn": "! 42\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(42)\n",
+    "task_id": "literal/number"
+  },
+  {
+    "expected_stdout": "hello",
+    "karn": "! \"hello\"\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(\"hello\")\n",
+    "task_id": "literal/string"
+  },
+  {
+    "expected_stdout": "7",
+    "karn": "! 1 + 2 * 3\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(1 + 2 * 3)\n",
+    "task_id": "arithmetic/precedence"
+  },
+  {
+    "expected_stdout": "42",
+    "karn": "x = 42\n! x\n",
+    "origin": "KARN interpreter conformance",
+    "python": "x = 42\nprint(x)\n",
+    "task_id": "binding/immutable"
+  },
+  {
+    "expected_stdout": "2",
+    "karn": "~x = 1\n~x = 2\n! x\n",
+    "origin": "KARN interpreter conformance",
+    "python": "x = 1\nx = 2\nprint(x)\n",
+    "task_id": "binding/mutable"
+  },
+  {
+    "expected_stdout": "7",
+    "karn": "add->a b: a+b\n! add(3, 4)\n",
+    "origin": "KARN interpreter conformance",
+    "python": "def add(a, b):\n    return a + b\n\nprint(add(3, 4))\n",
+    "task_id": "function/add"
+  },
+  {
+    "expected_stdout": "True",
+    "karn": "! 3 < 5\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(3 < 5)\n",
+    "task_id": "comparison/lt"
+  },
+  {
+    "expected_stdout": "True",
+    "karn": "! 7 > 5\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(7 > 5)\n",
+    "task_id": "comparison/gt"
+  },
+  {
+    "expected_stdout": "True",
+    "karn": "! 5 <= 5\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(5 <= 5)\n",
+    "task_id": "comparison/lte"
+  },
+  {
+    "expected_stdout": "True",
+    "karn": "! 7 >= 5\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(7 >= 5)\n",
+    "task_id": "comparison/gte"
+  },
+  {
+    "expected_stdout": "True",
+    "karn": "! 42 == 42\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(42 == 42)\n",
+    "task_id": "comparison/eq"
+  },
+  {
+    "expected_stdout": "True",
+    "karn": "! 1 != 2\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(1 != 2)\n",
+    "task_id": "comparison/neq"
+  },
+  {
+    "expected_stdout": "[1, 2, 3, 4, 5]",
+    "karn": "! 1..5\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(list(range(1, 6)))\n",
+    "task_id": "collection/range"
+  },
+  {
+    "expected_stdout": "[1, 2, 3]",
+    "karn": "! [1, 2, 3]\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print([1, 2, 3])\n",
+    "task_id": "collection/list"
+  },
+  {
+    "expected_stdout": "{'x': 1, 'y': 2}",
+    "karn": "! {x:1, y:2}\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print({\"x\": 1, \"y\": 2})\n",
+    "task_id": "collection/map"
+  },
+  {
+    "expected_stdout": "[2, 4, 6]",
+    "karn": "! [1, 2, 3]*(x -> x * 2)\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print([x * 2 for x in [1, 2, 3]])\n",
+    "task_id": "collection/map_operation"
+  },
+  {
+    "expected_stdout": "[3, 4]",
+    "karn": "! [1, 2, 3, 4]%(x -> x > 2)\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print([x for x in [1, 2, 3, 4] if x > 2])\n",
+    "task_id": "collection/filter_operation"
+  },
+  {
+    "expected_stdout": "Ok(42)",
+    "karn": "! Ok(42)\n",
+    "origin": "KARN interpreter conformance",
+    "python": "result = (\"Ok\", 42)\nprint(f\"{result[0]}({result[1]})\")\n",
+    "task_id": "result/construct_ok"
+  },
+  {
+    "expected_stdout": "42",
+    "karn": "! Ok(42)?\n",
+    "origin": "KARN interpreter conformance",
+    "python": "result = (\"Ok\", 42)\nprint(result[1])\n",
+    "task_id": "result/propagate"
+  },
+  {
+    "expected_stdout": "42",
+    "karn": "! Err(\"fail\")??42\n",
+    "origin": "KARN interpreter conformance",
+    "python": "result = (\"Err\", \"fail\")\nprint(42 if result[0] == \"Err\" else result[1])\n",
+    "task_id": "result/fallback"
+  },
+  {
+    "expected_stdout": "10",
+    "karn": "type Pt:{x:N, y:N}\np = Pt(10, 20)\n! p.x\n",
+    "origin": "KARN interpreter conformance",
+    "python": "point = {\"x\": 10, \"y\": 20}\nprint(point[\"x\"])\n",
+    "task_id": "record/field"
+  },
+  {
+    "expected_stdout": "42",
+    "karn": "! match Ok(42){ Ok(v) -> v, Err(e) -> 0 }\n",
+    "origin": "KARN interpreter conformance",
+    "python": "value = (\"Ok\", 42)\nprint(value[1] if value[0] == \"Ok\" else 0)\n",
+    "task_id": "match/ok"
+  },
+  {
+    "expected_stdout": "0",
+    "karn": "! match Err(\"fail\"){ Ok(v) -> v, Err(e) -> 0 }\n",
+    "origin": "KARN interpreter conformance",
+    "python": "value = (\"Err\", \"fail\")\nprint(value[1] if value[0] == \"Ok\" else 0)\n",
+    "task_id": "match/err"
+  },
+  {
+    "expected_stdout": "20",
+    "karn": "double->x: x*2\n! double(5) |> double\n",
+    "origin": "KARN interpreter conformance",
+    "python": "def double(x):\n    return x * 2\n\nprint(double(double(5)))\n",
+    "task_id": "pipeline/double_twice"
+  },
+  {
+    "expected_stdout": "120",
+    "karn": "fact->n:N:N\n  match n{ 0 -> 1, _ -> n * fact(n - 1) }\n! fact(5)\n",
+    "origin": "KARN interpreter conformance",
+    "python": "def fact(n):\n    if n == 0:\n        return 1\n    return n * fact(n - 1)\n\nprint(fact(5))\n",
+    "task_id": "recursion/factorial"
+  },
+  {
+    "expected_stdout": "HELLO",
+    "karn": "! \"hello\".upper()\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(\"hello\".upper())\n",
+    "task_id": "string/upper"
+  },
+  {
+    "expected_stdout": "3",
+    "karn": "! [1, 2, 3].len()\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(len([1, 2, 3]))\n",
+    "task_id": "collection/len"
+  },
+  {
+    "expected_stdout": "10",
+    "karn": "! [10, 20, 30].first()\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print([10, 20, 30][0])\n",
+    "task_id": "collection/first"
+  },
+  {
+    "expected_stdout": "[1, 2, 3]",
+    "karn": "a = [1, 2]\n! [*a, 3]\n",
+    "origin": "KARN interpreter conformance",
+    "python": "a = [1, 2]\nprint([*a, 3])\n",
+    "task_id": "collection/spread_list"
+  },
+  {
+    "expected_stdout": "{'x': 1, 'y': 2}",
+    "karn": "a = {x:1}\n! {*a, y:2}\n",
+    "origin": "KARN interpreter conformance",
+    "python": "a = {\"x\": 1}\nprint({**a, \"y\": 2})\n",
+    "task_id": "collection/spread_map"
+  },
+  {
+    "expected_stdout": "25",
+    "karn": "square = x -> x * x\n! square(5)\n",
+    "origin": "KARN interpreter conformance",
+    "python": "square = lambda x: x * x\nprint(square(5))\n",
+    "task_id": "function/lambda"
+  },
+  {
+    "expected_stdout": "{'x': 1}",
+    "karn": "! json.parse('{\"x\":1}')?\n",
+    "origin": "KARN interpreter conformance",
+    "python": "import json\n\nprint(json.loads('{\"x\":1}'))\n",
+    "task_id": "stdlib/json"
+  },
+  {
+    "expected_stdout": "4.0",
+    "karn": "! math.sqrt(16)\n",
+    "origin": "KARN interpreter conformance",
+    "python": "import math\nprint(math.sqrt(16))\n",
+    "task_id": "stdlib/sqrt"
+  },
+  {
+    "expected_stdout": "5d41402abc4b2a76b9719d911017c592",
+    "karn": "! crypto.md5(\"hello\")?\n",
+    "origin": "KARN interpreter conformance",
+    "python": "import hashlib\n\nprint(hashlib.md5(\"hello\".encode()).hexdigest())\n",
+    "task_id": "stdlib/md5"
+  },
+  {
+    "expected_stdout": "a-b-c",
+    "karn": "! str.join([\"a\", \"b\", \"c\"], \"-\")?\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(\"-\".join([\"a\", \"b\", \"c\"]))\n",
+    "task_id": "stdlib/join"
+  },
+  {
+    "expected_stdout": "4",
+    "karn": "! 29 % 5\n",
+    "origin": "KARN interpreter conformance",
+    "python": "print(29 % 5)\n",
+    "task_id": "arithmetic/modulo"
+  },
+  {
+    "expected_stdout": "55",
+    "karn": "sum->n:N:N\n  match n{ 0 -> 0, _ -> n + sum(n - 1) }\n! sum(10)\n",
+    "origin": "KARN extended public-feature probe",
+    "python": "def total(n):\n    if n == 0:\n        return 0\n    return n + total(n - 1)\n\nprint(total(10))\n",
+    "task_id": "recursion/sum"
+  },
+  {
+    "expected_stdout": "6",
+    "karn": "gcd->a:N b:N:N\n  match b{ 0 -> a, _ -> gcd(b, a % b) }\n! gcd(48, 18)\n",
+    "origin": "KARN extended public-feature probe",
+    "python": "def gcd(a, b):\n    if b == 0:\n        return a\n    return gcd(b, a % b)\n\nprint(gcd(48, 18))\n",
+    "task_id": "recursion/gcd"
+  },
+  {
+    "expected_stdout": "[9, 16]",
+    "karn": "! [1,2,3,4]*(x->x*x)%(x->x>4)\n",
+    "origin": "KARN extended public-feature probe",
+    "python": "print([x for x in [x * x for x in [1, 2, 3, 4]] if x > 4])\n",
+    "task_id": "collection/map_filter_chain"
+  },
+  {
+    "expected_stdout": "['a', 'b', 'c']",
+    "karn": "! \"a,b,c\".split(\",\")\n",
+    "origin": "KARN extended public-feature probe",
+    "python": "print(\"a,b,c\".split(\",\"))\n",
+    "task_id": "string/split"
+  },
+  {
+    "expected_stdout": "True",
+    "karn": "! \"kern\".contains(\"er\")\n",
+    "origin": "KARN extended public-feature probe",
+    "python": "print(\"er\" in \"kern\")\n",
+    "task_id": "string/contains"
+  },
+  {
+    "expected_stdout": "30",
+    "karn": "! [10,20,30].last()\n",
+    "origin": "KARN extended public-feature probe",
+    "python": "print([10, 20, 30][-1])\n",
+    "task_id": "collection/last"
+  },
+  {
+    "expected_stdout": "256.0",
+    "karn": "! math.pow(2,8)\n",
+    "origin": "KARN extended public-feature probe",
+    "python": "import math\nprint(math.pow(2, 8))\n",
+    "task_id": "stdlib/pow"
+  }
+]
