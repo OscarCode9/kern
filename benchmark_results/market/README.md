@@ -3,7 +3,8 @@
 This is Kern's directly reproduced language-level market comparison. It does
 **not** claim that Kern has already beaten every language. It establishes
 audited results against Sigil and Toke—including an equal-vocabulary native
-tokenizer win—plus an explicit queue for the remaining contenders.
+tokenizer win—and paired audits of KARN and NERD, plus an explicit queue for
+the remaining contenders.
 
 ## Reproduced Sigil result
 
@@ -75,8 +76,9 @@ The evidence supports this bounded statement:
 > v0.4 compact is denser and substantially more reliable than the public Sigil
 > 0.1.0 Python conversion pipeline.
 
-It does not by itself prove superiority over KARN's unreproduced headline,
-NERD's newly identified public examples, or model-generation systems.
+The later paired sections reproduce KARN and NERD separately. None of these
+source-representation results proves superiority over the compact-language
+frontier or over model-generation systems.
 
 ## Reproduced Toke public-pair result
 
@@ -160,21 +162,83 @@ tokens versus KARN + cl100k at `685`, a **22.19%** Kern advantage.
 The exact sources, output oracles, failure details, claim audit, limitations,
 and reproduction command are in the [KARN report](../karn/README.md).
 
+## Reproduced NERD result
+
+NERD 3.0.0 advertises 50–70% fewer tokens, while its public table shows two
+smaller 32–33% reductions against Python. The pinned repository does not
+publish the paired Python sources or name an LLM tokenizer. Its `nerd tokens`
+command prints compiler lexer tokens.
+
+The reproducible lane covers all seven deterministic local programs in pinned
+commit `edeafd53c4282a322bfe882bab05e7890e4766fd`:
+
+| Paired aggregate | Python | Kern compact | python-minifier | NERD |
+|---|---:|---:|---:|---:|
+| `cl100k_base` tokens | `593` | **`436`** | `472` | `484` |
+| Exact interpreter output | `7/7` | **`7/7`** | `7/7` | **`7/7`** |
+
+Kern is **9.92% smaller than NERD** with the same tokenizer. NERD reduces the
+matched Python source by `18.38%`. The current four-function math definition
+reproduces the table's `32` only as compiler lexer tokens; the current
+FizzBuzz has `43` lexer tokens rather than the published `49`.
+
+With each currently deployable language/tokenizer system, Kern‑16K uses `367`
+tokens versus NERD + cl100k at `484`, a **24.17% Kern advantage**.
+
+![Shared-tokenizer Kern versus NERD](../nerd/nerd-token-density.svg)
+
+The exact source pairs, hashes, gates, claim-counter evidence, limitations, and
+reproduction command are in the [NERD report](../nerd/README.md).
+
+## Adversarial compact-language frontier
+
+Direct LLM-oriented projects are not the whole market. The current
+[code.golf all-hole bytes ranking](https://code.golf/rankings/langs/all/all/bytes)
+puts K, GolfScript, and J first, second, and third. That ranking measures
+human-optimized UTF‑8 bytes, not production LLM tokens, so it is evidence of
+risk rather than evidence that any of them beats Kern.
+
+The next shared-tokenizer harness will therefore start with:
+
+1. K (`ngn/k` commit `717063f249`), the current all-hole bytes leader;
+2. GolfScript (`6155e9f` in code.golf);
+3. J `9.6.3`;
+4. specialized golf languages Pyth and Jelly;
+5. modern glyph/array languages Uiua and BQN.
+
+Each contender needs matched executable algorithms, exact stdout, a full
+denominator, `cl100k_base` and `o200k_base`, and a separately labeled native
+system lane. Byte, character, and token results will not be mixed. Array-heavy
+and built-in-heavy workloads will be reported separately to avoid silently
+favoring one language family.
+
+The other newly identified direct contender is
+[zerolang](https://github.com/vercel-labs/zerolang), a graph-first language for
+agents that names token efficiency as a design goal. It requires separate
+measurements for source density, compiler graph-inspection payloads, and
+checked-edit loops; no matched token-density claim was located.
+
 ## Remaining world-market gates
 
 The machine-readable registry is
 [`competitors.json`](competitors.json). Current priority:
 
-1. NERD paired execution and production-tokenizer audit beyond its two public
-   examples;
-2. exact ShortCoder and Token Sugar method reproduction;
-3. continued monitoring for KARN, Toke, Ax, and other public version
-   changes, and third-party reproduction.
+1. K, GolfScript, and J matched executable token-density audit;
+2. zerolang source/graph/edit-loop audit;
+3. exact ShortCoder and Token Sugar method reproduction;
+4. Pyth, Jelly, Uiua, and BQN adversarial screens;
+5. continued monitoring for KARN, NERD, Toke, Ax, and other public version
+   changes, plus third-party reproduction.
 
 NURL is not an immediate production-tokenizer leader: its own reproducible
 report says it requires a median roughly `1.7x` Python's tokens across eight
 matched algorithms. AI Native Lang remains a workflow DSL and requires a
 domain-specific comparison rather than the general Python corpus.
+
+No “world champion” claim is made while these gates remain open. For the later
+generation phase, [CodeGolf Bench](https://arxiv.org/abs/2605.30394) is a
+relevant 60-language concise-generation benchmark, but it must use the same
+model, prompt, correctness tests, and attempt budget in every language.
 
 ## Reproduce
 
@@ -198,3 +262,5 @@ Artifacts:
 - `market-structural-coverage.svg`: decoded parse coverage;
 - `market-evalplus-correctness.svg`: official functional preservation.
 - `../toke/`: public-pair Toke benchmark, raw results, and graphs.
+- `../karn/`: paired KARN benchmark, claim audit, and compiler-target results.
+- `../nerd/`: all deterministic NERD examples, claim-counter audit, and graphs.

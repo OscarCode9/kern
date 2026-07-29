@@ -1,6 +1,7 @@
 {
   "checked_at": "2026-07-29",
   "schema_version": 1,
+  "coverage_note": "Living registry, not a claim that every programming language has been exhausted. Direct AI-oriented rivals and adversarial compact-language families are tracked separately.",
   "competitors": [
     {
       "name": "Sigil",
@@ -45,9 +46,11 @@
       "official_source": "https://github.com/Nerd-Lang/nerd-lang-core",
       "version_or_reference": "edeafd53c4282a322bfe882bab05e7890e4766fd",
       "public_claim": "50-70% fewer tokens generally; its public table shows 32-33% below Python on FizzBuzz and four math functions",
-      "status": "claim_audit_required",
-      "kern_lane": "matched public programs under cl100k_base plus compile-and-run output checks",
-      "next_gate": "Reproduce the two published rows, identify the unstated tokenizer, then expand beyond toy examples"
+      "status": "reproduced_complete_deterministic_public_examples",
+      "kern_lane": "All 7 deterministic local examples: Kern 436 vs NERD 484 cl100k tokens; every Python, Kern, minifier, and NERD program matches its stdout oracle",
+      "claim_audit": "NERD's public counter is the compiler lexer, not an LLM tokenizer. The current math definition reproduces 32 lexer tokens but FizzBuzz uses 43 rather than 49; paired Python sources and one common tokenizer are unpublished.",
+      "native_observation": "Kern native 16K uses 367 tokens versus NERD + cl100k at 484, 24.17% lower; shared-tokenizer Kern is 9.92% lower",
+      "next_gate": "Expand when NERD publishes a larger deterministic corpus, paired sources, native tokenizer, or generation benchmark"
     },
     {
       "name": "Ax",
@@ -58,6 +61,90 @@
       "status": "monitoring_no_token_claim",
       "kern_lane": "only enter the density contest when matched executable programs or a token benchmark are published",
       "next_gate": "Track benchmark additions and construct pairs only if language semantics overlap"
+    },
+    {
+      "name": "zerolang",
+      "kind": "Graph-first programming language for agents",
+      "official_source": "https://github.com/vercel-labs/zerolang",
+      "version_or_reference": "afcc72da649fe4d4c670ac1489c2197d37436051",
+      "public_claim": "Token efficiency is an explicit design goal, but no matched source-density percentage was located",
+      "status": "new_direct_contender_audit_pending",
+      "kern_lane": "Compare source tokens, compiler-owned graph inspection payloads, and checked-edit token cost separately",
+      "next_gate": "Pin a release and reproduce its examples, conformance suite, graph payloads, and any published benchmark"
+    },
+    {
+      "name": "K (ngn/k)",
+      "kind": "Ultra-compact array language",
+      "official_source": "https://codeberg.org/ngn/k",
+      "evaluation_source": "https://code.golf/rankings/langs/all/all/bytes",
+      "version_or_reference": "717063f249 in code.golf",
+      "public_claim": "No LLM-token claim; ranked first on the current code.golf all-hole bytes table with 7,755 best-solution bytes",
+      "status": "adversarial_density_audit_pending_high",
+      "kern_lane": "Matched executable algorithm corpus under cl100k, o200k, and each deployable native tokenizer; bytes are only a discovery signal",
+      "next_gate": "Build the compact-language lane first because K is the strongest current human code-density signal"
+    },
+    {
+      "name": "GolfScript",
+      "kind": "Stack-based code-golf language",
+      "official_source": "https://golfscript.com/golfscript/",
+      "evaluation_source": "https://code.golf/rankings/langs/all/all/bytes",
+      "version_or_reference": "6155e9f in code.golf",
+      "public_claim": "No LLM-token claim; ranked second on the current code.golf all-hole bytes table with 8,229 best-solution bytes",
+      "status": "adversarial_density_audit_pending_high",
+      "kern_lane": "Matched executable algorithm corpus with shared production tokenizers and exact stdout",
+      "next_gate": "Measure after K in the same compact-language harness"
+    },
+    {
+      "name": "J",
+      "kind": "Tacit array language",
+      "official_source": "https://www.jsoftware.com/",
+      "evaluation_source": "https://code.golf/rankings/langs/all/all/bytes",
+      "version_or_reference": "9.6.3 in code.golf",
+      "public_claim": "No LLM-token claim; ranked third on the current code.golf all-hole bytes table with 8,741 best-solution bytes",
+      "status": "adversarial_density_audit_pending_high",
+      "kern_lane": "Matched executable array and scalar algorithms under shared production tokenizers",
+      "next_gate": "Measure in the same compact-language harness while reporting array-domain bias"
+    },
+    {
+      "name": "Pyth",
+      "kind": "Python-based procedural golfing language",
+      "official_source": "https://github.com/isaacg1/pyth",
+      "version_or_reference": "97cdf30d749d2a0d6ec1bb4b9bc417c34cce05bb",
+      "public_claim": "Designed to minimize source length; no production-LLM-token benchmark located",
+      "status": "adversarial_density_screen_pending",
+      "kern_lane": "Matched executable problems under shared tokenizers, with built-in and implicit-output advantages disclosed",
+      "next_gate": "Screen after the current code.golf top three"
+    },
+    {
+      "name": "Jelly",
+      "kind": "Unicode code-golf language",
+      "official_source": "https://github.com/DennisMitchell/jellylanguage",
+      "version_or_reference": "70c9fd93ab009c05dc396f8cc091f72b212fb188",
+      "public_claim": "Designed for code golf; no production-LLM-token benchmark located",
+      "status": "adversarial_density_screen_pending",
+      "kern_lane": "Matched executable problems under shared tokenizers; report Unicode byte and tokenizer fragmentation separately",
+      "next_gate": "Screen whether glyph fragmentation erases its character-count advantage"
+    },
+    {
+      "name": "Uiua",
+      "kind": "Modern tacit array language",
+      "official_source": "https://github.com/uiua-lang/uiua",
+      "version_or_reference": "28ea6507f5e90b0da63e46f23463534aa61929be",
+      "public_claim": "Concise array notation, but no matched production-token claim located",
+      "status": "array_density_screen_pending",
+      "kern_lane": "Matched array workloads plus general control-flow workloads; shared tokenizers and executable oracles",
+      "next_gate": "Measure Unicode-token fragmentation and domain-specific density separately"
+    },
+    {
+      "name": "BQN",
+      "kind": "Modern array programming language",
+      "official_source": "https://mlochbaum.github.io/BQN/",
+      "evaluation_source": "https://github.com/dzaima/CBQN",
+      "version_or_reference": "CBQN 2d2337d3b31e8ba1c6625b2c0fb414bc6960154e",
+      "public_claim": "Powerful concise array notation, but no matched production-token claim located",
+      "status": "array_density_screen_pending",
+      "kern_lane": "Matched array workloads plus general control-flow workloads; shared tokenizers and executable oracles",
+      "next_gate": "Measure after K and J, with glyph and workload bias reported"
     },
     {
       "name": "NURL",
@@ -89,6 +176,17 @@
       "status": "method_lane_pending",
       "kern_lane": "exact released patterns and model protocol, reported separately from grammar-only compression",
       "next_gate": "Reproduce the complete paper pipeline instead of the legacy adapter alone"
+    },
+    {
+      "name": "CodeGolf Bench",
+      "kind": "Dynamic concise-code generation benchmark",
+      "official_source": "https://arxiv.org/abs/2605.30394",
+      "evaluation_source": "https://code.golf/",
+      "version_or_reference": "arXiv:2605.30394",
+      "public_claim": "Evaluates concise generation in 60 languages against live human code-golf baselines",
+      "status": "generation_phase_candidate",
+      "kern_lane": "Use only when Kern generation is evaluated with the same model, prompts, attempts, correctness gates, and live baseline snapshot",
+      "next_gate": "Adopt in the generation phase; do not mix byte percentiles with current representation-token results"
     },
     {
       "name": "AI Native Lang",

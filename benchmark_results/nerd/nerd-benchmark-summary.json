@@ -1,0 +1,101 @@
+{
+  "claim_audit": {
+    "counter_semantics": "The public `nerd tokens` command prints the compiler lexer token stream, including EOF; it does not invoke an LLM tokenizer",
+    "current_sources": {
+      "fizzbuzz": {
+        "cl100k_base": 60,
+        "compiler_lexer_tokens": 43,
+        "o200k_base": 60,
+        "published_count_reproduced": false,
+        "published_nerd_tokens": 49
+      },
+      "math_four_functions": {
+        "cl100k_base": 39,
+        "compiler_lexer_tokens": 32,
+        "o200k_base": 39,
+        "published_count_reproduced": true,
+        "published_nerd_tokens": 32
+      }
+    },
+    "published_table": {
+      "fizzbuzz": {
+        "nerd": 49,
+        "python": 73
+      },
+      "math_four_functions": {
+        "nerd": 32,
+        "python": 47
+      },
+      "paired_python_sources_published": false,
+      "tokenizer_named": false,
+      "tokenizer_reference_hits": []
+    }
+  },
+  "failure_stages": {},
+  "metadata": {
+    "generated_at": "2026-07-29T08:24:38.686503+00:00",
+    "kern_tokenizer_sha256": "d570a49067b2fffca939924527b8daa3c0cc74e687b1ce7026c3193396e570ec",
+    "nerd_commit": "edeafd53c4282a322bfe882bab05e7890e4766fd",
+    "nerd_version": "3.0.0",
+    "protocol": "All seven deterministic local NERD examples paired with equivalent Python; full denominator; shared production tokenizers; parse, native compile/run, normalized stdout",
+    "python": "3.12.11",
+    "python_minifier": "3.2.0",
+    "tiktoken": "0.13.0",
+    "tokenizers": "0.22.2"
+  },
+  "official_gates": {
+    "compiler_version": {
+      "error": "",
+      "expected": "nerd 3.0.0",
+      "ok": true,
+      "stdout": "nerd 3.0.0"
+    },
+    "make_test": {
+      "completed_marker": true,
+      "error": "",
+      "ok": true,
+      "scope": "tokenize, parse, and compile examples/math.nerd; not a unit-test suite"
+    }
+  },
+  "public_examples": {
+    "cl100k_base": {
+      "kern_compact": 436,
+      "nerd": 484,
+      "python": 593,
+      "python_minifier": 472
+    },
+    "comparisons": {
+      "kern_cl100k_below_nerd_pct": 9.917355371900827,
+      "kern_native_below_nerd_cl100k_pct": 24.173553719008265,
+      "kern_native_system_wins": 6,
+      "kern_shared_ties": 0,
+      "kern_shared_wins": 5,
+      "median_per_pair_kern_cl100k_below_nerd_pct": 12.195121951219512,
+      "nerd_cl100k_below_python_pct": 18.381112984822934
+    },
+    "functional": {
+      "kern_compact": 7,
+      "nerd_compile_run": 7,
+      "nerd_oracle": 7,
+      "nerd_parse": 7,
+      "python": 7,
+      "python_minifier": 7
+    },
+    "native_system": {
+      "kern_native_16k": 367,
+      "nerd_cl100k_base": 484
+    },
+    "o200k_base": {
+      "kern_compact": 445,
+      "nerd": 484,
+      "python": 595,
+      "python_minifier": 474
+    },
+    "programs": 7,
+    "structural": {
+      "kern_contract_ast": 7,
+      "kern_native_exact_roundtrip": 7
+    }
+  },
+  "schema_version": 1
+}

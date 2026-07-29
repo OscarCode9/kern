@@ -1,0 +1,51 @@
+[
+  {
+    "expected_stdout": "15\n5\n50\n2",
+    "nerd": "fn calc a b op\nif op eq zero ret a plus b else if op eq one ret a minus b else if op eq two ret a times b else if op eq three ret a over b else ret zero\n\nfn main\nout call calc ten five zero\nout call calc ten five one\nout call calc ten five two\nout call calc ten five three\n",
+    "nerd_example": "calculator.nerd",
+    "python": "def calc(a, b, op):\n    if op == 0:\n        return a + b\n    if op == 1:\n        return a - b\n    if op == 2:\n        return a * b\n    if op == 3:\n        return a / b\n    return 0\n\nprint(calc(10, 5, 0))\nprint(calc(10, 5, 1))\nprint(calc(10, 5, 2))\nprint(calc(10, 5, 3))\n",
+    "task_id": "public/calculator"
+  },
+  {
+    "expected_stdout": "1\n-1\n0\n7\n8",
+    "nerd": "fn sign x\nif x gt zero ret one else if x lt zero ret neg one else ret zero\n\nfn abs x\nif x lt zero ret neg x else ret x\n\nfn max a b\nif a gt b ret a else ret b\n\nfn main\nout call sign five\nout call sign neg three\nout call sign zero\nout call abs neg seven\nout call max three eight\n",
+    "nerd_example": "conditionals.nerd",
+    "python": "def sign(x):\n    if x > 0:\n        return 1\n    if x < 0:\n        return -1\n    return 0\n\ndef absolute(x):\n    return -x if x < 0 else x\n\ndef maximum(a, b):\n    return a if a > b else b\n\nprint(sign(5))\nprint(sign(-3))\nprint(sign(0))\nprint(absolute(-7))\nprint(maximum(3, 8))\n",
+    "task_id": "public/conditionals"
+  },
+  {
+    "expected_stdout": "1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz",
+    "nerd": "fn fizzbuzz n\nrepeat n times as i\n  if i mod 15 eq zero out \"FizzBuzz\" else if i mod three eq zero out \"Fizz\" else if i mod five eq zero out \"Buzz\" else out i\ndone\n\nfn main\ncall fizzbuzz 15\n",
+    "nerd_example": "fizzbuzz.nerd",
+    "python": "def fizzbuzz(n):\n    for i in range(1, n + 1):\n        if i % 15 == 0:\n            print(\"FizzBuzz\")\n        elif i % 3 == 0:\n            print(\"Fizz\")\n        elif i % 5 == 0:\n            print(\"Buzz\")\n        else:\n            print(i)\n\nfizzbuzz(15)\n",
+    "task_id": "public/fizzbuzz"
+  },
+  {
+    "expected_stdout": "16\n27\n14\n5",
+    "nerd": "fn square x\nret x times x\n\nfn cube x\nlet sq call square x\nret x times sq\n\nfn double x\nret x plus x\n\nfn hypotenuse a b\nlet asq call square a\nlet bsq call square b\nlet sum asq plus bsq\nret math sqrt sum\n\nfn main\nout call square four\nout call cube three\nout call double seven\nout call hypotenuse three four\n",
+    "nerd_example": "functions.nerd",
+    "python": "import math\n\ndef square(x):\n    return x * x\n\ndef cube(x):\n    squared = square(x)\n    return x * squared\n\ndef double(x):\n    return x + x\n\ndef hypotenuse(a, b):\n    a_squared = square(a)\n    b_squared = square(b)\n    total = a_squared + b_squared\n    return math.sqrt(total)\n\nprint(square(4))\nprint(cube(3))\nprint(double(7))\nprint(hypotenuse(3, 4))\n",
+    "task_id": "public/functions"
+  },
+  {
+    "expected_stdout": "5\n4\n3\n2\n1\n55\n120",
+    "nerd": "fn countdown n\nrepeat n times as i\n  out n minus i plus one\ndone\n\nfn sumto n\nlet total zero\nrepeat n times as i\n  inc total i\ndone\nret total\n\nfn factorial n\nlet result one\nlet x n\nwhile x gt one\n  let result result times x\n  dec x\ndone\nret result\n\nfn main\ncall countdown five\nout call sumto ten\nout call factorial five\n",
+    "nerd_example": "loops.nerd",
+    "python": "def countdown(n):\n    for i in range(1, n + 1):\n        print(n - i + 1)\n\ndef sumto(n):\n    total = 0\n    for i in range(1, n + 1):\n        total += i\n    return total\n\ndef factorial(n):\n    result = 1\n    x = n\n    while x > 1:\n        result *= x\n        x -= 1\n    return result\n\ncountdown(5)\nprint(sumto(10))\nprint(factorial(5))\n",
+    "task_id": "public/loops"
+  },
+  {
+    "expected_stdout": "8\n6\n42\n5",
+    "nerd": "fn add a b\nret a plus b\n\nfn sub a b\nret a minus b\n\nfn mul a b\nret a times b\n\nfn div a b\nret a over b\n\nfn main\nout call add five three\nout call sub ten four\nout call mul six seven\nout call div 15 three\n",
+    "nerd_example": "math.nerd",
+    "python": "def add(a, b):\n    return a + b\n\ndef sub(a, b):\n    return a - b\n\ndef mul(a, b):\n    return a * b\n\ndef div(a, b):\n    return a / b\n\nprint(add(5, 3))\nprint(sub(10, 4))\nprint(mul(6, 7))\nprint(div(15, 3))\n",
+    "task_id": "public/math"
+  },
+  {
+    "expected_stdout": "42\nhello world\n8",
+    "nerd": "out 42\nout \"hello world\"\nout five plus three\n",
+    "nerd_example": "output.nerd",
+    "python": "print(42)\nprint(\"hello world\")\nprint(5 + 3)\n",
+    "task_id": "public/output"
+  }
+]

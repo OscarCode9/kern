@@ -278,6 +278,30 @@ preserves only `22/46`. Kern‑16K uses `533` tokens in the complete-system lane
 See the complete [KARN paired audit](benchmark_results/karn/README.md) for
 sources, output oracles, compiler failures, claim evidence, and reproduction.
 
+### Reproduced NERD audit (July 29, 2026)
+
+NERD 3.0.0 advertises 50–70% fewer tokens, but its public `nerd tokens`
+command counts compiler lexer tokens rather than LLM tokens. The exact Python
+sources and a common tokenizer behind its table are not published. On all seven
+deterministic local examples in pinned commit
+`edeafd53c4282a322bfe882bab05e7890e4766fd`:
+
+| `cl100k_base` paired result | Python | Kern compact | python-minifier | NERD |
+|---|---:|---:|---:|---:|
+| Tokens | `593` | **`436`** | `472` | `484` |
+| Exact output | `7/7` | **`7/7`** | `7/7` | **`7/7`** |
+
+Kern is **9.92% smaller than NERD** under the same tokenizer. NERD itself is
+`18.38%` below the matched Python references, rather than the unqualified
+50–70% headline. Kern‑16K uses `367` tokens in the complete-system lane,
+`24.17%` below NERD + cl100k.
+
+![Shared-tokenizer Kern versus NERD](benchmark_results/nerd/nerd-token-density.svg)
+
+The complete [NERD audit](benchmark_results/nerd/README.md) includes the exact
+pairs, compiler and stdout gates, claim-counter evidence, graphs, limitations,
+and reproduction command.
+
 ### Market context
 
 | Project / benchmark | Public position | Comparison used here |
@@ -288,14 +312,25 @@ sources, output oracles, compiler failures, claim evidence, and reproduction.
 | [python-minifier 3.2.0](https://pypi.org/project/python-minifier/) | Python source-to-source minifier | Current PyPI release, reproduced on the same source, interpreter, and tokenizers |
 | [Toke](https://www.tokelang.dev/) | Independent compiled language; its BPE package reports ~52% fewer tokens than cl100k on Toke source | Reproduced on all 60 public pairs: Kern is 52.37% below Toke with the shared tokenizer and 26.52% below it in the equal-16K native contest |
 | [KARN](https://github.com/karn-lang/karn) | AI-agent language claiming 76% fewer tokens than Python | Public claim row lacks paired sources/tokenizer; on 46 executable pairs Kern is 2.19% smaller with cl100k and both interpreters pass 46/46 |
-| [NERD](https://www.nerd-lang.org/) | New LLVM-backed machine-authorship language; public table contains two token examples | Newly identified contender: reproduce its 32–33% Python claim and compiler outputs next |
+| [NERD](https://www.nerd-lang.org/) | LLVM-backed machine-authorship language claiming 50–70% fewer tokens | All 7 deterministic examples reproduced: Kern is 9.92% smaller under cl100k; NERD's public counter is lexical, not an LLM tokenizer |
 | [Ax](https://github.com/axlanguage/axlang) | Compact AI-native compiled language | Monitored; no public token-density claim or matched token benchmark located yet |
+| [zerolang](https://github.com/vercel-labs/zerolang) | Graph-first language for agents with token efficiency as a design goal | Newly identified direct contender; source, graph-inspection, and checked-edit token lanes remain to be reproduced |
+| [K](https://codeberg.org/ngn/k), [GolfScript](https://golfscript.com/golfscript/), and [J](https://www.jsoftware.com/) | Current top three languages in code.golf's all-hole bytes ranking | High-priority adversarial density lane; bytes reveal risk but are not interchangeable with production LLM tokens |
 | [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |
+| [CodeGolf Bench](https://arxiv.org/abs/2605.30394) | Dynamic concise-code generation benchmark across 60 languages | Planned for the generation phase with identical model, prompt, correctness, and attempt budgets |
 | [SWE-bench](https://www.swebench.com/) | Repository-level issue resolution | Requires the same agent/model in Python and Kern modes; gold-patch compression would not be a valid comparison |
 
 The earlier SimPy and Token Sugar table below remains a legacy comparison.
 No claim is made about code-generation models without a shared corpus,
 tokenizer, model, prompt, and execution protocol.
+
+The market registry is deliberately a living audit, not a declaration that
+every language has already been defeated. The next density frontier is K,
+GolfScript, and J—the strongest current human code-golf signals—followed by
+Pyth, Jelly, Uiua, and BQN. Their byte or character compactness must be
+remeasured as actual `cl100k_base`, `o200k_base`, and deployable-system tokens;
+Unicode-heavy syntax can be short to humans while fragmenting badly for an
+LLM tokenizer.
 
 ### Reproduce
 
@@ -483,9 +518,13 @@ Observed legacy-harness result:
 - `benchmark_head_to_head.py`: unified head-to-head harness (`python`, `kern`, optional external baselines)
 - `benchmark_market.py`: full-denominator shared-corpus market harness
 - `benchmark_toke.py`: pinned paired-corpus Toke harness and compiler audit
+- `benchmark_karn.py`: pinned paired-corpus KARN and code-target audit
+- `benchmark_nerd.py`: complete deterministic public-example NERD audit
 - `market-benchmark-requirements.txt`: pinned optional market dependencies
 - `benchmark_results/market/`: Sigil comparison, graphs, and world-market competitor registry
 - `benchmark_results/toke/`: Toke pair results, integrity audit, and graphs
+- `benchmark_results/karn/`: KARN pairs, compiler audit, claim evidence, and graphs
+- `benchmark_results/nerd/`: NERD pairs, claim-counter audit, and graphs
 - `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
 - `test_baseline_adapters.py`: adapter sanity tests (`python`, `kern`, `simpy`, `token_sugar`)
 - `prepare_finetune_dataset.py`: exports `.py` + `.kern` pairs and JSONL for fine-tuning
