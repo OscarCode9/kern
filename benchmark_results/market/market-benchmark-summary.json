@@ -1,0 +1,900 @@
+{
+  "failure_counts": [
+    {
+      "count": 13,
+      "dataset": "BigCodeBench",
+      "representation": "kern_compact",
+      "stage": "ast"
+    },
+    {
+      "count": 12,
+      "dataset": "BigCodeBench",
+      "representation": "kern_compact",
+      "stage": "parse"
+    },
+    {
+      "count": 1118,
+      "dataset": "BigCodeBench",
+      "representation": "sigil",
+      "stage": "decode"
+    },
+    {
+      "count": 4,
+      "dataset": "BigCodeBench",
+      "representation": "sigil",
+      "stage": "parse"
+    },
+    {
+      "count": 125,
+      "dataset": "HumanEval+",
+      "representation": "sigil",
+      "stage": "decode"
+    },
+    {
+      "count": 3,
+      "dataset": "HumanEval+",
+      "representation": "sigil",
+      "stage": "parse"
+    },
+    {
+      "count": 157,
+      "dataset": "MBPP+",
+      "representation": "sigil",
+      "stage": "decode"
+    },
+    {
+      "count": 51,
+      "dataset": "MBPP+",
+      "representation": "sigil",
+      "stage": "parse"
+    }
+  ],
+  "failure_examples": [
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n;; TODO: manual conversion' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/0"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n;; TODO: manual conversion' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/1"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n;; TODO: manual conversion' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/3"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "SyntaxError: invalid syntax (<unknown>, line 4)",
+      "representation": "sigil",
+      "stage": "parse",
+      "task_id": "HumanEval/4"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n;; TODO: manual conversion' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/5"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n;; TODO: manual conversion' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/6"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n@fbs st:List[str] s:s>List' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/7"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n<typing.Tuple>\\n;; TODO: ma' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/8"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n<typing.Tuple>\\n@rm nu:List' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/9"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 2, col 26: unexpected token '(str(int(a[i]) ^ int(b[i])) for i in ran' in: @sx s:s s2:s>s = ''.join (str(int(a[i]) ^ int(b[i])) for i in range(len(a)))",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/11"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n<typing.Optional>\\n;; TODO:' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/12"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def gr' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/13"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n@ap s:s>List[str] = [i <-' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/14"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n;; TODO: manual conversion' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/17"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def ho' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/18"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token \"<typing.List>\\n@sn s:s>s = to_int:{'zero'\" in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/19"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n<typing.Tuple>\\n;; TODO: ma' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/20"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n@rtu nu:List[float]>List[f' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/21"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n<typing.Any>\\n@fi va:List[A' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/22"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def la' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/24"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n;; TODO: manual conversion' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/25"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n;; TODO: manual conversion' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/26"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 26: unexpected token '->x.swapcase() s' in: @fc s:s>s = ''.join map x->x.swapcase() s",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/27"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '<typing.List>\\n@fbp st:List[str] s:s>List' in: <typing.List>",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/29"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def is' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/31"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 2, col 25: unexpected token '[(i coeff) <- enumerate xs => coeff*math' in: @poly xs:list x:f = sum [(i coeff) <- enumerate xs => coeff*math.pow x i]",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/32"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '@st xs:list = third:[i <- range len xs i' in: @st xs:list = third:[i <- range len xs i%3==0 & => xs[i]] third.sort() [i <- range len xs => i%3==0 ? third[i//3] : xs[i]]",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/33"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def fi' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/36"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token '@se xs:list = even:[i <- range len xs i%' in: @se xs:list = even:[i <- range len xs i%2==0 & => xs[i]] even.sort() [i <- range len xs => i%2==0 ? even[i//2] : xs[i]]",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/37"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def pr' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/39"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def tr' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/40"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def pa' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/43"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def ch' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/44"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def fi' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/46"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def mo' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/49"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 32: unexpected token \"->ch not in 'aeiouAEIOU' te\" in: @rv te = ''.join list filter ch->ch not in 'aeiouAEIOU' te",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/51"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "SyntaxError: invalid syntax (<unknown>, line 2)",
+      "representation": "sigil",
+      "stage": "parse",
+      "task_id": "HumanEval/52"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def fi' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/55"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def co' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/56"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def mo' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/57"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def la' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/59"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def co' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/61"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def fi' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/63"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 1: unexpected token \"FIX:'\\\\nAdd more test cases.\\\\n'\\n@vc s = s\" in: FIX:'\\nAdd more test cases.\\n'",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/64"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 15: unexpected token '[ch <- s ch.isupper() & => ord ch]' in: @digi s = sum [ch <- s ch.isupper() & => ord ch]",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/66"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def fr' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/67"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def pl' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/68"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def se' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/69"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 4: unexpected token 'TODO: manual conversion needed\\n;; def st' in: ;; TODO: manual conversion needed",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/70"
+    },
+    {
+      "dataset": "HumanEval+",
+      "message": "ValueError: Parse errors in Sigil source:\nline 1, col 38: unexpected token '? -1 : None p:a+b+c/2 round p*p-a*p-b*p-' in: @ta a b c = a+b<=c | a+c<=b | b+c<=a ? -1 : None p:a+b+c/2 round p*p-a*p-b*p-c**0.5 2",
+      "representation": "sigil",
+      "stage": "decode",
+      "task_id": "HumanEval/71"
+    }
+  ],
+  "functional": {
+    "HumanEval+": {
+      "kern_compact": {
+        "base_pass": 163,
+        "dataset_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+        "error": "",
+        "plus_pass": 163,
+        "total": 164
+      },
+      "python": {
+        "base_pass": 163,
+        "dataset_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+        "error": "",
+        "plus_pass": 163,
+        "total": 164
+      },
+      "python_minifier": {
+        "base_pass": 163,
+        "dataset_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+        "error": "",
+        "plus_pass": 163,
+        "total": 164
+      },
+      "sigil": {
+        "base_pass": 1,
+        "dataset_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+        "error": "",
+        "plus_pass": 1,
+        "total": 164
+      }
+    },
+    "MBPP+": {
+      "kern_compact": {
+        "base_pass": 378,
+        "dataset_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+        "error": "",
+        "plus_pass": 378,
+        "total": 378
+      },
+      "python": {
+        "base_pass": 378,
+        "dataset_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+        "error": "",
+        "plus_pass": 378,
+        "total": 378
+      },
+      "python_minifier": {
+        "base_pass": 378,
+        "dataset_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+        "error": "",
+        "plus_pass": 378,
+        "total": 378
+      },
+      "sigil": {
+        "base_pass": 3,
+        "dataset_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+        "error": "",
+        "plus_pass": 3,
+        "total": 378
+      }
+    }
+  },
+  "metadata": {
+    "bigcodebench_revision": "b74c0d0bf70d2c0bc459be537895cca163007f1a",
+    "bigcodebench_split": "v0.1.4",
+    "evalplus": "0.3.1",
+    "evalplus_min_time_limit": 5.0,
+    "functional_executed": true,
+    "generated_at_utc": "2026-07-29T06:47:39.215538+00:00",
+    "humaneval_plus_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+    "mbpp_plus_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+    "normalization": "code-only source after removing no-op string expressions/docstrings; remaining formatting preserved",
+    "protocol": "same code-only source, same production tokenizers, full denominator, decoded-Python structural checks, optional official EvalPlus execution",
+    "representations": {
+      "kern_compact": "v0.4",
+      "python": "3.11.15",
+      "python_minifier": "3.2.0",
+      "sigil": "0.1.0"
+    },
+    "sigil_distribution": "https://pypi.org/project/sigil-lang/",
+    "sigil_wheel_sha256": "eba9b1a755c207d9db9dc658abf612c72f5a163aa72b59745ff9511ff8e7e31e",
+    "tokenizers": [
+      "cl100k_base",
+      "o200k_base"
+    ]
+  },
+  "summary": [
+    {
+      "ast_equal": 1140,
+      "dataset": "BigCodeBench",
+      "decode_ok": 1140,
+      "encode_ok": 1140,
+      "full_conversion": 1140,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 1140,
+      "python_tokens": 163786,
+      "representation": "python",
+      "representation_tokens": 163786,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "token_cases": 1140,
+      "tokenizer": "cl100k_base",
+      "total_cases": 1140
+    },
+    {
+      "ast_equal": 1140,
+      "dataset": "BigCodeBench",
+      "decode_ok": 1140,
+      "encode_ok": 1140,
+      "full_conversion": 1140,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 1140,
+      "python_tokens": 166184,
+      "representation": "python",
+      "representation_tokens": 166184,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "token_cases": 1140,
+      "tokenizer": "o200k_base",
+      "total_cases": 1140
+    },
+    {
+      "ast_equal": 1115,
+      "dataset": "BigCodeBench",
+      "decode_ok": 1140,
+      "encode_ok": 1140,
+      "full_conversion": 1140,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 1128,
+      "python_tokens": 163786,
+      "representation": "kern_compact",
+      "representation_tokens": 118401,
+      "saved_pct": 27.7099,
+      "saved_tokens": 45385,
+      "token_cases": 1140,
+      "tokenizer": "cl100k_base",
+      "total_cases": 1140
+    },
+    {
+      "ast_equal": 1115,
+      "dataset": "BigCodeBench",
+      "decode_ok": 1140,
+      "encode_ok": 1140,
+      "full_conversion": 1140,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 1128,
+      "python_tokens": 166184,
+      "representation": "kern_compact",
+      "representation_tokens": 121460,
+      "saved_pct": 26.9123,
+      "saved_tokens": 44724,
+      "token_cases": 1140,
+      "tokenizer": "o200k_base",
+      "total_cases": 1140
+    },
+    {
+      "ast_equal": 0,
+      "dataset": "BigCodeBench",
+      "decode_ok": 1140,
+      "encode_ok": 1140,
+      "full_conversion": 1140,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 1140,
+      "python_tokens": 163786,
+      "representation": "python_minifier",
+      "representation_tokens": 123107,
+      "saved_pct": 24.8367,
+      "saved_tokens": 40679,
+      "token_cases": 1140,
+      "tokenizer": "cl100k_base",
+      "total_cases": 1140
+    },
+    {
+      "ast_equal": 0,
+      "dataset": "BigCodeBench",
+      "decode_ok": 1140,
+      "encode_ok": 1140,
+      "full_conversion": 1140,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 1140,
+      "python_tokens": 166184,
+      "representation": "python_minifier",
+      "representation_tokens": 125898,
+      "saved_pct": 24.2418,
+      "saved_tokens": 40286,
+      "token_cases": 1140,
+      "tokenizer": "o200k_base",
+      "total_cases": 1140
+    },
+    {
+      "ast_equal": 0,
+      "dataset": "BigCodeBench",
+      "decode_ok": 22,
+      "encode_ok": 1140,
+      "full_conversion": 516,
+      "mean_conversion_pct": 85.9235,
+      "parse_ok": 18,
+      "python_tokens": 163786,
+      "representation": "sigil",
+      "representation_tokens": 149382,
+      "saved_pct": 8.7944,
+      "saved_tokens": 14404,
+      "token_cases": 1140,
+      "tokenizer": "cl100k_base",
+      "total_cases": 1140
+    },
+    {
+      "ast_equal": 0,
+      "dataset": "BigCodeBench",
+      "decode_ok": 22,
+      "encode_ok": 1140,
+      "full_conversion": 516,
+      "mean_conversion_pct": 85.9235,
+      "parse_ok": 18,
+      "python_tokens": 166184,
+      "representation": "sigil",
+      "representation_tokens": 151794,
+      "saved_pct": 8.6591,
+      "saved_tokens": 14390,
+      "token_cases": 1140,
+      "tokenizer": "o200k_base",
+      "total_cases": 1140
+    },
+    {
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "decode_ok": 164,
+      "encode_ok": 164,
+      "full_conversion": 164,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 164,
+      "python_tokens": 10571,
+      "representation": "python",
+      "representation_tokens": 10571,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "token_cases": 164,
+      "tokenizer": "cl100k_base",
+      "total_cases": 164
+    },
+    {
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "decode_ok": 164,
+      "encode_ok": 164,
+      "full_conversion": 164,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 164,
+      "python_tokens": 10611,
+      "representation": "python",
+      "representation_tokens": 10611,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "token_cases": 164,
+      "tokenizer": "o200k_base",
+      "total_cases": 164
+    },
+    {
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "decode_ok": 164,
+      "encode_ok": 164,
+      "full_conversion": 164,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 164,
+      "python_tokens": 10571,
+      "representation": "kern_compact",
+      "representation_tokens": 7342,
+      "saved_pct": 30.5458,
+      "saved_tokens": 3229,
+      "token_cases": 164,
+      "tokenizer": "cl100k_base",
+      "total_cases": 164
+    },
+    {
+      "ast_equal": 164,
+      "dataset": "HumanEval+",
+      "decode_ok": 164,
+      "encode_ok": 164,
+      "full_conversion": 164,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 164,
+      "python_tokens": 10611,
+      "representation": "kern_compact",
+      "representation_tokens": 7465,
+      "saved_pct": 29.6485,
+      "saved_tokens": 3146,
+      "token_cases": 164,
+      "tokenizer": "o200k_base",
+      "total_cases": 164
+    },
+    {
+      "ast_equal": 15,
+      "dataset": "HumanEval+",
+      "decode_ok": 164,
+      "encode_ok": 164,
+      "full_conversion": 164,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 164,
+      "python_tokens": 10571,
+      "representation": "python_minifier",
+      "representation_tokens": 7813,
+      "saved_pct": 26.0902,
+      "saved_tokens": 2758,
+      "token_cases": 164,
+      "tokenizer": "cl100k_base",
+      "total_cases": 164
+    },
+    {
+      "ast_equal": 15,
+      "dataset": "HumanEval+",
+      "decode_ok": 164,
+      "encode_ok": 164,
+      "full_conversion": 164,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 164,
+      "python_tokens": 10611,
+      "representation": "python_minifier",
+      "representation_tokens": 7875,
+      "saved_pct": 25.7846,
+      "saved_tokens": 2736,
+      "token_cases": 164,
+      "tokenizer": "o200k_base",
+      "total_cases": 164
+    },
+    {
+      "ast_equal": 0,
+      "dataset": "HumanEval+",
+      "decode_ok": 39,
+      "encode_ok": 164,
+      "full_conversion": 72,
+      "mean_conversion_pct": 48.2724,
+      "parse_ok": 36,
+      "python_tokens": 10571,
+      "representation": "sigil",
+      "representation_tokens": 11008,
+      "saved_pct": -4.134,
+      "saved_tokens": -437,
+      "token_cases": 164,
+      "tokenizer": "cl100k_base",
+      "total_cases": 164
+    },
+    {
+      "ast_equal": 0,
+      "dataset": "HumanEval+",
+      "decode_ok": 39,
+      "encode_ok": 164,
+      "full_conversion": 72,
+      "mean_conversion_pct": 48.2724,
+      "parse_ok": 36,
+      "python_tokens": 10611,
+      "representation": "sigil",
+      "representation_tokens": 11053,
+      "saved_pct": -4.1655,
+      "saved_tokens": -442,
+      "token_cases": 164,
+      "tokenizer": "o200k_base",
+      "total_cases": 164
+    },
+    {
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "decode_ok": 378,
+      "encode_ok": 378,
+      "full_conversion": 378,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 378,
+      "python_tokens": 15183,
+      "representation": "python",
+      "representation_tokens": 15183,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "token_cases": 378,
+      "tokenizer": "cl100k_base",
+      "total_cases": 378
+    },
+    {
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "decode_ok": 378,
+      "encode_ok": 378,
+      "full_conversion": 378,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 378,
+      "python_tokens": 15270,
+      "representation": "python",
+      "representation_tokens": 15270,
+      "saved_pct": 0.0,
+      "saved_tokens": 0,
+      "token_cases": 378,
+      "tokenizer": "o200k_base",
+      "total_cases": 378
+    },
+    {
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "decode_ok": 378,
+      "encode_ok": 378,
+      "full_conversion": 378,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 378,
+      "python_tokens": 15183,
+      "representation": "kern_compact",
+      "representation_tokens": 10459,
+      "saved_pct": 31.1137,
+      "saved_tokens": 4724,
+      "token_cases": 378,
+      "tokenizer": "cl100k_base",
+      "total_cases": 378
+    },
+    {
+      "ast_equal": 378,
+      "dataset": "MBPP+",
+      "decode_ok": 378,
+      "encode_ok": 378,
+      "full_conversion": 378,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 378,
+      "python_tokens": 15270,
+      "representation": "kern_compact",
+      "representation_tokens": 10631,
+      "saved_pct": 30.3798,
+      "saved_tokens": 4639,
+      "token_cases": 378,
+      "tokenizer": "o200k_base",
+      "total_cases": 378
+    },
+    {
+      "ast_equal": 140,
+      "dataset": "MBPP+",
+      "decode_ok": 378,
+      "encode_ok": 378,
+      "full_conversion": 378,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 378,
+      "python_tokens": 15183,
+      "representation": "python_minifier",
+      "representation_tokens": 11565,
+      "saved_pct": 23.8293,
+      "saved_tokens": 3618,
+      "token_cases": 378,
+      "tokenizer": "cl100k_base",
+      "total_cases": 378
+    },
+    {
+      "ast_equal": 140,
+      "dataset": "MBPP+",
+      "decode_ok": 378,
+      "encode_ok": 378,
+      "full_conversion": 378,
+      "mean_conversion_pct": 100.0,
+      "parse_ok": 378,
+      "python_tokens": 15270,
+      "representation": "python_minifier",
+      "representation_tokens": 11670,
+      "saved_pct": 23.5756,
+      "saved_tokens": 3600,
+      "token_cases": 378,
+      "tokenizer": "o200k_base",
+      "total_cases": 378
+    },
+    {
+      "ast_equal": 0,
+      "dataset": "MBPP+",
+      "decode_ok": 221,
+      "encode_ok": 378,
+      "full_conversion": 304,
+      "mean_conversion_pct": 82.1429,
+      "parse_ok": 170,
+      "python_tokens": 15183,
+      "representation": "sigil",
+      "representation_tokens": 13130,
+      "saved_pct": 13.5217,
+      "saved_tokens": 2053,
+      "token_cases": 378,
+      "tokenizer": "cl100k_base",
+      "total_cases": 378
+    },
+    {
+      "ast_equal": 0,
+      "dataset": "MBPP+",
+      "decode_ok": 221,
+      "encode_ok": 378,
+      "full_conversion": 304,
+      "mean_conversion_pct": 82.1429,
+      "parse_ok": 170,
+      "python_tokens": 15270,
+      "representation": "sigil",
+      "representation_tokens": 13196,
+      "saved_pct": 13.5822,
+      "saved_tokens": 2074,
+      "token_cases": 378,
+      "tokenizer": "o200k_base",
+      "total_cases": 378
+    }
+  ]
+}

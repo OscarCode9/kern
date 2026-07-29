@@ -1,0 +1,89 @@
+{
+  "checked_at": "2026-07-29",
+  "schema_version": 1,
+  "competitors": [
+    {
+      "name": "Sigil",
+      "kind": "Python-targeting compact language",
+      "official_source": "https://pypi.org/project/sigil-lang/",
+      "version_or_reference": "0.1.0",
+      "artifact_sha256": "eba9b1a755c207d9db9dc658abf612c72f5a163aa72b59745ff9511ff8e7e31e",
+      "public_claim": "54-60% fewer tokens on 23 functional tasks",
+      "status": "reproduced_shared_corpus",
+      "kern_lane": "cl100k_base and o200k_base on HumanEval+, MBPP+, and BigCodeBench",
+      "next_gate": "Repeat when a newer public distribution changes converter or compiler behavior"
+    },
+    {
+      "name": "Toke",
+      "kind": "Compiled AI-native language with a native BPE tokenizer",
+      "official_source": "https://github.com/karwalski/toke",
+      "evaluation_source": "https://github.com/karwalski/toke-eval",
+      "version_or_reference": "toke@a3adcebddbdf4629b5289a6f317ac6678c6061c8; toke-eval@851f6d8b2cfedea22833f3787ad96c19e072e952",
+      "public_claim": "52% average reduction across 42 programs with a purpose-built 16K BPE",
+      "status": "paired_corpus_required",
+      "kern_lane": "shared cl100k_base/o200k_base lane plus a separately labeled native-tokenizer lane",
+      "next_gate": "Pin public paired solutions, compile and execute both languages, then train a Kern-native tokenizer before comparing native BPE totals"
+    },
+    {
+      "name": "KARN",
+      "kind": "Multi-target agent language",
+      "official_source": "https://github.com/karn-lang/karn",
+      "version_or_reference": "5208a5f592083c4885281b1d505af06fc58995ba",
+      "public_claim": "76% fewer tokens than Python",
+      "status": "claim_audit_required",
+      "kern_lane": "shared matched programs under cl100k_base and o200k_base",
+      "next_gate": "Locate or construct a public paired corpus, verify outputs, and reproduce the claim without relying on LOC ratios"
+    },
+    {
+      "name": "NURL",
+      "kind": "LLVM-backed language for language models",
+      "official_source": "https://github.com/nurl-lang/nurl",
+      "evaluation_source": "https://github.com/nurl-lang/nurl/blob/main/bench/TOKEN_EFFICIENCY.md",
+      "version_or_reference": "3ab1340780025078d223a71adf2343cf9530908e",
+      "public_claim": "Official study reports median 1.70-1.71x Python tokens on production tokenizers",
+      "status": "officially_not_a_token_leader",
+      "kern_lane": "production-tokenizer evidence already contradicts an unqualified density claim",
+      "next_gate": "Monitor future native-tokenizer or generation-correctness evidence"
+    },
+    {
+      "name": "ShortCoder",
+      "kind": "Academic Python syntax-optimization method",
+      "official_source": "https://arxiv.org/abs/2601.09703",
+      "version_or_reference": "arXiv:2601.09703",
+      "public_claim": "18.1% syntax-level token reduction",
+      "status": "method_lane_pending",
+      "kern_lane": "same Python corpus, tokenizer, generated-code protocol, and functional tests",
+      "next_gate": "Reproduce released rules or dataset separately from language claims"
+    },
+    {
+      "name": "Token Sugar",
+      "kind": "Academic learned shorthand method",
+      "official_source": "https://arxiv.org/abs/2512.08266",
+      "version_or_reference": "ASE 2025 / arXiv:2512.08266",
+      "public_claim": "Up to 15.1% source reduction and 11.2% generated-output reduction",
+      "status": "method_lane_pending",
+      "kern_lane": "exact released patterns and model protocol, reported separately from grammar-only compression",
+      "next_gate": "Reproduce the complete paper pipeline instead of the legacy adapter alone"
+    },
+    {
+      "name": "AI Native Lang",
+      "kind": "Workflow and multi-target DSL",
+      "official_source": "https://www.ainativelang.com/benchmark",
+      "version_or_reference": "de90f9d9427f21ff1a3f9283efc10d5fa4e82808",
+      "public_claim": "Compactness on four workflow-authoring comparisons and emitted-artifact expansion ratios",
+      "status": "scope_mismatch",
+      "kern_lane": "domain-specific workflow tasks only; not HumanEval or general Python equivalence",
+      "next_gate": "Compare only after defining identical workflow semantics and required emitted targets"
+    },
+    {
+      "name": "KERN at kernlang.dev",
+      "kind": "Typed compact source format and semantic review engine",
+      "official_source": "https://kernlang.dev/",
+      "version_or_reference": "public site checked 2026-07-29",
+      "public_claim": "Compact AI-assisted source format without a shared percentage claim",
+      "status": "brand_and_scope_audit",
+      "kern_lane": "determine semantic overlap and avoid name-confusion claims",
+      "next_gate": "Track naming, feature, and benchmark overlap separately from token leadership"
+    }
+  ]
+}

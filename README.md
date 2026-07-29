@@ -83,7 +83,7 @@ flowchart LR
   F2 --> F1
 ```
 
-## Current status (July 28, 2026)
+## Current status (July 29, 2026)
 
 Implemented:
 - Grammar v0.4 (v0.2/v0.3 syntax remains accepted by the compiler)
@@ -176,12 +176,41 @@ it is the intentionally alpha-renamed compact AST. The 25 incompatibilities
 remain explicit next targets: 16 attribute/call precedence cases, 8 f-string
 cases, and 1 grouped-lambda case.
 
+### Reproduced language-market result (July 29, 2026)
+
+Kern now has a directly reproduced language-level comparison against the
+public [Sigil 0.1.0](https://pypi.org/project/sigil-lang/) distribution. The
+market harness uses the same 1,682 code-only programs, the same production
+tokenizers, a full denominator, decoded-Python checks, and official EvalPlus
+execution.
+
+| Combined result | Kern compact | Sigil 0.1.0 |
+|---|---:|---:|
+| `cl100k_base` tokens | **`136,202`** | `173,520` |
+| Saved vs Python | **`28.14%`** | `8.45%` |
+| Parseable round-trips | **`1,670/1,682`** | `224/1,682` |
+| EvalPlus base + extra | **`541/542`** | `4/542` |
+
+Kern uses `37,318` fewer `cl100k_base` tokens than Sigil (`21.51%` below its
+encoded output) while matching Python's outcome on all EvalPlus tasks. This is
+a bounded, reproducible win over Sigil 0.1.0—not yet a claim of superiority
+over every language or over Toke's native tokenizer.
+
+![Shared-tokenizer language market](benchmark_results/market/market-token-efficiency.svg)
+
+![Language market functional preservation](benchmark_results/market/market-evalplus-correctness.svg)
+
+The full protocol, structural graph, limitations, remaining opponents, and
+machine-readable registry are in the
+[world-market report](benchmark_results/market/README.md).
+
 ### Market context
 
 | Project / benchmark | Public position | Comparison used here |
 |---|---|---|
 | Kern v0.4 reversible | Identifier-reversible compact Python representation | Reproduced locally with shared tokenizers, AST checks, and EvalPlus tests |
 | Kern v0.4 compact | Optional semantic-minifier profile over the Kern grammar | Beats python-minifier on all three shared corpora and both shared tokenizers while matching its EvalPlus outcomes |
+| [Sigil 0.1.0](https://pypi.org/project/sigil-lang/) | Alpha compact language with a Python converter and compiler | Reproduced on all 1,682 programs; Kern is denser and preserves `541/542` EvalPlus tasks versus Sigil's `4/542` |
 | [python-minifier 3.2.0](https://pypi.org/project/python-minifier/) | Python source-to-source minifier | Current PyPI release, reproduced on the same source, interpreter, and tokenizers |
 | [Toke](https://www.tokelang.dev/) | Independent compiled language; reports 52% average reduction on 42 programs with its own trained BPE | Kept out of the graph because its corpus and tokenizer are not shared or reproduced here |
 | [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |
@@ -375,6 +404,9 @@ Observed legacy-harness result:
 - `benchmark_humaneval_functional.py`: HumanEval functional validation
 - `benchmark_multitokenizer.py`: HumanEval + MBPP multi-tokenizer benchmark
 - `benchmark_head_to_head.py`: unified head-to-head harness (`python`, `kern`, optional external baselines)
+- `benchmark_market.py`: full-denominator shared-corpus market harness
+- `market-benchmark-requirements.txt`: pinned optional market dependencies
+- `benchmark_results/market/`: Sigil comparison, graphs, and world-market competitor registry
 - `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
 - `test_baseline_adapters.py`: adapter sanity tests (`python`, `kern`, `simpy`, `token_sugar`)
 - `prepare_finetune_dataset.py`: exports `.py` + `.kern` pairs and JSONL for fine-tuning
