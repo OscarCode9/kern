@@ -176,7 +176,7 @@ it is the intentionally alpha-renamed compact AST. The 25 incompatibilities
 remain explicit next targets: 16 attribute/call precedence cases, 8 f-string
 cases, and 1 grouped-lambda case.
 
-### Reproduced language-market result (July 29, 2026)
+### Reproduced language-market results (July 29, 2026)
 
 Kern now has a directly reproduced language-level comparison against the
 public [Sigil 0.1.0](https://pypi.org/project/sigil-lang/) distribution. The
@@ -200,9 +200,34 @@ over every language or over Toke's native tokenizer.
 
 ![Language market functional preservation](benchmark_results/market/market-evalplus-correctness.svg)
 
-The full protocol, structural graph, limitations, remaining opponents, and
+The second reproduced rival is
+[Toke](https://github.com/karwalski/toke). Because Toke has no public
+Python-to-Toke converter, its pinned public evaluation corpus requires a
+paired-program lane. On the 60 public Python/Toke pairs rendered as equivalent
+JSON-CLI programs:
+
+| `cl100k_base` paired result | Python | Kern compact | python-minifier | Toke |
+|---|---:|---:|---:|---:|
+| Tokens | `3,565` | **`3,023`** | `2,892` | `6,347` |
+| Matches the public smoke oracle | `60/60` | **`60/60`** | `60/60` | `29/60` |
+
+Kern uses **`52.37%` fewer tokens than Toke** under the same tokenizer. Toke's
+native 16K BPE uses `3,906` tokens on those same sources, so Kern with cl100k
+still uses `22.61%` fewer; that remains a cross-tokenizer observation, not the
+final native-tokenizer contest. The current pinned Toke compiler accepts only
+`430/1,000` published solutions, showing source/compiler drift after its
+historical gate.
+
+![Shared-tokenizer Kern vs Toke](benchmark_results/toke/toke-shared-tokenizer.svg)
+
+The paired micro-corpus also identifies the next Kern target: python-minifier
+uses `131` fewer tokens than Kern there, despite Kern beating it on the larger
+1,682-program modern corpus.
+
+The full protocols, structural graphs, limitations, remaining opponents, and
 machine-readable registry are in the
-[world-market report](benchmark_results/market/README.md).
+[world-market report](benchmark_results/market/README.md) and the
+[Toke public-pair audit](benchmark_results/toke/README.md).
 
 ### Market context
 
@@ -212,13 +237,13 @@ machine-readable registry are in the
 | Kern v0.4 compact | Optional semantic-minifier profile over the Kern grammar | Beats python-minifier on all three shared corpora and both shared tokenizers while matching its EvalPlus outcomes |
 | [Sigil 0.1.0](https://pypi.org/project/sigil-lang/) | Alpha compact language with a Python converter and compiler | Reproduced on all 1,682 programs; Kern is denser and preserves `541/542` EvalPlus tasks versus Sigil's `4/542` |
 | [python-minifier 3.2.0](https://pypi.org/project/python-minifier/) | Python source-to-source minifier | Current PyPI release, reproduced on the same source, interpreter, and tokenizers |
-| [Toke](https://www.tokelang.dev/) | Independent compiled language; reports 52% average reduction on 42 programs with its own trained BPE | Kept out of the graph because its corpus and tokenizer are not shared or reproduced here |
+| [Toke](https://www.tokelang.dev/) | Independent compiled language; its BPE package reports ~52% fewer tokens than cl100k on Toke source | Reproduced on all 60 public Python/Toke pairs: Kern is 52.37% below Toke with the shared tokenizer; separate native observation and compiler-drift audit are published |
 | [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |
 | [SWE-bench](https://www.swebench.com/) | Repository-level issue resolution | Requires the same agent/model in Python and Kern modes; gold-patch compression would not be a valid comparison |
 
 The earlier SimPy and Token Sugar table below remains a legacy comparison.
-No claim is made that Kern beats Toke or code-generation models without a
-shared corpus, tokenizer, model, prompt, and execution protocol.
+No claim is made about code-generation models without a shared corpus,
+tokenizer, model, prompt, and execution protocol.
 
 ### Reproduce
 
@@ -405,8 +430,10 @@ Observed legacy-harness result:
 - `benchmark_multitokenizer.py`: HumanEval + MBPP multi-tokenizer benchmark
 - `benchmark_head_to_head.py`: unified head-to-head harness (`python`, `kern`, optional external baselines)
 - `benchmark_market.py`: full-denominator shared-corpus market harness
+- `benchmark_toke.py`: pinned paired-corpus Toke harness and compiler audit
 - `market-benchmark-requirements.txt`: pinned optional market dependencies
 - `benchmark_results/market/`: Sigil comparison, graphs, and world-market competitor registry
+- `benchmark_results/toke/`: Toke pair results, integrity audit, and graphs
 - `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
 - `test_baseline_adapters.py`: adapter sanity tests (`python`, `kern`, `simpy`, `token_sugar`)
 - `prepare_finetune_dataset.py`: exports `.py` + `.kern` pairs and JSONL for fine-tuning

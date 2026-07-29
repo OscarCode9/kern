@@ -1,2 +1,3 @@
 -r benchmark-requirements.txt
 sigil-lang==0.1.0
+toke-tokenizer==0.1.0

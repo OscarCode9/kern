@@ -1,10 +1,11 @@
 # Kern world-market benchmark — July 29, 2026
 
-This is Kern's first directly reproduced language-level market comparison. It
-does **not** claim that Kern has already beaten every language. It establishes
-one audited result and an explicit queue for the remaining contenders.
+This is Kern's directly reproduced language-level market comparison. It does
+**not** claim that Kern has already beaten every language. It establishes
+audited results against Sigil and Toke plus an explicit queue for the remaining
+contenders.
 
-## Reproduced result
+## Reproduced Sigil result
 
 Kern v0.4 compact beats Sigil 0.1.0 under the shared production-tokenizer
 protocol while preserving far more executable behavior.
@@ -74,16 +75,45 @@ The evidence supports this bounded statement:
 > v0.4 compact is denser and substantially more reliable than the public Sigil
 > 0.1.0 Python conversion pipeline.
 
-It does not yet prove superiority over Toke's native tokenizer, KARN's
+It does not by itself prove superiority over Toke's native tokenizer, KARN's
 unreproduced headline, or model-generation systems.
+
+## Reproduced Toke public-pair result
+
+Toke does not publish a Python-to-Toke converter, so it requires a paired
+protocol. The pinned public evaluation repository contains 60 Python reference
+functions with matching Toke programs. The
+[Toke report](../toke/README.md) renders both sides as equivalent JSON-CLI
+programs and keeps all 60 pairs in the denominator.
+
+| `cl100k_base` result | Python | Kern compact | python-minifier | Toke |
+|---|---:|---:|---:|---:|
+| Tokens | `3,565` | **`3,023`** | `2,892` | `6,347` |
+| Saved vs Python | — | **`15.20%`** | `18.88%` | `-78.04%` |
+
+Kern uses `3,324` fewer shared-tokenizer tokens than Toke (**`52.37%` below
+Toke**). With Toke's own 16K BPE, the 60 Toke programs use `3,906` tokens; Kern
+with cl100k still uses `22.61%` fewer, but that observation remains explicitly
+cross-tokenizer until Kern has a held-out native-tokenizer lane.
+
+Kern round-trips and matches the public smoke oracle on `60/60`. Only `29/60`
+published Toke pairs pass the current pinned compiler, and all 29 pass the
+single probe. Across all 1,000 published Toke solutions, `430/1,000` pass the
+current compiler versus the historical public CSV's `588/923` evaluated
+passes.
+
+![Shared-tokenizer Toke comparison](../toke/toke-shared-tokenizer.svg)
+
+![Toke public functional smoke probe](../toke/toke-functional-probe.svg)
 
 ## Remaining world-market gates
 
 The machine-readable registry is
 [`competitors.json`](competitors.json). Current priority:
 
-1. Toke paired programs under shared `cl100k_base` and `o200k_base`;
-2. a separate native-tokenizer contest: Toke BPE versus a trained Kern BPE;
+1. a separate native-tokenizer contest: Toke BPE versus a trained Kern BPE;
+2. close Kern's 131-token micro-corpus gap to python-minifier without weakening
+   its semantic contract;
 3. KARN paired compile-and-run programs before accepting its 76% claim;
 4. exact ShortCoder and Token Sugar method reproduction;
 5. continued monitoring for new public languages, version changes, and
@@ -104,6 +134,8 @@ python -m venv .venv-market
 
 Sigil's public wheel builds its Tree-sitter parser on first use, so a C compiler
 is required and the first run can spend several minutes compiling that parser.
+The separately pinned Toke benchmark and build commands are documented in the
+[Toke report](../toke/README.md).
 
 Artifacts:
 
@@ -113,3 +145,4 @@ Artifacts:
 - `market-token-efficiency.svg`: shared-tokenizer density;
 - `market-structural-coverage.svg`: decoded parse coverage;
 - `market-evalplus-correctness.svg`: official functional preservation.
+- `../toke/`: public-pair Toke benchmark, raw results, and graphs.

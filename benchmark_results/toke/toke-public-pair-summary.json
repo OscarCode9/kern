@@ -1,0 +1,178 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-29T07:21:08.982925+00:00",
+    "protocol": "60 public Python/Toke pairs as equivalent JSON-CLI programs; full denominator; same production tokenizer in shared lane",
+    "toke_commit": "a3adcebddbdf4629b5289a6f317ac6678c6061c8",
+    "toke_eval_commit": "851f6d8b2cfedea22833f3787ad96c19e072e952",
+    "toke_compiler_version": "toke 2.8.0",
+    "toke_tokenizer_version": "0.1.0",
+    "toke_tokenizer_wheel_sha256": "c33eee7501da85966f969dc0007afd30c9cc2a7f2a6fb5f8b769aa7762210fcb",
+    "python_version": "3.12.11",
+    "python_minifier_version": "3.2.0",
+    "tiktoken_version": "0.13.0",
+    "tokenizers": [
+      "cl100k_base",
+      "o200k_base"
+    ],
+    "public_pairs": 60,
+    "functional_probe": true,
+    "functional_limit": "Kern-authored smoke probes, not Toke private held-out tests"
+  },
+  "shared_tokenizer_aggregates": [
+    {
+      "tokenizer": "cl100k_base",
+      "representation": "python",
+      "programs": 60,
+      "python_tokens": 3565,
+      "representation_tokens": 3565,
+      "saved_tokens": 0,
+      "saved_pct": 0.0
+    },
+    {
+      "tokenizer": "cl100k_base",
+      "representation": "kern_compact",
+      "programs": 60,
+      "python_tokens": 3565,
+      "representation_tokens": 3023,
+      "saved_tokens": 542,
+      "saved_pct": 15.203366058906031
+    },
+    {
+      "tokenizer": "cl100k_base",
+      "representation": "python_minifier",
+      "programs": 60,
+      "python_tokens": 3565,
+      "representation_tokens": 2892,
+      "saved_tokens": 673,
+      "saved_pct": 18.877980364656384
+    },
+    {
+      "tokenizer": "cl100k_base",
+      "representation": "toke",
+      "programs": 60,
+      "python_tokens": 3565,
+      "representation_tokens": 6347,
+      "saved_tokens": -2782,
+      "saved_pct": -78.03646563814867
+    },
+    {
+      "tokenizer": "o200k_base",
+      "representation": "python",
+      "programs": 60,
+      "python_tokens": 3616,
+      "representation_tokens": 3616,
+      "saved_tokens": 0,
+      "saved_pct": 0.0
+    },
+    {
+      "tokenizer": "o200k_base",
+      "representation": "kern_compact",
+      "programs": 60,
+      "python_tokens": 3616,
+      "representation_tokens": 3076,
+      "saved_tokens": 540,
+      "saved_pct": 14.933628318584072
+    },
+    {
+      "tokenizer": "o200k_base",
+      "representation": "python_minifier",
+      "programs": 60,
+      "python_tokens": 3616,
+      "representation_tokens": 2945,
+      "saved_tokens": 671,
+      "saved_pct": 18.55641592920354
+    },
+    {
+      "tokenizer": "o200k_base",
+      "representation": "toke",
+      "programs": 60,
+      "python_tokens": 3616,
+      "representation_tokens": 6351,
+      "saved_tokens": -2735,
+      "saved_pct": -75.63606194690266
+    }
+  ],
+  "native_tokenizer_lane": {
+    "scope": "Toke source only; separately labeled cross-tokenizer row",
+    "programs": 60,
+    "toke_native_tokens": 3906,
+    "toke_cl100k_base_tokens": 6347,
+    "native_reduction_vs_toke_cl100k_pct": 38.45911454230345,
+    "kern_cl100k_base_tokens": 3023,
+    "kern_below_toke_native_pct": 22.606246799795187,
+    "fairness_note": "Kern and Toke use different tokenizers in this observation; the shared-tokenizer aggregates are the neutral language lane."
+  },
+  "robustness": {
+    "kern_shared_tokenizer_wins": 59,
+    "total_pairs": 60,
+    "median_per_pair_kern_below_toke_pct": 46.86274509803921,
+    "largest_toke_source": {
+      "task_id": "task-a-0015",
+      "toke_cl100k_base_tokens": 922,
+      "kern_cl100k_base_tokens": 38
+    },
+    "excluding_largest_toke_source": {
+      "programs": 59,
+      "kern_cl100k_base_tokens": 2985,
+      "toke_cl100k_base_tokens": 5425,
+      "kern_below_toke_pct": 44.97695852534562
+    },
+    "kern_cl100k_below_toke_native_pairs": 46,
+    "median_per_pair_kern_below_toke_native_pct": 14.423076923076916
+  },
+  "structural": {
+    "kern_decode_ok": 60,
+    "kern_parse_ok": 60,
+    "kern_contract_ast": 60,
+    "toke_current_compiler_check_ok": 29,
+    "total": 60,
+    "toke_first_error_counts": {
+      "E2002": 25,
+      "E4070": 4,
+      "E2004": 1,
+      "E4031": 1
+    }
+  },
+  "functional_probe": {
+    "python": {
+      "passed": 60,
+      "total": 60
+    },
+    "kern_compact": {
+      "passed": 60,
+      "total": 60
+    },
+    "python_minifier": {
+      "passed": 60,
+      "total": 60
+    },
+    "toke": {
+      "passed": 29,
+      "total": 60
+    }
+  },
+  "toke_public_corpus_audit": {
+    "solutions": 1000,
+    "cl100k_base_tokens": 87903,
+    "o200k_base_tokens": 88182,
+    "toke_native_tokens": 56822,
+    "toke_native_normalized_tokens": 56610,
+    "native_reduction_vs_cl100k_pct": 35.35829266350409,
+    "current_compiler_check_pass": 430,
+    "current_compiler_check_fail": 570,
+    "current_compiler_first_error_counts": {
+      "E2002": 554,
+      "E4070": 8,
+      "E4031": 4,
+      "E2004": 2,
+      "E1003": 2
+    },
+    "official_gate1_csv": {
+      "rows": 1000,
+      "cl100k_base_tokens": 87903,
+      "pass1": 588,
+      "fail": 335,
+      "missing": 77
+    }
+  }
+}

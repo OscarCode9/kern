@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+<title id="title">Public-pair functional smoke probe</title>
+<desc id="desc">One Kern-authored deterministic input per public pair; not Toke's private held-out suite</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">Public-pair functional smoke probe</text>
+<text x="92" y="65" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">One Kern-authored deterministic input per public pair; not Toke's private held-out suite</text>
+<line x1="92" y1="448.0" x2="946" y2="448.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="453.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="376.8" x2="946" y2="376.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="381.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">20</text>
+<line x1="92" y1="305.6" x2="946" y2="305.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="310.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">40</text>
+<line x1="92" y1="234.4" x2="946" y2="234.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="239.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">60</text>
+<line x1="92" y1="163.2" x2="946" y2="163.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="168.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">80</text>
+<line x1="92" y1="92.0" x2="946" y2="92.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">100</text>
+<text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Programs matching Python (%)</text>
+<text x="519.0" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">60 public pairs</text>
+<rect x="387.0" y="92.0" width="60.0" height="356.0" rx="5" fill="#64748b"/>
+<text x="417.0" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
+<rect x="455.0" y="92.0" width="60.0" height="356.0" rx="5" fill="#22c55e"/>
+<text x="485.0" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
+<rect x="523.0" y="92.0" width="60.0" height="356.0" rx="5" fill="#06b6d4"/>
+<text x="553.0" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
+<rect x="591.0" y="275.9" width="60.0" height="172.1" rx="5" fill="#f97316"/>
+<text x="621.0" y="267.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">48.3%</text>
+<rect x="92" y="504" width="14" height="14" rx="3" fill="#64748b"/>
+<text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Python</text>
+<rect x="282" y="504" width="14" height="14" rx="3" fill="#22c55e"/>
+<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern compact</text>
+<rect x="472" y="504" width="14" height="14" rx="3" fill="#06b6d4"/>
+<text x="494" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">python-minifier</text>
+<rect x="662" y="504" width="14" height="14" rx="3" fill="#f97316"/>
+<text x="684" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Toke</text>
+</svg>
