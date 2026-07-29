@@ -9,8 +9,8 @@
 <rect x="190" y="99" width="409.8" height="28" rx="5" fill="#64748b"/>
 <text x="611.8" y="119" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600">3,565</text>
 <text x="176" y="169" fill="#cbd5e1" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="13">Kern compact</text>
-<rect x="190" y="151" width="347.5" height="28" rx="5" fill="#22c55e"/>
-<text x="549.5" y="171" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600">3,023</text>
+<rect x="190" y="151" width="346.2" height="28" rx="5" fill="#22c55e"/>
+<text x="548.2" y="171" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600">3,012</text>
 <text x="176" y="221" fill="#cbd5e1" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="13">python-minifier</text>
 <rect x="190" y="203" width="332.4" height="28" rx="5" fill="#06b6d4"/>
 <text x="534.4" y="223" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600">2,892</text>
@@ -22,8 +22,8 @@
 <rect x="190" y="307" width="415.6" height="28" rx="5" fill="#64748b"/>
 <text x="617.6" y="327" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600">3,616</text>
 <text x="176" y="377" fill="#cbd5e1" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="13">Kern compact</text>
-<rect x="190" y="359" width="353.6" height="28" rx="5" fill="#22c55e"/>
-<text x="555.6" y="379" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600">3,076</text>
+<rect x="190" y="359" width="352.4" height="28" rx="5" fill="#22c55e"/>
+<text x="554.4" y="379" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600">3,066</text>
 <text x="176" y="429" fill="#cbd5e1" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="13">python-minifier</text>
 <rect x="190" y="411" width="338.5" height="28" rx="5" fill="#06b6d4"/>
 <text x="540.5" y="431" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600">2,945</text>

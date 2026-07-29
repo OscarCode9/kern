@@ -16,23 +16,23 @@ denominator.
 
 | Tokenizer | Python | Kern compact | python-minifier | Toke |
 |---|---:|---:|---:|---:|
-| `cl100k_base` | `3,565` | **`3,023`** | `2,892` | `6,347` |
-| `o200k_base` | `3,616` | **`3,076`** | `2,945` | `6,351` |
+| `cl100k_base` | `3,565` | **`3,012`** | `2,892` | `6,347` |
+| `o200k_base` | `3,616` | **`3,066`** | `2,945` | `6,351` |
 
-Under `cl100k_base`, Kern uses `3,324` fewer tokens than Toke: **`52.37%`
+Under `cl100k_base`, Kern uses `3,335` fewer tokens than Toke: **`52.54%`
 below the Toke source total**. Toke expands the equivalent Python total by
-`78.04%`. Under `o200k_base`, Kern is `51.57%` below Toke and Toke expands
+`78.04%`. Under `o200k_base`, Kern is `51.72%` below Toke and Toke expands
 Python by `75.64%`.
 
 The result is not carried by the truncated 922-token `task-a-0015` outlier.
 Kern is smaller on `59/60` individual pairs; the median per-pair advantage is
-`46.86%`. Removing that largest Toke source leaves `2,985` Kern tokens versus
-`5,425` Toke tokens, still **`44.98%` below Toke**.
+`47.19%`. Removing that largest Toke source leaves `2,974` Kern tokens versus
+`5,425` Toke tokens, still **`45.18%` below Toke**.
 
 ![Shared-tokenizer Toke comparison](toke-shared-tokenizer.svg)
 
-This micro-corpus also exposes a real Kern target: python-minifier uses `131`
-fewer `cl100k_base` tokens than Kern (`4.33%` below Kern). That does not erase
+This micro-corpus also exposes a real Kern target: python-minifier uses `120`
+fewer `cl100k_base` tokens than Kern (`3.98%` below Kern). That does not erase
 Kern's previously reproduced win over python-minifier on the diverse
 1,682-program corpus; it shows that tiny typed functions remain a separate
 optimization regime.
@@ -45,11 +45,12 @@ The official `toke-tokenizer==0.1.0` wheel uses:
 - `6,347` tokens with `cl100k_base`;
 - a reproduced native reduction of `38.46%` on this public subset.
 
-Kern's `3,023` `cl100k_base` tokens are `22.61%` below Toke's `3,906` native
+Kern's `3,012` `cl100k_base` tokens are `22.89%` below Toke's `3,906` native
 tokens on these pairs. This is a useful real-output observation, but it is
-**not** the final native-tokenizer contest: Kern and Toke are using different
-vocabularies. A Kern tokenizer trained on a disjoint training corpus and scored
-on held-out pairs is the remaining fair native lane.
+**not** the final native-tokenizer contest because Kern and Toke use different
+vocabularies in this row. The separately reproduced equal-16K contest uses
+`2,803` Kern tokens versus `3,906` Toke tokens and is documented in the
+[native-tokenizer report](../native-tokenizer/README.md).
 
 Toke's [PyPI package](https://pypi.org/project/toke-tokenizer/) describes its
 headline `~52%` as BPE reduction versus `cl100k_base` **on Toke source**, not
@@ -112,7 +113,7 @@ implementations.
 The evidence supports this bounded statement:
 
 > On the 60 public Toke/Python pairs rendered as equivalent JSON-CLI programs,
-> Kern v0.4 compact is 52.37% smaller than the published Toke source under the
+> Kern v0.4 compact is 52.54% smaller than the published Toke source under the
 > same cl100k tokenizer, round-trips every pair, and matches the Python smoke
 > oracle on all 60.
 

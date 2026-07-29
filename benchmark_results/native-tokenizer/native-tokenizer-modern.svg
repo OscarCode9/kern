@@ -22,24 +22,24 @@
 <text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">70</text>
 <text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Tokens saved vs Python + cl100k (%)</text>
 <text x="234.3" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">HumanEval+</text>
-<rect x="136.3" y="206.4" width="60.0" height="241.6" rx="5" fill="#22c55e"/>
-<text x="166.3" y="198.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">47.5%</text>
-<rect x="204.3" y="292.7" width="60.0" height="155.3" rx="5" fill="#7c3aed"/>
-<text x="234.3" y="284.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">30.5%</text>
+<rect x="136.3" y="206.7" width="60.0" height="241.3" rx="5" fill="#22c55e"/>
+<text x="166.3" y="198.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">47.4%</text>
+<rect x="204.3" y="291.0" width="60.0" height="157.0" rx="5" fill="#7c3aed"/>
+<text x="234.3" y="283.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">30.9%</text>
 <rect x="272.3" y="315.3" width="60.0" height="132.7" rx="5" fill="#06b6d4"/>
 <text x="302.3" y="307.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">26.1%</text>
 <text x="519.0" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">MBPP+</text>
-<rect x="421.0" y="223.2" width="60.0" height="224.8" rx="5" fill="#22c55e"/>
-<text x="451.0" y="215.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">44.2%</text>
-<rect x="489.0" y="289.8" width="60.0" height="158.2" rx="5" fill="#7c3aed"/>
-<text x="519.0" y="281.8" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">31.1%</text>
+<rect x="421.0" y="224.1" width="60.0" height="223.9" rx="5" fill="#22c55e"/>
+<text x="451.0" y="216.1" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">44.0%</text>
+<rect x="489.0" y="288.2" width="60.0" height="159.8" rx="5" fill="#7c3aed"/>
+<text x="519.0" y="280.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">31.4%</text>
 <rect x="557.0" y="326.8" width="60.0" height="121.2" rx="5" fill="#06b6d4"/>
 <text x="587.0" y="318.8" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">23.8%</text>
 <text x="803.7" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">BigCodeBench</text>
-<rect x="705.7" y="259.9" width="60.0" height="188.1" rx="5" fill="#22c55e"/>
-<text x="735.7" y="251.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">37.0%</text>
-<rect x="773.7" y="307.1" width="60.0" height="140.9" rx="5" fill="#7c3aed"/>
-<text x="803.7" y="299.1" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">27.7%</text>
+<rect x="705.7" y="260.3" width="60.0" height="187.7" rx="5" fill="#22c55e"/>
+<text x="735.7" y="252.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">36.9%</text>
+<rect x="773.7" y="306.8" width="60.0" height="141.2" rx="5" fill="#7c3aed"/>
+<text x="803.7" y="298.8" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">27.8%</text>
 <rect x="841.7" y="321.7" width="60.0" height="126.3" rx="5" fill="#06b6d4"/>
 <text x="871.7" y="313.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">24.8%</text>
 <rect x="92" y="504" width="14" height="14" rx="3" fill="#22c55e"/>

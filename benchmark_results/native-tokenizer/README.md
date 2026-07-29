@@ -4,8 +4,8 @@ Kern now has a purpose-built, lossless 16K byte-level BPE and a held-out
 native-tokenizer comparison against Toke. The central result is:
 
 > On the 60 equivalent public JSON-CLI pairs excluded from Kern's tokenizer
-> training, Kern compact + Kern‑16K uses **2,870 tokens** and Toke + its
-> official 16K BPE uses **3,906 tokens**. Kern is **26.52% smaller**.
+> training, Kern compact + Kern‑16K uses **2,803 tokens** and Toke + its
+> official 16K BPE uses **3,906 tokens**. Kern is **28.24% smaller**.
 
 This closes the previously reported cross-tokenizer limitation. Both native
 tokenizers have exactly `16,384` vocabulary entries, and each language is
@@ -15,18 +15,18 @@ scored with its own purpose-built tokenizer.
 
 | System | Tokens on 60 pairs | Relative to Python + cl100k |
 |---|---:|---:|
-| **Kern compact + Kern‑16K** | **`2,870`** | **`19.50%` smaller** |
+| **Kern compact + Kern‑16K** | **`2,803`** | **`21.37%` smaller** |
 | python-minifier + cl100k | `2,892` | `18.88%` smaller |
 | Python + cl100k | `3,565` | baseline |
 | Toke + official Toke‑16K | `3,906` | `9.56%` larger |
 
-Kern uses `1,036` fewer native tokens than Toke. It wins `47/60` individual
-pairs, and the median per-pair advantage is `21.05%`. Every Kern token stream
+Kern uses `1,103` fewer native tokens than Toke. It wins `47/60` individual
+pairs, and the median per-pair advantage is `23.22%`. Every Kern token stream
 decodes to the exact input representation (`60/60`).
 
 Kern‑16K also closes the small-program gap to python-minifier that the shared
-tokenizer audit exposed: `2,870` versus `2,892` tokens, an aggregate lead of
-`22` tokens (`0.76%` below the minified Python output). This is an
+tokenizer audit exposed: `2,803` versus `2,892` tokens, an aggregate lead of
+`89` tokens (`3.08%` below the minified Python output). This is an
 end-to-end system comparison—Kern uses its native tokenizer while
 python-minifier uses `cl100k_base`.
 
@@ -40,14 +40,14 @@ choose the pre-tokenizer.
 
 | Dataset | Programs | Python + cl100k | Kern + cl100k | Kern + Kern‑16K | Native saved vs Python |
 |---|---:|---:|---:|---:|---:|
-| HumanEval+ | `164` | `10,571` | `7,342` | **`5,550`** | **`47.50%`** |
-| MBPP+ | `378` | `15,183` | `10,459` | **`8,471`** | **`44.21%`** |
-| BigCodeBench | `1,140` | `163,786` | `118,401` | **`103,205`** | **`36.99%`** |
-| **Combined** | **`1,682`** | **`189,540`** | **`136,202`** | **`117,226`** | **`38.15%`** |
+| HumanEval+ | `164` | `10,571` | `7,308` | **`5,556`** | **`47.44%`** |
+| MBPP+ | `378` | `15,183` | `10,412` | **`8,499`** | **`44.02%`** |
+| BigCodeBench | `1,140` | `163,786` | `118,306` | **`103,334`** | **`36.91%`** |
+| **Combined** | **`1,682`** | **`189,540`** | **`136,026`** | **`117,389`** | **`38.07%`** |
 
-Across all 1,682 programs, Kern‑16K removes another `18,976` tokens relative
-to Kern under `cl100k_base` (`13.93%`) and uses `25,261` fewer tokens than
-python-minifier + cl100k (`17.73%`). Exact tokenizer round-trip succeeds on
+Across all 1,682 programs, Kern‑16K removes another `18,637` tokens relative
+to Kern under `cl100k_base` (`13.70%`) and uses `25,098` fewer tokens than
+python-minifier + cl100k (`17.61%`). Exact tokenizer round-trip succeeds on
 `1,682/1,682`.
 
 ![Held-out modern Kern tokenizer result](native-tokenizer-modern.svg)
@@ -89,7 +89,7 @@ The native paired lane supports this bounded claim:
 
 > On the pinned 60-program public paired corpus, with equal 16K vocabulary
 > sizes and each language using its own native tokenizer, Kern compact is
-> 26.52% smaller than Toke and exactly reconstructs all 60 Kern sources.
+> 28.24% smaller than Toke and exactly reconstructs all 60 Kern sources.
 
 It does not claim a model-generation Pass@1 result or reproduce Toke's private
 tests. Functional behavior for these same public pairs remains the separately

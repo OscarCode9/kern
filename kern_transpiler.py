@@ -109,6 +109,8 @@ class KernEmitter(ast.NodeVisitor):
 
             tree = compact_tree(tree)
         nodes = self._strip_nonsemantic_string_exprs(list(tree.body))
+        if self._can_elide_leading_math_import(nodes):
+            nodes = nodes[1:]
         parts = []
         index = 0
         while index < len(nodes):
@@ -124,6 +126,26 @@ class KernEmitter(ast.NodeVisitor):
         # marker remains explicit so the following statement is unambiguous.
         rendered = rendered.rstrip(_BLOCK_CLOSE)
         return rendered.replace(_BLOCK_CLOSE, "}")
+
+    def _can_elide_leading_math_import(self, nodes) -> bool:
+        """Let compact math sigils carry an exact leading ``import math``."""
+        if not self._compact_mode or not nodes:
+            return False
+        first = nodes[0]
+        if not (
+            isinstance(first, ast.Import)
+            and len(first.names) == 1
+            and first.names[0].name == "math"
+            and first.names[0].asname is None
+        ):
+            return False
+        for node in ast.walk(ast.Module(body=nodes[1:], type_ignores=[])):
+            if not isinstance(node, ast.Call):
+                continue
+            rendered = self._compact_call(node)
+            if rendered is not None and rendered.startswith(("%", "&")):
+                return True
+        return False
 
     # ── Statements ─────────────────────────────────────────────────
 
@@ -876,6 +898,22 @@ class KernEmitter(ast.NodeVisitor):
             and isinstance(node.operand.value, (int, float))
         )
 
+    @staticmethod
+    def _is_compact_dot_literal_item(node) -> bool:
+        """Whether an item is safe in an unbracketed numeric dot strand."""
+        if isinstance(node, ast.Constant):
+            return (
+                isinstance(node.value, (int, float))
+                and not isinstance(node.value, bool)
+            )
+        return (
+            isinstance(node, ast.UnaryOp)
+            and isinstance(node.op, (ast.UAdd, ast.USub))
+            and isinstance(node.operand, ast.Constant)
+            and isinstance(node.operand.value, (int, float))
+            and not isinstance(node.operand.value, bool)
+        )
+
     def _compact_range(self, node) -> str | None:
         if not (
             isinstance(node, ast.Call)
@@ -930,10 +968,29 @@ class KernEmitter(ast.NodeVisitor):
             or generator.elt.right.id != right_name
         ):
             return None
+        left_arg, right_arg = clause.iter.args
+        if (
+            left_name == "a"
+            and right_name == "b"
+            and isinstance(left_arg, ast.List)
+            and left_arg.elts
+            and isinstance(right_arg, ast.List)
+            and right_arg.elts
+            and all(
+                self._is_compact_dot_literal_item(item)
+                for item in (*left_arg.elts, *right_arg.elts)
+            )
+        ):
+            return (
+                "@"
+                + ",".join(self._expr(item) for item in left_arg.elts)
+                + ":"
+                + ",".join(self._expr(item) for item in right_arg.elts)
+            )
         return (
             f"@{left_name},{right_name}:"
-            f"{self._expr(clause.iter.args[0])}:"
-            f"{self._expr(clause.iter.args[1])}"
+            f"{self._expr(left_arg)}:"
+            f"{self._expr(right_arg)}"
         )
 
     def _compact_call(self, node) -> str | None:

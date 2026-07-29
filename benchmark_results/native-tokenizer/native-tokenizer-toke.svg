@@ -25,7 +25,7 @@
 <rect x="567.8" y="143.3" width="116.0" height="288.7" rx="7" fill="#f59e0b"/>
 <text x="625.8" y="133.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">3,906</text>
 <text x="625.8" y="460" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="13">Toke + native 16K</text>
-<rect x="781.2" y="219.9" width="116.0" height="212.1" rx="7" fill="#22c55e"/>
-<text x="839.2" y="209.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">2,870</text>
+<rect x="781.2" y="224.8" width="116.0" height="207.2" rx="7" fill="#22c55e"/>
+<text x="839.2" y="214.8" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">2,803</text>
 <text x="839.2" y="460" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="13">Kern + native 16K</text>
 </svg>

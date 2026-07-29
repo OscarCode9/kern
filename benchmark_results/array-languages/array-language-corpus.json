@@ -1,0 +1,128 @@
+[
+  {
+    "bqn": "\u230a2\u00f7\u02dc11+17\u00d723\n",
+    "bqn_mode": "p",
+    "category": "scalar",
+    "expected_stdout": "201",
+    "python": "print((17 * 23 + 11) // 2)\n",
+    "task_id": "scalar/arithmetic",
+    "uiua": "&p\u00f72+11\u00d717 23\n"
+  },
+  {
+    "bqn": "+\u00b41+\u2195100\n",
+    "bqn_mode": "p",
+    "category": "reduction",
+    "expected_stdout": "5050",
+    "python": "print(sum(range(1, 101)))\n",
+    "task_id": "reduction/sum_1_100",
+    "uiua": "&p/++1\u21e1100\n"
+  },
+  {
+    "bqn": "\u00d7\u00b41+\u219510\n",
+    "bqn_mode": "p",
+    "category": "reduction",
+    "expected_stdout": "3628800",
+    "python": "import math\nprint(math.factorial(10))\n",
+    "task_id": "reduction/factorial_10",
+    "uiua": "&p /\u00d7 +1 \u21e110\n"
+  },
+  {
+    "bqn": "\u233d\"kernlanguage\"\n",
+    "bqn_mode": "o",
+    "category": "text",
+    "expected_stdout": "egaugnalnrek",
+    "python": "print(\"kernlanguage\"[::-1])\n",
+    "task_id": "text/reverse",
+    "uiua": "&p \u21cc \"kernlanguage\"\n"
+  },
+  {
+    "bqn": "\u2022Out\u00a8\u2022Fmt\u00a8\u22279\u203f1\u203f5\u203f3\u203f7\u203f2\u203f8\u203f6\u203f4\n",
+    "bqn_mode": "e",
+    "category": "array",
+    "expected_stdout": "1 2 3 4 5 6 7 8 9",
+    "python": "print(*sorted([9, 1, 5, 3, 7, 2, 8, 6, 4]))\n",
+    "task_id": "array/sort",
+    "uiua": "\u2261&p\u23469_1_5_3_7_2_8_6_4\n"
+  },
+  {
+    "bqn": "\u2022Out\u00a8\u2022Fmt\u00a8\u23773\u203f1\u203f2\u203f3\u203f2\u203f4\u203f1\u203f5\n",
+    "bqn_mode": "e",
+    "category": "array",
+    "expected_stdout": "3 1 2 4 5",
+    "python": "print(*dict.fromkeys([3, 1, 2, 3, 2, 4, 1, 5]))\n",
+    "task_id": "array/distinct",
+    "uiua": "\u2261&p\u25f43_1_2_3_2_4_1_5\n"
+  },
+  {
+    "bqn": "\u2022Out\u00a8\u2022Fmt\u00a8\u00d7\u02dc1+\u219510\n",
+    "bqn_mode": "e",
+    "category": "array",
+    "expected_stdout": "1 4 9 16 25 36 49 64 81 100",
+    "python": "print(*(x * x for x in range(1, 11)))\n",
+    "task_id": "array/squares",
+    "uiua": "\u2261&p \u00d7\u22b8\u2218 +1 \u21e110\n"
+  },
+  {
+    "bqn": "\u2022Out\u00a8\u2022Fmt\u00a82\u00d71+\u219510\n",
+    "bqn_mode": "e",
+    "category": "array",
+    "expected_stdout": "2 4 6 8 10 12 14 16 18 20",
+    "python": "print(*(x for x in range(1, 21) if x % 2 == 0))\n",
+    "task_id": "array/evens",
+    "uiua": "\u2261&p \u00d72 +1 \u21e110\n"
+  },
+  {
+    "bqn": "+\u00b4'a'=\"abracadabra\"\n",
+    "bqn_mode": "p",
+    "category": "text",
+    "expected_stdout": "5",
+    "python": "print(\"abracadabra\".count(\"a\"))\n",
+    "task_id": "text/count_character",
+    "uiua": "&p/+=@a\"abracadabra\"\n"
+  },
+  {
+    "bqn": "+\u00b41\u203f2\u203f3\u00d74\u203f5\u203f6\n",
+    "bqn_mode": "p",
+    "category": "array",
+    "expected_stdout": "32",
+    "python": "print(sum(a * b for a, b in zip([1, 2, 3], [4, 5, 6])))\n",
+    "task_id": "array/dot_product",
+    "uiua": "&p/+\u00d71_2_3 4_5_6\n"
+  },
+  {
+    "bqn": "\"racecar\"\u2261\u233d\"racecar\"\n",
+    "bqn_mode": "p",
+    "category": "text",
+    "expected_stdout": "1",
+    "python": "text = \"racecar\"\nprint(int(text == text[::-1]))\n",
+    "task_id": "text/palindrome",
+    "uiua": "&p\u224d\u21cc\u22b8\u2218\"racecar\"\n"
+  },
+  {
+    "bqn": "2706\u2022math.GCD 410\n",
+    "bqn_mode": "p",
+    "category": "scalar",
+    "expected_stdout": "82",
+    "python": "import math\nprint(math.gcd(2706, 410))\n",
+    "task_id": "scalar/gcd",
+    "uiua": "&p \u22a2\u2362([\u2283\u22a2(/\u25ff)\u21bb1]|\u22600\u22a3)2706_410\n"
+  },
+  {
+    "bqn": "\u2022Out\u00a8\u2022Fmt\u00a83\u233d1\u203f2\u203f3\u203f4\u203f5\n",
+    "bqn_mode": "e",
+    "category": "array",
+    "expected_stdout": "4 5 1 2 3",
+    "python": "values = [1, 2, 3, 4, 5]\nprint(*(values[3:] + values[:3]))\n",
+    "task_id": "array/rotate_left",
+    "uiua": "\u2261&p\u21bb3 1_2_3_4_5\n"
+  },
+  {
+    "bqn": "\u2022Out\u00a8\u2022Fmt\u00a8{\ud835\udd69\u223e+\u00b4\u00af2\u2191\ud835\udd69}\u235f10\u22a20\u203f1\n",
+    "bqn_mode": "e",
+    "category": "recurrence",
+    "expected_stdout": "0 1 1 2 3 5 8 13 21 34 55 89",
+    "python": "values = [0, 1]\nfor _ in range(10):\n    values.append(values[-1] + values[-2])\nprint(*values)\n",
+    "task_id": "recurrence/fibonacci",
+    "uiua": "\u2261&p\u2365\u25e1+12 1 0\n"
+  }
+]

@@ -1,0 +1,164 @@
+{
+  "corpus": {
+    "authorship": "Benchmark-authored compact programs using documented language primitives; not claimed to be globally minimal",
+    "normalization": "Collapse display-only whitespace; preserve value tokens and their order",
+    "sources_and_hashes_published": true
+  },
+  "discovery_evidence": {
+    "interpretation": "Uiua and BQN are adversarial compact-language baselines; this fixed corpus is a density screen, not a claim about all programs or globally minimal array solutions",
+    "official_repositories": {
+      "bqn": "https://mlochbaum.github.io/BQN/",
+      "cbqn": "https://github.com/dzaima/CBQN",
+      "uiua": "https://github.com/uiua-lang/uiua"
+    },
+    "source_snapshot_date": "2026-07-29"
+  },
+  "metadata": {
+    "generated_at": "2026-07-29T11:15:09.449750+00:00",
+    "kern_tokenizer_sha256": "d570a49067b2fffca939924527b8daa3c0cc74e687b1ce7026c3193396e570ec",
+    "protocol": "Fourteen fixed matched executable programs; complete public sources; shared production tokenizers; exact normalized stdout; separate shared-tokenizer, native-system, and UTF-8 byte lanes",
+    "python": "3.12.11",
+    "python_minifier": "3.2.0",
+    "tiktoken": "0.13.0",
+    "tokenizers": "0.22.2"
+  },
+  "results": {
+    "categories": {
+      "array": {
+        "cl100k_base": {
+          "bqn": 131,
+          "kern": 80,
+          "python": 153,
+          "python_minifier": 122,
+          "uiua": 102
+        },
+        "kern_native_16k": 55,
+        "programs": 6
+      },
+      "recurrence": {
+        "cl100k_base": {
+          "bqn": 32,
+          "kern": 7,
+          "python": 31,
+          "python_minifier": 27,
+          "uiua": 15
+        },
+        "kern_native_16k": 6,
+        "programs": 1
+      },
+      "reduction": {
+        "cl100k_base": {
+          "bqn": 14,
+          "kern": 9,
+          "python": 19,
+          "python_minifier": 18,
+          "uiua": 16
+        },
+        "kern_native_16k": 10,
+        "programs": 2
+      },
+      "scalar": {
+        "cl100k_base": {
+          "bqn": 21,
+          "kern": 15,
+          "python": 28,
+          "python_minifier": 17,
+          "uiua": 42
+        },
+        "kern_native_16k": 15,
+        "programs": 2
+      },
+      "text": {
+        "cl100k_base": {
+          "bqn": 32,
+          "kern": 25,
+          "python": 34,
+          "python_minifier": 33,
+          "uiua": 34
+        },
+        "kern_native_16k": 30,
+        "programs": 3
+      }
+    },
+    "cl100k_base": {
+      "bqn": 230,
+      "kern": 136,
+      "python": 265,
+      "python_minifier": 217,
+      "uiua": 209
+    },
+    "comparisons": {
+      "median_per_pair_shared_kern_below_pct": {
+        "bqn": 36.62207357859532,
+        "uiua": 20.833333333333332
+      },
+      "native_kern_below_competitor_cl100k_pct": {
+        "bqn": 49.56521739130435,
+        "uiua": 44.49760765550239
+      },
+      "native_kern_wins": {
+        "bqn": 12,
+        "uiua": 13
+      },
+      "shared_kern_below_pct": {
+        "bqn": 40.869565217391305,
+        "uiua": 34.92822966507177
+      },
+      "shared_kern_wins": {
+        "bqn": 14,
+        "uiua": 14
+      }
+    },
+    "functional": {
+      "bqn": 14,
+      "kern": 14,
+      "python": 14,
+      "python_minifier": 14,
+      "uiua": 14
+    },
+    "native_system": {
+      "bqn_cl100k_base": 230,
+      "kern_native_16k": 116,
+      "uiua_cl100k_base": 209
+    },
+    "o200k_base": {
+      "bqn": 220,
+      "kern": 138,
+      "python": 263,
+      "python_minifier": 216,
+      "uiua": 200
+    },
+    "programs": 14,
+    "structural": {
+      "kern_contract_ast": 14,
+      "kern_native_exact_roundtrip": 14
+    },
+    "utf8_bytes": {
+      "bqn": 383,
+      "kern": 217,
+      "python": 611,
+      "python_minifier": 537,
+      "uiua": 294
+    }
+  },
+  "runtime_gates": {
+    "bqn": {
+      "binary_sha256": "32c0915af389cc469cb3f663025d72c7aab39ca451d02de41b4c24f7b8e338e6",
+      "commit": "b4db324a99d6590d91b9b09bc36847f3254c1543",
+      "expected_binary_sha256": "32c0915af389cc469cb3f663025d72c7aab39ca451d02de41b4c24f7b8e338e6",
+      "expected_commit": "b4db324a99d6590d91b9b09bc36847f3254c1543",
+      "expected_tag": "v0.12.0",
+      "ok": true,
+      "tag": "v0.12.0",
+      "version": "CBQN on commit b4db324a99d6590d91b9b09bc36847f3254c1543\nbuilt with FFI"
+    },
+    "uiua": {
+      "binary_sha256": "d4585363ebac31c6d63575108c13aff796fe86050f2b975ccff4f8bde22fd114",
+      "expected_binary_sha256": "d4585363ebac31c6d63575108c13aff796fe86050f2b975ccff4f8bde22fd114",
+      "expected_version": "uiua 0.18.1",
+      "ok": true,
+      "version": "uiua 0.18.1"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-29T07:21:08.982925+00:00",
+    "generated_at": "2026-07-29T11:19:25.596725+00:00",
     "protocol": "60 public Python/Toke pairs as equivalent JSON-CLI programs; full denominator; same production tokenizer in shared lane",
     "toke_commit": "a3adcebddbdf4629b5289a6f317ac6678c6061c8",
     "toke_eval_commit": "851f6d8b2cfedea22833f3787ad96c19e072e952",
@@ -33,9 +33,9 @@
       "representation": "kern_compact",
       "programs": 60,
       "python_tokens": 3565,
-      "representation_tokens": 3023,
-      "saved_tokens": 542,
-      "saved_pct": 15.203366058906031
+      "representation_tokens": 3012,
+      "saved_tokens": 553,
+      "saved_pct": 15.511921458625528
     },
     {
       "tokenizer": "cl100k_base",
@@ -69,9 +69,9 @@
       "representation": "kern_compact",
       "programs": 60,
       "python_tokens": 3616,
-      "representation_tokens": 3076,
-      "saved_tokens": 540,
-      "saved_pct": 14.933628318584072
+      "representation_tokens": 3066,
+      "saved_tokens": 550,
+      "saved_pct": 15.210176991150442
     },
     {
       "tokenizer": "o200k_base",
@@ -98,14 +98,14 @@
     "toke_native_tokens": 3906,
     "toke_cl100k_base_tokens": 6347,
     "native_reduction_vs_toke_cl100k_pct": 38.45911454230345,
-    "kern_cl100k_base_tokens": 3023,
-    "kern_below_toke_native_pct": 22.606246799795187,
+    "kern_cl100k_base_tokens": 3012,
+    "kern_below_toke_native_pct": 22.887864823348693,
     "fairness_note": "Kern and Toke use different tokenizers in this observation; the shared-tokenizer aggregates are the neutral language lane."
   },
   "robustness": {
     "kern_shared_tokenizer_wins": 59,
     "total_pairs": 60,
-    "median_per_pair_kern_below_toke_pct": 46.86274509803921,
+    "median_per_pair_kern_below_toke_pct": 47.19012605042017,
     "largest_toke_source": {
       "task_id": "task-a-0015",
       "toke_cl100k_base_tokens": 922,
@@ -113,12 +113,12 @@
     },
     "excluding_largest_toke_source": {
       "programs": 59,
-      "kern_cl100k_base_tokens": 2985,
+      "kern_cl100k_base_tokens": 2974,
       "toke_cl100k_base_tokens": 5425,
-      "kern_below_toke_pct": 44.97695852534562
+      "kern_below_toke_pct": 45.17972350230415
     },
     "kern_cl100k_below_toke_native_pairs": 46,
-    "median_per_pair_kern_below_toke_native_pct": 14.423076923076916
+    "median_per_pair_kern_below_toke_native_pct": 15.800415800415802
   },
   "structural": {
     "kern_decode_ok": 60,

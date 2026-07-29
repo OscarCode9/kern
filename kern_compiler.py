@@ -66,6 +66,8 @@ class Parser:
         self.pos  = 0
         self.ind  = 0          # current indent level
         self.implicit_self_depth = 0
+        self.requires_math = False
+        self.has_top_level_math_import = False
 
     # ── Token helpers ──────────────────────────────────────────────
     @property
@@ -104,7 +106,10 @@ class Parser:
                 )
             if s: lines.append(s)
             self.skip_nl()
-        return '\n'.join(lines)
+        rendered = '\n'.join(lines)
+        if self.requires_math and not self.has_top_level_math_import:
+            rendered = 'import math' + ('\n' + rendered if rendered else '')
+        return rendered
 
     # ── Block: {stmts}[}] → ":\n    stmt\n    stmt" ────────────────
     def _block(self) -> str:
@@ -243,14 +248,25 @@ class Parser:
         )
 
     def _looks_like_dot_primitive(self) -> bool:
-        """Whether ``@a,b:...:...`` starts a compact dot product."""
-        return (
+        """Whether a named or literal-vector compact dot product starts."""
+        named = (
             self.cur.v == '@'
             and self.peek().t == 'NAME'
             and self.peek(2).v == ','
             and self.peek(3).t == 'NAME'
             and self.peek(4).v == ':'
         )
+        literal = (
+            self.cur.v == '@'
+            and (
+                self.peek().t in {'NUM', 'STR'}
+                or (
+                    self.peek().v in {'+', '-'}
+                    and self.peek(2).t in {'NUM', 'NAME'}
+                )
+            )
+        )
+        return named or literal
 
     def _looks_like_bare_fn(self, start: int | None = None) -> bool:
         """Whether tokens at ``start`` have the reversible v0.4 def shape."""
@@ -363,6 +379,11 @@ class Parser:
     def _import(self) -> str:
         self.eat('imp')
         names = self._csv_names()
+        if self.ind == 0 and any(
+            item.strip().split(' as ', 1)[0] == 'math'
+            for item in names.split(',')
+        ):
+            self.has_top_level_math_import = True
         return 'import ' + names
 
     def _from(self) -> str:
@@ -694,6 +715,8 @@ class Parser:
                 continue
             if expect_operand and v in ('^', '?', '%'):
                 marker = self.eat().v
+                if marker == '%':
+                    self.requires_math = True
                 function = {
                     '^': 'sorted',
                     '?': 'dict.fromkeys',
@@ -707,6 +730,7 @@ class Parser:
                 continue
             if expect_operand and v == '&':
                 self.eat('&')
+                self.requires_math = True
                 left = self._compact_primitive_primary()
                 self.eat(':')
                 right = self._compact_primitive_primary()
@@ -732,13 +756,24 @@ class Parser:
                 continue
             if expect_operand and v == '@' and self._looks_like_dot_primitive():
                 self.eat('@')
-                left_name = self.eat().v
-                self.eat(',')
-                right_name = self.eat().v
-                self.eat(':')
-                left = self._compact_primitive_primary()
-                self.eat(':')
-                right = self._compact_primitive_primary()
+                if (
+                    self.cur.t == 'NAME'
+                    and self.peek().v == ','
+                    and self.peek(2).t == 'NAME'
+                    and self.peek(3).v == ':'
+                ):
+                    left_name = self.eat().v
+                    self.eat(',')
+                    right_name = self.eat().v
+                    self.eat(':')
+                    left = self._compact_primitive_primary()
+                    self.eat(':')
+                    right = self._compact_primitive_primary()
+                else:
+                    left_name, right_name = 'a', 'b'
+                    left = self._compact_literal_vector()
+                    self.eat(':')
+                    right = self._compact_literal_vector()
                 parts.append(
                     f'sum({left_name} * {right_name} for '
                     f'{left_name}, {right_name} in zip({left}, {right}))'
@@ -830,6 +865,14 @@ class Parser:
                 f"Expected compact primitive operand, got {self.cur.v!r}"
             )
         return self._next_tok()
+
+    def _compact_literal_vector(self) -> str:
+        """Compile a comma strand in ``@1,2:3,4`` as a Python list."""
+        items = [self._compact_primitive_primary()]
+        while self.cur.v == ',':
+            self.eat(',')
+            items.append(self._compact_primitive_primary())
+        return '[' + ', '.join(items) + ']'
 
     def _compact_range(self) -> str:
         """Compile ``!stop`` / ``!start:stop[:step]`` to ``range(...)``."""

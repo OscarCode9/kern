@@ -327,15 +327,33 @@ print(*(values[3:] + values[:3]))
             "$?[3,1,3,2]",
             "$*x:!1:5",
             "'abracadabra'#'a'",
-            "@a,b:[1,2]:[3,4]",
+            "@1,2:3,4",
             "&2706:410",
             "$values<<<3",
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, kern)
+        self.assertNotIn("imp math", kern)
+        self.assertTrue(rebuilt.startswith("import math\n"))
         self.assertEqual(
             ast.dump(ast.parse(rebuilt), include_attributes=False),
             ast.dump(ast.parse(expected), include_attributes=False),
+        )
+
+    def test_math_import_elision_requires_an_encoded_math_primitive(self) -> None:
+        source = """\
+import math
+print(math.sin(1))
+"""
+        kern = transpile(source, compact=True)
+
+        self.assertIn("imp math", kern)
+        self.assertEqual(
+            ast.dump(ast.parse(compile_kern(kern)), include_attributes=False),
+            ast.dump(
+                ast.parse(ast.unparse(compact_tree(ast.parse(source)))),
+                include_attributes=False,
+            ),
         )
 
     def test_compact_primitives_do_not_capture_near_matches(self) -> None:
@@ -355,6 +373,25 @@ print(*(values[3:] + other[:3]))
         self.assertNotIn("@a,b:", kern)
         self.assertNotIn("*x:", kern)
         self.assertNotIn("<<<", kern)
+
+        boolean_dot = """\
+print(sum(a * b for a, b in zip([True, False], [1, 2])))
+"""
+        boolean_dot_kern = transpile(boolean_dot, compact=True)
+        self.assertIn(
+            "@a,b:[True,False]:[1,2]",
+            boolean_dot_kern,
+        )
+        self.assertEqual(
+            ast.dump(
+                ast.parse(compile_kern(boolean_dot_kern)),
+                include_attributes=False,
+            ),
+            ast.dump(
+                compact_tree(ast.parse(boolean_dot)),
+                include_attributes=False,
+            ),
+        )
 
     def test_existing_none_and_bitwise_syntax_remains_distinct(self) -> None:
         source = """\
