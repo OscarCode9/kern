@@ -1,0 +1,128 @@
+[
+  {
+    "category": "scalar",
+    "expected_stdout": "201",
+    "golfscript": "17 23*11+2/\n",
+    "j": "echo ((17*23)+11)%2\n",
+    "k": "`0:$-2!((17*23)+11)\n",
+    "python": "print((17 * 23 + 11) // 2)\n",
+    "task_id": "scalar/arithmetic"
+  },
+  {
+    "category": "reduction",
+    "expected_stdout": "5050",
+    "golfscript": "100,{)}%{+}*\n",
+    "j": "echo +/1+i.100\n",
+    "k": "`0:$+/1+!100\n",
+    "python": "print(sum(range(1, 101)))\n",
+    "task_id": "reduction/sum_1_100"
+  },
+  {
+    "category": "reduction",
+    "expected_stdout": "3628800",
+    "golfscript": "10 1+,1>{*}*\n",
+    "j": "echo */1+i.10\n",
+    "k": "`0:$*/1+!10\n",
+    "python": "import math\nprint(math.factorial(10))\n",
+    "task_id": "reduction/factorial_10"
+  },
+  {
+    "category": "text",
+    "expected_stdout": "egaugnalnrek",
+    "golfscript": "'kernlanguage'-1%\n",
+    "j": "echo |.'kernlanguage'\n",
+    "k": "`0:|\"kernlanguage\"\n",
+    "python": "print(\"kernlanguage\"[::-1])\n",
+    "task_id": "text/reverse"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "1 2 3 4 5 6 7 8 9",
+    "golfscript": "[9 1 5 3 7 2 8 6 4]$' '*\n",
+    "j": "echo /:~9 1 5 3 7 2 8 6 4\n",
+    "k": "`0:$a@<a:a:9 1 5 3 7 2 8 6 4\n",
+    "python": "print(*sorted([9, 1, 5, 3, 7, 2, 8, 6, 4]))\n",
+    "task_id": "array/sort"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "3 1 2 4 5",
+    "golfscript": "[3 1 2 3 2 4 1 5][]|' '*\n",
+    "j": "echo ~.3 1 2 3 2 4 1 5\n",
+    "k": "`0:$?3 1 2 3 2 4 1 5\n",
+    "python": "print(*dict.fromkeys([3, 1, 2, 3, 2, 4, 1, 5]))\n",
+    "task_id": "array/distinct"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "1 4 9 16 25 36 49 64 81 100",
+    "golfscript": "10,{).*}%' '*\n",
+    "j": "echo *:1+i.10\n",
+    "k": "`0:$a*a:a:1+!10\n",
+    "python": "print(*(x * x for x in range(1, 11)))\n",
+    "task_id": "array/squares"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "2 4 6 8 10 12 14 16 18 20",
+    "golfscript": "20,{)}%{2%!},' '*\n",
+    "j": "echo (#~0=2&|)1+i.20\n",
+    "k": "`0:$a@&~2!a:a:1+!20\n",
+    "python": "print(*(x for x in range(1, 21) if x % 2 == 0))\n",
+    "task_id": "array/evens"
+  },
+  {
+    "category": "text",
+    "expected_stdout": "5",
+    "golfscript": "'abracadabra'{97=},,\n",
+    "j": "echo +/'abracadabra'='a'\n",
+    "k": "`0:$+/\"abracadabra\"=\"a\"\n",
+    "python": "print(\"abracadabra\".count(\"a\"))\n",
+    "task_id": "text/count_character"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "32",
+    "golfscript": "[[1 2 3][4 5 6]]zip{{*}*}%{+}*\n",
+    "j": "echo +/1 2 3*4 5 6\n",
+    "k": "`0:$+/1 2 3*4 5 6\n",
+    "python": "print(sum(a * b for a, b in zip([1, 2, 3], [4, 5, 6])))\n",
+    "task_id": "array/dot_product"
+  },
+  {
+    "category": "text",
+    "expected_stdout": "1",
+    "golfscript": "'racecar'.-1%=\n",
+    "j": "echo 'racecar'-:|.'racecar'\n",
+    "k": "`0:$\"racecar\"~|\"racecar\"\n",
+    "python": "text = \"racecar\"\nprint(int(text == text[::-1]))\n",
+    "task_id": "text/palindrome"
+  },
+  {
+    "category": "scalar",
+    "expected_stdout": "82",
+    "golfscript": "2706 410{.@\\%.}do;\n",
+    "j": "echo 2706+.410\n",
+    "k": "gcd:*|(*:)(|!\\)/,;`0:$gcd[2706]410\n",
+    "python": "import math\nprint(math.gcd(2706, 410))\n",
+    "task_id": "scalar/gcd"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "4 5 1 2 3",
+    "golfscript": "[1 2 3 4 5].3>\\3<+' '*\n",
+    "j": "echo 3|.1 2 3 4 5\n",
+    "k": "`0:$5#3_(a,a:1 2 3 4 5)\n",
+    "python": "values = [1, 2, 3, 4, 5]\nprint(*(values[3:] + values[:3]))\n",
+    "task_id": "array/rotate_left"
+  },
+  {
+    "category": "recurrence",
+    "expected_stdout": "0 1 1 2 3 5 8 13 21 34 55 89",
+    "golfscript": "0 1{100<}{.@+}/\\;[0]\\+' '*\n",
+    "j": "echo (3 : 'y,+/_2{.y')^:10]0 1\n",
+    "k": "`0:${x,+/-2#x}/[10;0 1]\n",
+    "python": "values = [0, 1]\nfor _ in range(10):\n    values.append(values[-1] + values[-2])\nprint(*values)\n",
+    "task_id": "recurrence/fibonacci"
+  }
+]

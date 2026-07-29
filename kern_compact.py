@@ -518,6 +518,22 @@ class _CompactSimplifier(ast.NodeTransformer):
     def __init__(self) -> None:
         self._functions: list[ast.FunctionDef | ast.AsyncFunctionDef] = []
         self._try_descendants: set[int] = set()
+        self._range_shadowed = False
+
+    def visit_Module(self, node: ast.Module) -> ast.Module:  # noqa: N802
+        self._range_shadowed = (
+            "range" in self._string_bindings(node)
+            or any(
+                (
+                    isinstance(item, ast.Name)
+                    and isinstance(item.ctx, (ast.Store, ast.Del))
+                    and item.id == "range"
+                )
+                or (isinstance(item, ast.arg) and item.arg == "range")
+                for item in ast.walk(node)
+            )
+        )
+        return self.generic_visit(node)
 
     @staticmethod
     def _uses_introspection(
@@ -678,6 +694,114 @@ class _CompactSimplifier(ast.NodeTransformer):
 
     visit_FunctionDef = _visit_function
     visit_AsyncFunctionDef = _visit_function
+
+    @staticmethod
+    def _literal_int(node: ast.AST) -> int | None:
+        if (
+            isinstance(node, ast.Constant)
+            and isinstance(node.value, int)
+            and not isinstance(node.value, bool)
+        ):
+            return node.value
+        if (
+            isinstance(node, ast.UnaryOp)
+            and isinstance(node.op, ast.USub)
+            and isinstance(node.operand, ast.Constant)
+            and isinstance(node.operand.value, int)
+            and not isinstance(node.operand.value, bool)
+        ):
+            return -node.operand.value
+        return None
+
+    def _range_mod_filter(self, node: ast.GeneratorExp) -> ast.Call | None:
+        """Replace a guarded range-modulo filter with an exact stepped range."""
+        if self._range_shadowed or len(node.generators) != 1:
+            return None
+        generator = node.generators[0]
+        if generator.is_async or len(generator.ifs) != 1:
+            return None
+        if not (
+            isinstance(generator.target, ast.Name)
+            and isinstance(node.elt, ast.Name)
+            and node.elt.id == generator.target.id
+            and isinstance(generator.iter, ast.Call)
+            and isinstance(generator.iter.func, ast.Name)
+            and generator.iter.func.id == "range"
+            and not generator.iter.keywords
+            and len(generator.iter.args) in {1, 2}
+        ):
+            return None
+
+        if len(generator.iter.args) == 1:
+            start_node = ast.Constant(value=0)
+            stop_node = generator.iter.args[0]
+        else:
+            start_node, stop_node = generator.iter.args
+        start = _CompactSimplifier._literal_int(start_node)
+        stop = _CompactSimplifier._literal_int(stop_node)
+        if start is None or stop is None:
+            return None
+
+        condition = generator.ifs[0]
+        if not (
+            isinstance(condition, ast.Compare)
+            and len(condition.ops) == 1
+            and isinstance(condition.ops[0], ast.Eq)
+            and len(condition.comparators) == 1
+        ):
+            return None
+        candidates = (condition.left, condition.comparators[0])
+        modulo = next(
+            (
+                candidate
+                for candidate in candidates
+                if isinstance(candidate, ast.BinOp)
+                and isinstance(candidate.op, ast.Mod)
+                and isinstance(candidate.left, ast.Name)
+                and candidate.left.id == generator.target.id
+                and isinstance(candidate.right, ast.Constant)
+                and isinstance(candidate.right.value, int)
+                and not isinstance(candidate.right.value, bool)
+            ),
+            None,
+        )
+        zero = next(
+            (
+                candidate
+                for candidate in candidates
+                if isinstance(candidate, ast.Constant)
+                and candidate.value == 0
+                and not isinstance(candidate.value, bool)
+            ),
+            None,
+        )
+        if modulo is None or zero is None:
+            return None
+        divisor = modulo.right.value
+        if divisor <= 0:
+            return None
+
+        first = start + (-start) % divisor
+        return ast.copy_location(
+            ast.Call(
+                func=ast.Name(id="range", ctx=ast.Load()),
+                args=[
+                    ast.Constant(value=first),
+                    copy.deepcopy(stop_node),
+                    ast.Constant(value=divisor),
+                ],
+                keywords=[],
+            ),
+            node,
+        )
+
+    def visit_GeneratorExp(
+        self,
+        node: ast.GeneratorExp,
+    ) -> ast.GeneratorExp | ast.Call:
+        node = self.generic_visit(node)
+        assert isinstance(node, ast.GeneratorExp)
+        return self._range_mod_filter(node) or node
 
     def visit_Return(self, node: ast.Return) -> ast.Return:  # noqa: N802
         node = self.generic_visit(node)

@@ -6,6 +6,7 @@ import ast
 import unittest
 
 from kern_compiler import compile_kern
+from kern_compact import compact_tree
 from kern_transpiler import transpile
 
 
@@ -278,6 +279,68 @@ async def consume(stream, manager):
         namespace: dict[str, object] = {}
         exec(rebuilt, namespace)
         self.assertEqual(namespace["outer"](), 1)
+
+    def test_compact_output_reverse_and_stepped_range(self) -> None:
+        source = """\
+text = "kern"
+print(text[::-1])
+print(*(x for x in range(1, 21) if x % 2 == 0))
+"""
+        kern = transpile(source, compact=True)
+        rebuilt = compile_kern(kern)
+        expected = ast.unparse(compact_tree(ast.parse(source)))
+
+        self.assertIn("::text~", kern)
+        self.assertIn("~", kern)
+        self.assertIn("$range(2,21,2)", kern)
+        self.assertEqual(
+            ast.dump(ast.parse(rebuilt), include_attributes=False),
+            ast.dump(ast.parse(expected), include_attributes=False),
+        )
+        namespace: dict[str, object] = {}
+        exec(rebuilt, namespace)
+        self.assertEqual(transpile("print('x')"), "print('x')")
+        self.assertEqual(compile_kern("out(1)"), "out(1)")
+
+    def test_stepped_range_rewrite_is_guarded(self) -> None:
+        exact = ast.unparse(
+            compact_tree(
+                ast.parse(
+                    "values = "
+                    "(x for x in range(-3, 5) if 0 == x % 2)"
+                )
+            )
+        )
+        dynamic = ast.unparse(
+            compact_tree(
+                ast.parse(
+                    "values = "
+                    "(x for x in range(start, stop) if x % 2 == 0)"
+                )
+            )
+        )
+        negative_divisor = ast.unparse(
+            compact_tree(
+                ast.parse(
+                    "values = "
+                    "(x for x in range(1, 10) if x % -2 == 0)"
+                )
+            )
+        )
+        shadowed = ast.unparse(
+            compact_tree(
+                ast.parse(
+                    "range = custom_range\n"
+                    "values = "
+                    "(x for x in range(1, 10) if x % 2 == 0)"
+                )
+            )
+        )
+
+        self.assertIn("range(-2, 5, 2)", exact)
+        self.assertIn("for x in range(start, stop)", dynamic)
+        self.assertIn("for x in range(1, 10)", negative_divisor)
+        self.assertIn("for x in range(1, 10)", shadowed)
 
     def test_fn_identifier_attribute_is_not_receiver_syntax(self) -> None:
         rebuilt = compile_kern("fn.foo()")

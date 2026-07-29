@@ -129,7 +129,7 @@ Two Kern contracts are reported:
   `ee43ecabebf20deef4bb776a405ac5b1`;
 - BigCodeBench revision
   `b74c0d0bf70d2c0bc459be537895cca163007f1a`, split `v0.1.4`;
-- Python `3.11.15`, EvalPlus `0.3.1`, python-minifier `3.2.0`,
+- Python `3.12.11`, EvalPlus `0.3.1`, python-minifier `3.2.0`,
   tiktoken `0.13.0`;
 - Python references exclude benchmark prose and no-op docstrings while
   preserving the remaining source formatting;
@@ -144,16 +144,16 @@ Two Kern contracts are reported:
 
 | Dataset | Python | Kern compact | Compact saved | Kern reversible | Reversible saved | python-minifier | Minifier saved |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| HumanEval+ | `10,571` | **`7,342`** | **`30.55%`** | `7,736` | `26.82%` | `7,813` | `26.09%` |
-| MBPP+ | `15,183` | **`10,459`** | **`31.11%`** | `11,023` | `27.40%` | `11,565` | `23.83%` |
-| BigCodeBench | `163,786` | **`118,401`** | **`27.71%`** | `128,909` | `21.29%` | `123,107` | `24.84%` |
-| Combined | `189,540` | **`136,202`** | **`28.14%`** | `147,668` | `22.09%` | `142,485` | `24.83%` |
+| HumanEval+ | `10,571` | **`7,324`** | **`30.72%`** | `7,736` | `26.82%` | `7,813` | `26.09%` |
+| MBPP+ | `15,183` | **`10,451`** | **`31.17%`** | `11,023` | `27.40%` | `11,565` | `23.83%` |
+| BigCodeBench | `163,786` | **`118,395`** | **`27.71%`** | `128,909` | `21.29%` | `123,109` | `24.84%` |
+| Combined | `189,540` | **`136,170`** | **`28.16%`** | `147,668` | `22.09%` | `142,487` | `24.82%` |
 
-Kern compact uses `6,283` fewer tokens than python-minifier across the three
-corpora (`4.41%` fewer relative to the minified output). It wins each dataset
-individually: `471` tokens on HumanEval+, `1,106` on MBPP+, and `4,706` on
+Kern compact uses `6,317` fewer tokens than python-minifier across the three
+corpora (`4.43%` fewer relative to the minified output). It wins each dataset
+individually: `489` tokens on HumanEval+, `1,114` on MBPP+, and `4,714` on
 BigCodeBench. The same ordering holds under `o200k_base`, where Kern compact
-uses `5,887` fewer tokens overall (`4.05%`).
+uses `5,936` fewer tokens overall (`4.08%`).
 
 ![EvalPlus functional preservation](benchmark_results/modern/modern-evalplus-correctness.svg)
 
@@ -169,7 +169,7 @@ All four representations fail the same `HumanEval/32` numeric oracle in the
 local runtime. Both Kern modes therefore preserve the Python reference outcome
 on all `542/542` tasks; neither introduces a functional regression in EvalPlus.
 
-On BigCodeBench, both Kern modes produced parseable Python for `1,128/1,140`
+On BigCodeBench, both Kern modes produced parseable Python for `1,129/1,140`
 tasks and preserved their reference AST on `1,115/1,140` (`97.81%`). For
 reversible mode the reference is the original normalized AST; for compact mode
 it is the intentionally alpha-renamed compact AST. The 25 incompatibilities
@@ -182,7 +182,9 @@ Kern now has a directly reproduced language-level comparison against the
 public [Sigil 0.1.0](https://pypi.org/project/sigil-lang/) distribution. The
 market harness uses the same 1,682 code-only programs, the same production
 tokenizers, a full denominator, decoded-Python checks, and official EvalPlus
-execution.
+execution. The table and graph preserve that original pinned Sigil run; the
+newer compact-language iteration is reported separately above at `136,170`
+tokens and does not weaken this result.
 
 | Combined result | Kern compact | Sigil 0.1.0 |
 |---|---:|---:|
@@ -302,6 +304,39 @@ The complete [NERD audit](benchmark_results/nerd/README.md) includes the exact
 pairs, compiler and stdout gates, claim-counter evidence, graphs, limitations,
 and reproduction command.
 
+### Reproduced compact-language screen: K, GolfScript, and J
+
+The current code.golf all-hole byte ranking identifies K, GolfScript, and J as
+the strongest compact-language risk signals. Because its leading solutions are
+private and the ranking measures bytes, Kern uses a separate fixed corpus of
+fourteen complete matched programs with exact stdout oracles.
+
+| Aggregate result | Kern compact | K | GolfScript | J |
+|---|---:|---:|---:|---:|
+| Shared `cl100k_base` | **`200`** | `206` | **`169`** | **`163`** |
+| Deployable system lane | **`159`** | `206` | `169` | `163` |
+| Exact outputs | **`14/14`** | `14/14` | `14/14` | `14/14` |
+
+Kern is `2.91%` below K in the neutral shared-tokenizer lane. GolfScript and J
+still lead that lane. With the held-out Kern-16K tokenizer, Kern is `22.82%`
+below K, `5.92%` below GolfScript, and `2.45%` below J on this aggregate.
+
+The final iteration added general compact output (`::value` and `$values`),
+postfix reverse (`value~`), and a guarded constant stepped-range rewrite. The
+same changes save another 32 `cl100k_base` tokens across the independent
+1,682-program modern corpus without reducing its contract counts.
+
+![Kern versus K, GolfScript, and J](benchmark_results/compact-languages/compact-language-token-density.svg)
+
+![Kern native-system lane](benchmark_results/compact-languages/compact-language-native-system.svg)
+
+The complete
+[compact-language report](benchmark_results/compact-languages/README.md)
+publishes every source, runtime pin, hash, category total, limitation, and
+reproduction command. This is a bounded aggregate win in the native system
+lane, not a world-smallest-language claim: Kern wins only `6/14` individual
+pairs against GolfScript and J, and expert-reviewed solutions remain a gate.
+
 ### Market context
 
 | Project / benchmark | Public position | Comparison used here |
@@ -315,7 +350,7 @@ and reproduction command.
 | [NERD](https://www.nerd-lang.org/) | LLVM-backed machine-authorship language claiming 50–70% fewer tokens | All 7 deterministic examples reproduced: Kern is 9.92% smaller under cl100k; NERD's public counter is lexical, not an LLM tokenizer |
 | [Ax](https://github.com/axlanguage/axlang) | Compact AI-native compiled language | Monitored; no public token-density claim or matched token benchmark located yet |
 | [zerolang](https://github.com/vercel-labs/zerolang) | Graph-first language for agents with token efficiency as a design goal | Newly identified direct contender; source, graph-inspection, and checked-edit token lanes remain to be reproduced |
-| [K](https://codeberg.org/ngn/k), [GolfScript](https://golfscript.com/golfscript/), and [J](https://www.jsoftware.com/) | Current top three languages in code.golf's all-hole bytes ranking | High-priority adversarial density lane; bytes reveal risk but are not interchangeable with production LLM tokens |
+| [K](https://codeberg.org/ngn/k), [GolfScript](https://golfscript.com/golfscript/), and [J](https://www.jsoftware.com/) | Current top three languages in code.golf's all-hole bytes ranking | Reproduced on 14 executable pairs: Kern beats K under the shared tokenizer and all three in the native system aggregate; GolfScript and J retain the shared-tokenizer lead |
 | [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |
 | [CodeGolf Bench](https://arxiv.org/abs/2605.30394) | Dynamic concise-code generation benchmark across 60 languages | Planned for the generation phase with identical model, prompt, correctness, and attempt budgets |
 | [SWE-bench](https://www.swebench.com/) | Repository-level issue resolution | Requires the same agent/model in Python and Kern modes; gold-patch compression would not be a valid comparison |
@@ -325,12 +360,12 @@ No claim is made about code-generation models without a shared corpus,
 tokenizer, model, prompt, and execution protocol.
 
 The market registry is deliberately a living audit, not a declaration that
-every language has already been defeated. The next density frontier is K,
-GolfScript, and J—the strongest current human code-golf signals—followed by
-Pyth, Jelly, Uiua, and BQN. Their byte or character compactness must be
-remeasured as actual `cl100k_base`, `o200k_base`, and deployable-system tokens;
-Unicode-heavy syntax can be short to humans while fragmenting badly for an
-LLM tokenizer.
+every language has already been defeated. K, GolfScript, and J now have a
+first reproducible screen; the next density frontier is expert review of that
+corpus followed by Pyth, Jelly, Uiua, and BQN. Their byte or character
+compactness must be remeasured as actual `cl100k_base`, `o200k_base`, and
+deployable-system tokens; Unicode-heavy syntax can be short to humans while
+fragmenting badly for an LLM tokenizer.
 
 ### Reproduce
 
@@ -406,6 +441,17 @@ Validation:
 The same iteration also hardens positional-only parameters, `async for/with`,
 lambda defaults/call boundaries, dict/set expressions in headers, f-string
 expression safety, and fail-fast handling for unmatched delimiters.
+
+The optional compact profile adds four further statement/expression rules
+discovered by the K/GolfScript/J screen:
+
+- `print(value)` becomes `::value`;
+- `print(*values)` becomes `$values`;
+- `value[::-1]` becomes `value~`;
+- eligible constant `range` + positive modulo filters become exact stepped
+  ranges.
+
+These rules are not emitted by the default reversible profile.
 
 ## Grammar v0.3 optimization update (July 23, 2026)
 
@@ -520,11 +566,13 @@ Observed legacy-harness result:
 - `benchmark_toke.py`: pinned paired-corpus Toke harness and compiler audit
 - `benchmark_karn.py`: pinned paired-corpus KARN and code-target audit
 - `benchmark_nerd.py`: complete deterministic public-example NERD audit
+- `benchmark_compact_languages.py`: executable K, GolfScript, and J density screen
 - `market-benchmark-requirements.txt`: pinned optional market dependencies
 - `benchmark_results/market/`: Sigil comparison, graphs, and world-market competitor registry
 - `benchmark_results/toke/`: Toke pair results, integrity audit, and graphs
 - `benchmark_results/karn/`: KARN pairs, compiler audit, claim evidence, and graphs
 - `benchmark_results/nerd/`: NERD pairs, claim-counter audit, and graphs
+- `benchmark_results/compact-languages/`: K/GolfScript/J sources, gates, results, and graphs
 - `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
 - `test_baseline_adapters.py`: adapter sanity tests (`python`, `kern`, `simpy`, `token_sugar`)
 - `prepare_finetune_dataset.py`: exports `.py` + `.kern` pairs and JSONL for fine-tuning

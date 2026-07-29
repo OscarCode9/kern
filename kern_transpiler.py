@@ -99,8 +99,10 @@ class KernEmitter(ast.NodeVisitor):
     def __init__(self):
         self._implicit_self_depth = 0
         self._fstring_depth = 0
+        self._compact_mode = False
 
     def transpile(self, source: str, compact: bool = False) -> str:
+        self._compact_mode = compact
         tree = ast.parse(source)
         if compact:
             from kern_compact import compact_tree
@@ -532,6 +534,18 @@ class KernEmitter(ast.NodeVisitor):
         # Bare expression statement. Ignore no-op string literal statements.
         if self._is_nop_string_expr_stmt(node):
             return ""
+        if (
+            self._compact_mode
+            and isinstance(node.value, ast.Call)
+            and isinstance(node.value.func, ast.Name)
+            and node.value.func.id == "print"
+            and len(node.value.args) == 1
+            and not node.value.keywords
+        ):
+            argument = node.value.args[0]
+            if isinstance(argument, ast.Starred):
+                return "$" + self._expr(argument.value)
+            return "::" + self._expr(argument)
         return self._expr(node.value)
 
     # yield / yield from as statements
@@ -581,6 +595,17 @@ class KernEmitter(ast.NodeVisitor):
         return self._expr(node.value) + "." + node.attr
 
     def _expr_Subscript(self, node) -> str:
+        if (
+            self._compact_mode
+            and isinstance(node.slice, ast.Slice)
+            and node.slice.lower is None
+            and node.slice.upper is None
+            and isinstance(node.slice.step, ast.UnaryOp)
+            and isinstance(node.slice.step.op, ast.USub)
+            and isinstance(node.slice.step.operand, ast.Constant)
+            and node.slice.step.operand.value == 1
+        ):
+            return self._expr_with_parens(node.value, node) + "~"
         # In subscripts, tuple slices must be emitted without parentheses:
         # arr[:,0] instead of arr[(:,0)].
         if isinstance(node.slice, ast.Tuple):

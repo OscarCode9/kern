@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="600" viewBox="0 0 1120 600" role="img" aria-labelledby="title desc">
+<title id="title">Compact-language token-density screen</title>
+<desc id="desc">Aggregate cl100k_base tokens on fourteen matched executable programs; lower is better</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">Kern versus the compact-language frontier</text>
+<text x="92" y="66" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">14 matched executable programs · cl100k_base · lower is better</text>
+<line x1="92" y1="482.0" x2="1086" y2="482.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="487.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="405.6" x2="1086" y2="405.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="410.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">61</text>
+<line x1="92" y1="329.2" x2="1086" y2="329.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="334.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">122</text>
+<line x1="92" y1="252.8" x2="1086" y2="252.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="257.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">183</text>
+<line x1="92" y1="176.4" x2="1086" y2="176.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="181.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">244</text>
+<line x1="92" y1="100.0" x2="1086" y2="100.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="105.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">305</text>
+<rect x="123.5" y="149.8" width="102.7" height="332.2" rx="7" fill="#94a3b8"/>
+<text x="174.8" y="139.8" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">265</text>
+<text x="174.8" y="510" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12">Python</text>
+<rect x="289.1" y="210.0" width="102.7" height="272.0" rx="7" fill="#06b6d4"/>
+<text x="340.5" y="200.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">217</text>
+<text x="340.5" y="510" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12">python-minifier</text>
+<rect x="454.8" y="223.8" width="102.7" height="258.2" rx="7" fill="#a855f7"/>
+<text x="506.2" y="213.8" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">206</text>
+<text x="506.2" y="510" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12">K</text>
+<rect x="620.5" y="270.2" width="102.7" height="211.8" rx="7" fill="#f97316"/>
+<text x="671.8" y="260.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">169</text>
+<text x="671.8" y="510" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12">GolfScript</text>
+<rect x="786.1" y="277.7" width="102.7" height="204.3" rx="7" fill="#f59e0b"/>
+<text x="837.5" y="267.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">163</text>
+<text x="837.5" y="510" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12">J</text>
+<rect x="951.8" y="231.3" width="102.7" height="250.7" rx="7" fill="#22c55e"/>
+<text x="1003.2" y="221.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700">200</text>
+<text x="1003.2" y="510" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12">Kern compact</text>
+</svg>

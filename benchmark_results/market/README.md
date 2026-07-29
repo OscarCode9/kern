@@ -3,8 +3,8 @@
 This is Kern's directly reproduced language-level market comparison. It does
 **not** claim that Kern has already beaten every language. It establishes
 audited results against Sigil and Toke—including an equal-vocabulary native
-tokenizer win—and paired audits of KARN and NERD, plus an explicit queue for
-the remaining contenders.
+tokenizer win—paired audits of KARN and NERD, and the first executable screen
+of K, GolfScript, and J, plus an explicit queue for the remaining contenders.
 
 ## Reproduced Sigil result
 
@@ -195,22 +195,27 @@ reproduction command are in the [NERD report](../nerd/README.md).
 Direct LLM-oriented projects are not the whole market. The current
 [code.golf all-hole bytes ranking](https://code.golf/rankings/langs/all/all/bytes)
 puts K, GolfScript, and J first, second, and third. That ranking measures
-human-optimized UTF‑8 bytes, not production LLM tokens, so it is evidence of
-risk rather than evidence that any of them beats Kern.
+human-optimized UTF‑8 bytes, not production LLM tokens, so it was used only to
+select adversaries.
 
-The next shared-tokenizer harness will therefore start with:
+The first fixed screen now executes fourteen complete matched programs:
 
-1. K (`ngn/k` commit `717063f249`), the current all-hole bytes leader;
-2. GolfScript (`6155e9f` in code.golf);
-3. J `9.6.3`;
-4. specialized golf languages Pyth and Jelly;
-5. modern glyph/array languages Uiua and BQN.
+| Aggregate result | Kern compact | K | GolfScript | J |
+|---|---:|---:|---:|---:|
+| Shared `cl100k_base` | **`200`** | `206` | **`169`** | **`163`** |
+| Deployable system lane | **`159`** | `206` | `169` | `163` |
+| Exact outputs | **`14/14`** | `14/14` | `14/14` | `14/14` |
 
-Each contender needs matched executable algorithms, exact stdout, a full
-denominator, `cl100k_base` and `o200k_base`, and a separately labeled native
-system lane. Byte, character, and token results will not be mixed. Array-heavy
-and built-in-heavy workloads will be reported separately to avoid silently
-favoring one language family.
+Kern beats K by `2.91%` with the same tokenizer but does not beat GolfScript
+or J there. Kern-16K wins the bounded system aggregate by `22.82%`, `5.92%`,
+and `2.45%`, respectively. Kern still loses the UTF-8 byte lane to all three.
+
+The [complete compact-language report](../compact-languages/README.md)
+publishes every source, category, hash, runtime gate, graph, and reproduction
+command. Its authorship limitation is material: the competitor programs are
+benchmark-authored and compact, not certified best-known expert solutions.
+Kern also wins only `6/14` individual native-token pairs against GolfScript
+and J, so this is a first screen rather than a global defeat claim.
 
 The other newly identified direct contender is
 [zerolang](https://github.com/vercel-labs/zerolang), a graph-first language for
@@ -223,10 +228,10 @@ checked-edit loops; no matched token-density claim was located.
 The machine-readable registry is
 [`competitors.json`](competitors.json). Current priority:
 
-1. K, GolfScript, and J matched executable token-density audit;
-2. zerolang source/graph/edit-loop audit;
-3. exact ShortCoder and Token Sugar method reproduction;
-4. Pyth, Jelly, Uiua, and BQN adversarial screens;
+1. expert review and expansion of the K, GolfScript, and J sources;
+2. Pyth, Jelly, Uiua, and BQN adversarial screens;
+3. zerolang source/graph/edit-loop audit;
+4. exact ShortCoder and Token Sugar method reproduction;
 5. continued monitoring for KARN, NERD, Toke, Ax, and other public version
    changes, plus third-party reproduction.
 
@@ -264,3 +269,5 @@ Artifacts:
 - `../toke/`: public-pair Toke benchmark, raw results, and graphs.
 - `../karn/`: paired KARN benchmark, claim audit, and compiler-target results.
 - `../nerd/`: all deterministic NERD examples, claim-counter audit, and graphs.
+- `../compact-languages/`: K, GolfScript, and J executable sources, runtime
+  gates, results, and graphs.

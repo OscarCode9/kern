@@ -29,7 +29,7 @@ _TOK = re.compile(r"""
   (?P<NUM>   \d+(?:\.\d+)?(?:[eE][+-]?\d+)?)            |  # numbers
   (?P<OP>    &&|\|\||->>|->|:=|//|\*\*|<<|>>|
              \+=|-=|\*=|/=|//=|%=|\*\*=|\|=|&=|\^=|<<=|>>=|
-             ==|!=|<=|>=|[+\-*/%@&|^~<>=!?])             |  # operators
+             ==|!=|<=|>=|[+\-*/%@&|^~<>=!?$])            |  # operators
   (?P<SPEC>  [{}\[\]().,;:\\])                           |  # specials
   (?P<NAME>  [a-zA-Z_]\w*)                               |  # identifiers
   (?P<NL>    \n)                                         |  # newlines
@@ -157,6 +157,10 @@ class Parser:
         c = self.cur
         v = c.v
 
+        if v == '$':
+            return self._out(starred=True)
+        if v == ':' and self.peek().v == ':':
+            return self._out()
         if c.t == 'SELF_FN':
             return self._fn(False)
         if self._looks_like_bare_fn():
@@ -336,6 +340,19 @@ class Parser:
             value = self._expr_line()
             return f'{name} = {value}\n{self._i()}return {name}'
         return 'return ' + self._expr_line()
+
+    def _out(self, *, starred: bool = False) -> str:
+        """Compile compact output syntax: ``::value`` or ``$iterable``."""
+        if starred:
+            self.eat('$')
+        else:
+            self.eat(':')
+            self.eat(':')
+        value = self._expr_line()
+        if not value:
+            marker = '$' if starred else '::'
+            raise SyntaxError(f"Expected an expression after {marker!r}")
+        return f"print({'*' if starred else ''}{value})"
 
     def _if(self) -> str:
         self.eat('if')
@@ -609,6 +626,12 @@ class Parser:
             if v == '\\':
                 self.pos += 1
                 parts.append(self._lambda_with_stops(stops))
+                expect_operand = False
+                previous_value = v
+                continue
+            if v == '~' and not expect_operand:
+                self.pos += 1
+                parts.append('[::-1]')
                 expect_operand = False
                 previous_value = v
                 continue

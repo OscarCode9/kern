@@ -16,22 +16,22 @@
 <text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">40</text>
 <text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Tokens saved (%)</text>
 <text x="234.3" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">HumanEval+</text>
-<rect x="136.3" y="176.1" width="60.0" height="271.9" rx="5" fill="#22c55e"/>
-<text x="166.3" y="168.1" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">30.5%</text>
+<rect x="136.3" y="174.6" width="60.0" height="273.4" rx="5" fill="#22c55e"/>
+<text x="166.3" y="166.6" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">30.7%</text>
 <rect x="204.3" y="209.3" width="60.0" height="238.7" rx="5" fill="#7c3aed"/>
 <text x="234.3" y="201.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">26.8%</text>
 <rect x="272.3" y="215.8" width="60.0" height="232.2" rx="5" fill="#06b6d4"/>
 <text x="302.3" y="207.8" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">26.1%</text>
 <text x="519.0" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">MBPP+</text>
-<rect x="421.0" y="171.1" width="60.0" height="276.9" rx="5" fill="#22c55e"/>
-<text x="451.0" y="163.1" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">31.1%</text>
+<rect x="421.0" y="170.6" width="60.0" height="277.4" rx="5" fill="#22c55e"/>
+<text x="451.0" y="162.6" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">31.2%</text>
 <rect x="489.0" y="204.1" width="60.0" height="243.9" rx="5" fill="#7c3aed"/>
 <text x="519.0" y="196.1" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">27.4%</text>
 <rect x="557.0" y="235.9" width="60.0" height="212.1" rx="5" fill="#06b6d4"/>
 <text x="587.0" y="227.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">23.8%</text>
 <text x="803.7" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">BigCodeBench</text>
-<rect x="705.7" y="201.4" width="60.0" height="246.6" rx="5" fill="#22c55e"/>
-<text x="735.7" y="193.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">27.7%</text>
+<rect x="705.7" y="201.3" width="60.0" height="246.7" rx="5" fill="#22c55e"/>
+<text x="735.7" y="193.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">27.7%</text>
 <rect x="773.7" y="258.5" width="60.0" height="189.5" rx="5" fill="#7c3aed"/>
 <text x="803.7" y="250.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">21.3%</text>
 <rect x="841.7" y="227.0" width="60.0" height="221.0" rx="5" fill="#06b6d4"/>

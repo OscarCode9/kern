@@ -77,22 +77,22 @@
       "kind": "Ultra-compact array language",
       "official_source": "https://codeberg.org/ngn/k",
       "evaluation_source": "https://code.golf/rankings/langs/all/all/bytes",
-      "version_or_reference": "717063f249 in code.golf",
+      "version_or_reference": "717063f24921d5aff405a39cf7643efedb5bb365",
       "public_claim": "No LLM-token claim; ranked first on the current code.golf all-hole bytes table with 7,755 best-solution bytes",
-      "status": "adversarial_density_audit_pending_high",
-      "kern_lane": "Matched executable algorithm corpus under cl100k, o200k, and each deployable native tokenizer; bytes are only a discovery signal",
-      "next_gate": "Build the compact-language lane first because K is the strongest current human code-density signal"
+      "status": "first_adversarial_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: Kern 200 vs K 206 cl100k tokens; Kern-16K 159 vs K + cl100k 206; both 14/14 exact stdout",
+      "next_gate": "Expand with expert-reviewed K solutions and a larger corpus; the current code.golf leaders remain private"
     },
     {
       "name": "GolfScript",
       "kind": "Stack-based code-golf language",
       "official_source": "https://golfscript.com/golfscript/",
       "evaluation_source": "https://code.golf/rankings/langs/all/all/bytes",
-      "version_or_reference": "6155e9f in code.golf",
+      "version_or_reference": "6155e9f7860775be53bdc79c6e1c3b9308ebbfe5",
       "public_claim": "No LLM-token claim; ranked second on the current code.golf all-hole bytes table with 8,229 best-solution bytes",
-      "status": "adversarial_density_audit_pending_high",
-      "kern_lane": "Matched executable algorithm corpus with shared production tokenizers and exact stdout",
-      "next_gate": "Measure after K in the same compact-language harness"
+      "status": "first_adversarial_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: GolfScript 169 vs Kern 200 cl100k tokens; Kern-16K 159 vs GolfScript + cl100k 169; both 14/14 exact stdout",
+      "next_gate": "Expand with expert-reviewed GolfScript solutions; GolfScript retains the shared-tokenizer lead and Kern wins only 6/14 native pairs"
     },
     {
       "name": "J",
@@ -101,9 +101,9 @@
       "evaluation_source": "https://code.golf/rankings/langs/all/all/bytes",
       "version_or_reference": "9.6.3 in code.golf",
       "public_claim": "No LLM-token claim; ranked third on the current code.golf all-hole bytes table with 8,741 best-solution bytes",
-      "status": "adversarial_density_audit_pending_high",
-      "kern_lane": "Matched executable array and scalar algorithms under shared production tokenizers",
-      "next_gate": "Measure in the same compact-language harness while reporting array-domain bias"
+      "status": "first_adversarial_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: J 163 vs Kern 200 cl100k tokens; Kern-16K 159 vs J + cl100k 163; both 14/14 exact stdout",
+      "next_gate": "Expand with expert-reviewed J solutions and rebalance beyond the current six array tasks; J retains the shared-tokenizer lead"
     },
     {
       "name": "Pyth",

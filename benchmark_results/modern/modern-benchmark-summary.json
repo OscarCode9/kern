@@ -2,14 +2,14 @@
   "failures": [
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 18) (<unknown>, line 18)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 18) (<unknown>, line 18)",
       "representation": "kern",
       "stage": "parse",
       "task_id": "BigCodeBench/15"
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 16) (<unknown>, line 16)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 16) (<unknown>, line 16)",
       "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/15"
@@ -30,14 +30,14 @@
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 16) (<unknown>, line 16)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 16) (<unknown>, line 16)",
       "representation": "kern",
       "stage": "parse",
       "task_id": "BigCodeBench/113"
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 16) (<unknown>, line 16)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 16) (<unknown>, line 16)",
       "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/113"
@@ -58,16 +58,16 @@
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: f-string: unmatched '[' (<unknown>, line 17)",
+      "message": "normalized AST differs",
       "representation": "kern",
-      "stage": "parse",
+      "stage": "ast",
       "task_id": "BigCodeBench/190"
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: f-string: unmatched '[' (<unknown>, line 15)",
+      "message": "normalized AST differs",
       "representation": "kern_compact",
-      "stage": "parse",
+      "stage": "ast",
       "task_id": "BigCodeBench/190"
     },
     {
@@ -226,14 +226,14 @@
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 11) (<unknown>, line 11)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 11) (<unknown>, line 11)",
       "representation": "kern",
       "stage": "parse",
       "task_id": "BigCodeBench/804"
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 11) (<unknown>, line 11)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 11) (<unknown>, line 11)",
       "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/804"
@@ -268,14 +268,14 @@
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 11) (<unknown>, line 11)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 11) (<unknown>, line 11)",
       "representation": "kern",
       "stage": "parse",
       "task_id": "BigCodeBench/1041"
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 10) (<unknown>, line 10)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 10) (<unknown>, line 10)",
       "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/1041"
@@ -338,14 +338,14 @@
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 16) (<unknown>, line 16)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 16) (<unknown>, line 16)",
       "representation": "kern",
       "stage": "parse",
       "task_id": "BigCodeBench/1134"
     },
     {
       "dataset": "BigCodeBench",
-      "message": "SyntaxError: unterminated string literal (detected at line 14) (<unknown>, line 14)",
+      "message": "SyntaxError: unterminated f-string literal (detected at line 14) (<unknown>, line 14)",
       "representation": "kern_compact",
       "stage": "parse",
       "task_id": "BigCodeBench/1134"
@@ -418,13 +418,13 @@
     "bigcodebench_split": "v0.1.4",
     "evalplus": "0.3.1",
     "evalplus_min_time_limit": 5.0,
-    "generated_at_utc": "2026-07-29T05:35:34.433992+00:00",
+    "generated_at_utc": "2026-07-29T09:20:14.826362+00:00",
     "humaneval_plus_hash": "fe585eb4df8c88d844eeb463ea4d0302",
-    "kern_compact": "opt-in BPE-aware local alpha-renaming and conservative return/control-flow simplification; module names and function parameters preserved; AST checked against compact_tree",
+    "kern_compact": "opt-in BPE-aware local alpha-renaming and conservative return/control-flow, output, reverse-slice, and stepped-range simplification; module names and function parameters preserved; AST checked against compact_tree",
     "kern_grammar": "v0.4",
     "mbpp_plus_hash": "ee43ecabebf20deef4bb776a405ac5b1",
     "normalization": "code-only source after removing no-op string expressions/docstrings; remaining formatting preserved",
-    "python": "3.11.15",
+    "python": "3.12.11",
     "python_minifier": "3.2.0",
     "tiktoken": "0.13.0"
   },
@@ -461,7 +461,7 @@
       "ast_cases": 1140,
       "ast_equal": 1115,
       "dataset": "BigCodeBench",
-      "parse_ok": 1128,
+      "parse_ok": 1129,
       "python_tokens": 163786,
       "representation": "kern",
       "representation_tokens": 128909,
@@ -475,7 +475,7 @@
       "ast_cases": 1140,
       "ast_equal": 1115,
       "dataset": "BigCodeBench",
-      "parse_ok": 1128,
+      "parse_ok": 1129,
       "python_tokens": 166184,
       "representation": "kern",
       "representation_tokens": 132165,
@@ -489,12 +489,12 @@
       "ast_cases": 1140,
       "ast_equal": 1115,
       "dataset": "BigCodeBench",
-      "parse_ok": 1128,
+      "parse_ok": 1129,
       "python_tokens": 163786,
       "representation": "kern_compact",
-      "representation_tokens": 118401,
-      "saved_pct": 27.7099,
-      "saved_tokens": 45385,
+      "representation_tokens": 118395,
+      "saved_pct": 27.7136,
+      "saved_tokens": 45391,
       "tokenizer": "cl100k_base",
       "total_cases": 1140,
       "transform_ok": 1140
@@ -503,12 +503,12 @@
       "ast_cases": 1140,
       "ast_equal": 1115,
       "dataset": "BigCodeBench",
-      "parse_ok": 1128,
+      "parse_ok": 1129,
       "python_tokens": 166184,
       "representation": "kern_compact",
-      "representation_tokens": 121460,
-      "saved_pct": 26.9123,
-      "saved_tokens": 44724,
+      "representation_tokens": 121439,
+      "saved_pct": 26.925,
+      "saved_tokens": 44745,
       "tokenizer": "o200k_base",
       "total_cases": 1140,
       "transform_ok": 1140
@@ -520,9 +520,9 @@
       "parse_ok": 1140,
       "python_tokens": 163786,
       "representation": "python_minifier",
-      "representation_tokens": 123107,
-      "saved_pct": 24.8367,
-      "saved_tokens": 40679,
+      "representation_tokens": 123109,
+      "saved_pct": 24.8355,
+      "saved_tokens": 40677,
       "tokenizer": "cl100k_base",
       "total_cases": 1140,
       "transform_ok": 1140
@@ -534,9 +534,9 @@
       "parse_ok": 1140,
       "python_tokens": 166184,
       "representation": "python_minifier",
-      "representation_tokens": 125898,
-      "saved_pct": 24.2418,
-      "saved_tokens": 40286,
+      "representation_tokens": 125900,
+      "saved_pct": 24.2406,
+      "saved_tokens": 40284,
       "tokenizer": "o200k_base",
       "total_cases": 1140,
       "transform_ok": 1140
@@ -604,9 +604,9 @@
       "parse_ok": 164,
       "python_tokens": 10571,
       "representation": "kern_compact",
-      "representation_tokens": 7342,
-      "saved_pct": 30.5458,
-      "saved_tokens": 3229,
+      "representation_tokens": 7324,
+      "saved_pct": 30.7161,
+      "saved_tokens": 3247,
       "tokenizer": "cl100k_base",
       "total_cases": 164,
       "transform_ok": 164
@@ -618,9 +618,9 @@
       "parse_ok": 164,
       "python_tokens": 10611,
       "representation": "kern_compact",
-      "representation_tokens": 7465,
-      "saved_pct": 29.6485,
-      "saved_tokens": 3146,
+      "representation_tokens": 7447,
+      "saved_pct": 29.8181,
+      "saved_tokens": 3164,
       "tokenizer": "o200k_base",
       "total_cases": 164,
       "transform_ok": 164
@@ -716,9 +716,9 @@
       "parse_ok": 378,
       "python_tokens": 15183,
       "representation": "kern_compact",
-      "representation_tokens": 10459,
-      "saved_pct": 31.1137,
-      "saved_tokens": 4724,
+      "representation_tokens": 10451,
+      "saved_pct": 31.1664,
+      "saved_tokens": 4732,
       "tokenizer": "cl100k_base",
       "total_cases": 378,
       "transform_ok": 378
@@ -730,9 +730,9 @@
       "parse_ok": 378,
       "python_tokens": 15270,
       "representation": "kern_compact",
-      "representation_tokens": 10631,
-      "saved_pct": 30.3798,
-      "saved_tokens": 4639,
+      "representation_tokens": 10623,
+      "saved_pct": 30.4322,
+      "saved_tokens": 4647,
       "tokenizer": "o200k_base",
       "total_cases": 378,
       "transform_ok": 378
