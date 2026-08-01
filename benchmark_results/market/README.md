@@ -1,11 +1,11 @@
-# Kern world-market benchmark — July 29, 2026
+# Kern world-market benchmark — August 1, 2026
 
 This is Kern's directly reproduced language-level market comparison. It does
 **not** claim that Kern has already beaten every language. It establishes
 audited results against Sigil and Toke—including an equal-vocabulary native
-tokenizer win—paired audits of KARN and NERD, and the first executable screen
-of K, GolfScript, J, Pyth, and Jelly, plus an explicit queue for the remaining
-contenders.
+tokenizer win—paired audits of KARN and NERD, and executable screens of K,
+GolfScript, J, Pyth, Jelly, Uiua, BQN, GNU APL, CJam, and Kona, plus an
+explicit queue for the remaining contenders.
 
 ## Reproduced Sigil result
 
@@ -91,13 +91,13 @@ programs and keeps all 60 pairs in the denominator.
 
 | `cl100k_base` result | Python | Kern compact | python-minifier | Toke |
 |---|---:|---:|---:|---:|
-| Tokens | `3,565` | **`3,023`** | `2,892` | `6,347` |
-| Saved vs Python | — | **`15.20%`** | `18.88%` | `-78.04%` |
+| Tokens | `3,565` | **`3,012`** | `2,892` | `6,347` |
+| Saved vs Python | — | **`15.51%`** | `18.88%` | `-78.04%` |
 
-Kern uses `3,324` fewer shared-tokenizer tokens than Toke (**`52.37%` below
-Toke**). With Toke's own 16K BPE, the 60 Toke programs use `3,906` tokens; Kern
-with cl100k still uses `22.61%` fewer, but that observation remains explicitly
-cross-tokenizer until Kern has a held-out native-tokenizer lane.
+Kern uses `3,335` fewer shared-tokenizer tokens than Toke (**`52.54%` below
+Toke**). The original Toke report preserves the pinned execution; the current
+Kern rescore is produced by the held-out native-tokenizer harness on the exact
+same 60 Python/Toke registry.
 
 Kern round-trips and matches the public smoke oracle on `60/60`. Only `29/60`
 published Toke pairs pass the current pinned compiler, and all 29 pass the
@@ -118,15 +118,15 @@ exactly `16,384` entries, matching Toke's official tokenizer.
 
 | Held-out 60-pair system | Tokens |
 |---|---:|
-| **Kern compact + Kern‑16K** | **`2,870`** |
+| **Kern compact + Kern‑16K** | **`2,788`** |
 | python-minifier + cl100k | `2,892` |
 | Python + cl100k | `3,565` |
 | Toke + Toke‑16K | `3,906` |
 
-Kern is **26.52% below Toke** in the equal-vocabulary native contest, wins
+Kern is **28.62% below Toke** in the equal-vocabulary native contest, wins
 `47/60` individual pairs, and exactly reconstructs all 60 Kern sources. It
-also closes the earlier aggregate 131-token shared-tokenizer micro-gap to
-python-minifier when each system uses its production tokenizer.
+also beats python-minifier + cl100k by `104` tokens in this separately labeled
+complete-system comparison.
 
 ![Native-tokenizer Kern versus Toke](../native-tokenizer/native-tokenizer-toke.svg)
 
@@ -195,48 +195,39 @@ reproduction command are in the [NERD report](../nerd/README.md).
 
 Direct LLM-oriented projects are not the whole market. The current
 [code.golf all-hole bytes ranking](https://code.golf/rankings/langs/all/all/bytes)
-puts K, GolfScript, and J first, second, and third. That ranking measures
-human-optimized UTF‑8 bytes, not production LLM tokens, so it was used only to
-select adversaries.
+is only an adversary-discovery signal because it measures private human-golfed
+bytes rather than production LLM tokens. Kern now has four pinned executable
+screens on an identical fourteen-program registry.
 
-The first fixed screen now executes fourteen complete matched programs:
+| `cl100k_base` aggregate | Tokens | Exact stdout |
+|---|---:|---:|
+| **Kern compact (current)** | **`91`** | **`14/14`** |
+| CJam 0.6.5 | `93` | `14/14` |
+| Kona K3 | `115` | `14/14` |
+| Jelly | `128` | `14/14` |
+| Pyth | `132` | `14/14` |
+| GNU APL 2.0 | `142` | `14/14` |
+| J | `163` | `14/14` |
+| GolfScript | `169` | `14/14` |
+| K | `206` | `14/14` |
+| Uiua 0.18.1 | `209` | `14/14` |
+| BQN / CBQN 0.12.0 | `230` | `14/14` |
 
-| Aggregate result | Kern compact | K | GolfScript | J |
-|---|---:|---:|---:|---:|
-| Shared `cl100k_base` | **`147`** | `206` | `169` | `163` |
-| Deployable system lane | **`127`** | `206` | `169` | `163` |
-| Exact outputs | **`14/14`** | `14/14` | `14/14` | `14/14` |
+![Same-corpus executable market](../frontier-languages/frontier-language-market.svg)
 
-Kern wins this shared aggregate by `28.64%`, `13.02%`, and `9.82%`,
-respectively. Kern-16K extends the bounded system advantages to `38.35%`,
-`24.85%`, and `22.09%`. Kern also uses fewer complete-source UTF-8 bytes:
-`243` versus K `286`, GolfScript `260`, and J `277`.
+The August 1 harness refuses to join the prior screens until every task ID,
+Python source, and stdout oracle is exactly equal. It then rescored only the
+current Kern representation while preserving the pinned competitor sources
+and their already published exact executions. The new direct frontier run pins
+GNU APL by official source-archive hash, CJam by official JAR hash, and Kona by
+commit plus its upstream test suite.
 
-The [complete compact-language report](../compact-languages/README.md)
-publishes every source, category, hash, runtime gate, graph, and reproduction
-command. Its authorship limitation is material: the competitor programs are
-benchmark-authored and compact, not certified best-known expert solutions.
-Kern wins `9/14` shared pairs against GolfScript but only `6/14` against J, so
-this remains a first screen rather than a global defeat claim.
-
-The second screen pins the current official Pyth and Jelly repositories and
-executes the same fourteen tasks:
-
-| Aggregate result | Kern compact | Pyth | Jelly |
-|---|---:|---:|---:|
-| Shared `cl100k_base` | `147` | **`132`** | **`128`** |
-| Shared `o200k_base` | `149` | **`130`** | **`115`** |
-| Deployable system lane | **`127`** | `132` | `128` |
-| Exact outputs | **`14/14`** | `14/14` | `14/14` |
-
-Pyth and Jelly keep the neutral shared-tokenizer and byte leads. Kern-16K wins
-the separately labeled system aggregate by `3.79%` over Pyth and only `0.78%`
-over Jelly. Jelly's official one-byte code-page score is `145` units and is
-kept separate from its `180` UTF-8 bytes and its LLM-token totals.
-
-The [complete Pyth/Jelly report](../golf-languages/README.md) publishes every
-source, runtime and code-page gate, hash, category, graph, limitation, and
-reproduction command.
+Kern leads this bounded shared-tokenizer aggregate, but CJam is only two tokens
+behind, wins the UTF-8 byte lane (`164` versus `179`), beats Kern-16K (`93`
+versus `99`), and wins more individual pairs. Competitor programs are compact
+benchmark submissions, not certified global minima. The
+[complete frontier report](../frontier-languages/README.md) publishes the
+sources, hashes, runtime gates, per-pair details, graphs, and limitations.
 
 The other newly identified direct contender is
 [zerolang](https://github.com/vercel-labs/zerolang), a graph-first language for
@@ -249,10 +240,10 @@ checked-edit loops; no matched token-density claim was located.
 The machine-readable registry is
 [`competitors.json`](competitors.json). Current priority:
 
-1. expert review and expansion of the K, GolfScript, J, Pyth, and Jelly
-   sources;
-2. Uiua `0.18.1` and BQN via CBQN `0.12.0` adversarial screens;
-3. zerolang source/graph/edit-loop audit;
+1. expert review and expansion of every fourteen-program compact-language
+   source set;
+2. reliable Nibbles execution and a separately licensed Dyalog APL 20 gate;
+3. Vyxal, 05AB1E, Husk, Brachylog, q, and zerolang audits;
 4. exact ShortCoder and Token Sugar method reproduction;
 5. continued monitoring for KARN, NERD, Toke, Ax, and other public version
    changes, plus third-party reproduction.
@@ -295,3 +286,6 @@ Artifacts:
   gates, results, and graphs.
 - `../golf-languages/`: Pyth and Jelly executable sources, runtime/code-page
   gates, results, and graphs.
+- `../array-languages/`: Uiua and BQN executable sources and runtime gates.
+- `../frontier-languages/`: current Kern, GNU APL, CJam, Kona, and the verified
+  same-registry cross-screen market graph.

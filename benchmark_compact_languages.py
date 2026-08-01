@@ -71,7 +71,7 @@ def write_grouped_bar_svg(
     title: str,
     subtitle: str,
     groups: list[str],
-    series: list[tuple[str, str, list[float]]],
+    series: list[tuple[str, str, list[float | None]]],
     y_label: str,
     max_value: float = 100.0,
     value_suffix: str = "%",
@@ -143,6 +143,8 @@ def write_grouped_bar_svg(
         )
         for series_index, (_, color, values) in enumerate(series):
             value = values[group_index]
+            if value is None:
+                continue
             bar_h = max(0.0, min(max_value, value)) / max_value * plot_h
             x = start + series_index * bar_w + 4
             y = top + plot_h - bar_h

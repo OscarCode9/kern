@@ -16,8 +16,8 @@
 <text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">40</text>
 <text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Tokens saved (%)</text>
 <text x="234.3" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">HumanEval+</text>
-<rect x="136.3" y="173.3" width="60.0" height="274.7" rx="5" fill="#22c55e"/>
-<text x="166.3" y="165.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">30.9%</text>
+<rect x="136.3" y="172.6" width="60.0" height="275.4" rx="5" fill="#22c55e"/>
+<text x="166.3" y="164.6" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">30.9%</text>
 <rect x="204.3" y="209.3" width="60.0" height="238.7" rx="5" fill="#7c3aed"/>
 <text x="234.3" y="201.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">26.8%</text>
 <rect x="272.3" y="215.8" width="60.0" height="232.2" rx="5" fill="#06b6d4"/>
@@ -30,8 +30,8 @@
 <rect x="557.0" y="235.9" width="60.0" height="212.1" rx="5" fill="#06b6d4"/>
 <text x="587.0" y="227.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">23.8%</text>
 <text x="803.7" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">BigCodeBench</text>
-<rect x="705.7" y="200.9" width="60.0" height="247.1" rx="5" fill="#22c55e"/>
-<text x="735.7" y="192.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">27.8%</text>
+<rect x="705.7" y="200.7" width="60.0" height="247.3" rx="5" fill="#22c55e"/>
+<text x="735.7" y="192.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">27.8%</text>
 <rect x="773.7" y="258.5" width="60.0" height="189.5" rx="5" fill="#7c3aed"/>
 <text x="803.7" y="250.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">21.3%</text>
 <rect x="841.7" y="227.0" width="60.0" height="221.0" rx="5" fill="#06b6d4"/>

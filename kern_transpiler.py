@@ -19,6 +19,10 @@ Grammar spec v0.4:
   >expr                         return
   >x=expr                       assign x, then return x
   x? / x!                       x is None / x is not None
+  #012                          compact decimal digit vector [0,1,2]
+  ::value / $values             scalar / starred compact output
+  ::=~x=value                   bind value, then print integer palindrome
+  $x=value<<<n                  bind value, then print its left rotation
   x=expr, x+=expr               assignments
   x>0&&y<0  x||y                and→&& or→||
 """
@@ -114,6 +118,11 @@ class KernEmitter(ast.NodeVisitor):
         parts = []
         index = 0
         while index < len(nodes):
+            bound_output = self._compact_bound_output(nodes, index)
+            if bound_output is not None:
+                parts.append(bound_output)
+                index += 2
+                continue
             recurrence = self._compact_additive_recurrence(nodes, index)
             if recurrence is not None:
                 parts.append(recurrence)
@@ -166,6 +175,11 @@ class KernEmitter(ast.NodeVisitor):
         i = 0
         while i < len(nodes):
             node = nodes[i]
+            bound_output = self._compact_bound_output(nodes, i)
+            if bound_output is not None:
+                rendered.append((bound_output, node))
+                i += 2
+                continue
             recurrence = self._compact_additive_recurrence(nodes, i)
             if recurrence is not None:
                 rendered.append((recurrence, node))
@@ -189,6 +203,38 @@ class KernEmitter(ast.NodeVisitor):
             if i + 1 < len(rendered) and not self._is_self_delimiting_stmt(node, text):
                 out.append(";")
         return "".join(out)
+
+    def _compact_bound_output(self, nodes, index: int) -> str | None:
+        """Fuse an exact primitive binding followed by its derived output."""
+        if not self._compact_mode or index + 1 >= len(nodes):
+            return None
+        assign, output = nodes[index:index + 2]
+        if not (
+            isinstance(assign, ast.Assign)
+            and len(assign.targets) == 1
+            and isinstance(assign.targets[0], ast.Name)
+            and self._is_compact_primitive_atom(assign.value)
+            and isinstance(output, ast.Expr)
+            and isinstance(output.value, ast.Call)
+            and isinstance(output.value.func, ast.Name)
+            and output.value.func.id == "print"
+            and len(output.value.args) == 1
+            and not output.value.keywords
+        ):
+            return None
+        name = assign.targets[0].id
+        argument = output.value.args[0]
+        if isinstance(argument, ast.Starred):
+            rotation = self._compact_rotate_left(argument.value)
+            if rotation is not None and rotation.startswith(name + "<<<"):
+                return (
+                    f"${name}={self._expr(assign.value)}"
+                    + rotation[len(name):]
+                )
+        palindrome = self._compact_integer_palindrome(argument)
+        if palindrome == "=~" + name:
+            return f"::=~{name}={self._expr(assign.value)}"
+        return None
 
     def _compact_additive_recurrence(self, nodes, index: int) -> str | None:
         """Fuse an exact seeded additive recurrence and starred output."""
@@ -247,8 +293,8 @@ class KernEmitter(ast.NodeVisitor):
             and self._is_negative_index(recurrence.right, name, 2)
         ):
             return None
-        seeds = ",".join(self._expr(item) for item in assign.value.elts)
-        return f"${name}=[{seeds}]\\{self._expr(loop.iter.args[0])}"
+        seeds = self._expr(assign.value)
+        return f"${name}={seeds}\\{self._expr(loop.iter.args[0])}"
 
     @staticmethod
     def _is_negative_index(node, name: str, amount: int) -> bool:
@@ -759,7 +805,11 @@ class KernEmitter(ast.NodeVisitor):
 
     def _compact_rotate_left(self, node) -> str | None:
         """Render ``x[n:] + x[:n]`` as Kern's reversible ``x<<<n``."""
-        if not self._compact_mode or not isinstance(node.op, ast.Add):
+        if (
+            not self._compact_mode
+            or not isinstance(node, ast.BinOp)
+            or not isinstance(node.op, ast.Add)
+        ):
             return None
         left = node.left
         right = node.right
@@ -983,9 +1033,9 @@ class KernEmitter(ast.NodeVisitor):
         ):
             return (
                 "@"
-                + ",".join(self._expr(item) for item in left_arg.elts)
+                + self._expr(left_arg)
                 + ":"
-                + ",".join(self._expr(item) for item in right_arg.elts)
+                + self._expr(right_arg)
             )
         return (
             f"@{left_name},{right_name}:"
@@ -1071,7 +1121,8 @@ class KernEmitter(ast.NodeVisitor):
     def _compact_integer_palindrome(self, node) -> str | None:
         """Render ``int(x == x[::-1])`` as reversible ``=~x``."""
         if not (
-            isinstance(node.func, ast.Name)
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
             and node.func.id == "int"
             and len(node.args) == 1
             and not node.keywords
@@ -1126,6 +1177,18 @@ class KernEmitter(ast.NodeVisitor):
         return "\\" + params + ":" + body
 
     def _expr_List(self, node) -> str:
+        if (
+            self._compact_mode
+            and len(node.elts) >= 2
+            and all(
+                isinstance(item, ast.Constant)
+                and isinstance(item.value, int)
+                and not isinstance(item.value, bool)
+                and 0 <= item.value <= 9
+                for item in node.elts
+            )
+        ):
+            return "#" + "".join(str(item.value) for item in node.elts)
         return "[" + ",".join(self._expr(e) for e in node.elts) + "]"
 
     def _expr_Tuple(self, node) -> str:

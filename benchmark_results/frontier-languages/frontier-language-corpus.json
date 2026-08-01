@@ -1,0 +1,142 @@
+[
+  {
+    "category": "scalar",
+    "cjam": "23H*B+Y/\n",
+    "expected_stdout": "201",
+    "gnu_apl": "⌊.5×11+17×23\n",
+    "kern": "::(17*23+11)//2\n",
+    "kona": "(11+17*23)%2\n",
+    "python": "print((17 * 23 + 11) // 2)\n",
+    "task_id": "scalar/arithmetic"
+  },
+  {
+    "category": "reduction",
+    "cjam": "101,:+\n",
+    "expected_stdout": "5050",
+    "gnu_apl": "+/⍳100\n",
+    "kern": "::+/!1:101\n",
+    "kona": "+/1+!100\n",
+    "python": "print(sum(range(1, 101)))\n",
+    "task_id": "reduction/sum_1_100"
+  },
+  {
+    "category": "reduction",
+    "cjam": "Am!\n",
+    "expected_stdout": "3628800",
+    "gnu_apl": "!10\n",
+    "kern": "::%10\n",
+    "kona": "*/1+!10\n",
+    "python": "import math\nprint(math.factorial(10))\n",
+    "task_id": "reduction/factorial_10"
+  },
+  {
+    "category": "text",
+    "cjam": "\"kernlanguage\"W%\n",
+    "expected_stdout": "egaugnalnrek",
+    "gnu_apl": "⌽'kernlanguage'\n",
+    "kern": "::'kernlanguage'~\n",
+    "kona": "`0:|\"kernlanguage\"\n",
+    "python": "print(\"kernlanguage\"[::-1])\n",
+    "task_id": "text/reverse"
+  },
+  {
+    "category": "array",
+    "cjam": "\"915372864\"$S*\n",
+    "expected_stdout": "1 2 3 4 5 6 7 8 9",
+    "gnu_apl": "{⍵[⍋⍵]}⍎¨'915372864'\n",
+    "kern": "$^#915372864\n",
+    "kona": "{x@<x}10 _vs 915372864\n",
+    "python": "print(*sorted([9, 1, 5, 3, 7, 2, 8, 6, 4]))\n",
+    "task_id": "array/sort"
+  },
+  {
+    "category": "array",
+    "cjam": "\"31232415\"L|S*\n",
+    "expected_stdout": "3 1 2 4 5",
+    "gnu_apl": "∪⍎¨'31232415'\n",
+    "kern": "$?#31232415\n",
+    "kona": "?10 _vs 31232415\n",
+    "python": "print(*dict.fromkeys([3, 1, 2, 3, 2, 4, 1, 5]))\n",
+    "task_id": "array/distinct"
+  },
+  {
+    "category": "array",
+    "cjam": "A,:)_.*S*\n",
+    "expected_stdout": "1 4 9 16 25 36 49 64 81 100",
+    "gnu_apl": "(⍳10)*2\n",
+    "kern": "$*x:!1:11\n",
+    "kona": "{x*x}1+!10\n",
+    "python": "print(*(x * x for x in range(1, 11)))\n",
+    "task_id": "array/squares"
+  },
+  {
+    "category": "array",
+    "cjam": "A,:)Yf*S*\n",
+    "expected_stdout": "2 4 6 8 10 12 14 16 18 20",
+    "gnu_apl": "2×⍳10\n",
+    "kern": "$!2:21:2\n",
+    "kona": "2*1+!10\n",
+    "python": "print(*(x for x in range(1, 21) if x % 2 == 0))\n",
+    "task_id": "array/evens"
+  },
+  {
+    "category": "text",
+    "cjam": "\"abracadabra\"'ae=\n",
+    "expected_stdout": "5",
+    "gnu_apl": "+/'a'='abracadabra'\n",
+    "kern": "::'abracadabra'#'a'\n",
+    "kona": "+/\"abracadabra\"=\"a\"\n",
+    "python": "print(\"abracadabra\".count(\"a\"))\n",
+    "task_id": "text/count_character"
+  },
+  {
+    "category": "array",
+    "cjam": "123Ab456Ab.*:+\n",
+    "expected_stdout": "32",
+    "gnu_apl": "1 2 3+.×4 5 6\n",
+    "kern": "::@#123:#456\n",
+    "kona": "+/1 2 3*4+!3\n",
+    "python": "print(sum(a * b for a, b in zip([1, 2, 3], [4, 5, 6])))\n",
+    "task_id": "array/dot_product"
+  },
+  {
+    "category": "text",
+    "cjam": "\"racecar\"_W%=\n",
+    "expected_stdout": "1",
+    "gnu_apl": "'racecar'≡⌽'racecar'\n",
+    "kern": "::=~text='racecar'\n",
+    "kona": "{x~|x}\"racecar\"\n",
+    "python": "text = \"racecar\"\nprint(int(text == text[::-1]))\n",
+    "task_id": "text/palindrome"
+  },
+  {
+    "category": "scalar",
+    "cjam": "2706 410{_@\\%}h;\n",
+    "expected_stdout": "82",
+    "gnu_apl": "2706∨410\n",
+    "kern": "::&2706:410\n",
+    "kona": "a:2706!410;a!410!a\n",
+    "python": "import math\nprint(math.gcd(2706, 410))\n",
+    "task_id": "scalar/gcd"
+  },
+  {
+    "category": "array",
+    "cjam": "\"12345\"3m<S*\n",
+    "expected_stdout": "4 5 1 2 3",
+    "gnu_apl": "3⌽⍳5\n",
+    "kern": "$values=#12345<<<3\n",
+    "kona": "3!1+!5\n",
+    "python": "values = [1, 2, 3, 4, 5]\nprint(*(values[3:] + values[:3]))\n",
+    "task_id": "array/rotate_left"
+  },
+  {
+    "category": "recurrence",
+    "cjam": "T1{_2$+}A*]S*\n",
+    "expected_stdout": "0 1 1 2 3 5 8 13 21 34 55 89",
+    "gnu_apl": "{⍵,+/¯2↑⍵}⍣10⊢0 1\n",
+    "kern": "$values=#01\\10\n",
+    "kona": "10{x,+/-2#x}/!2\n",
+    "python": "values = [0, 1]\nfor _ in range(10):\n    values.append(values[-1] + values[-2])\nprint(*values)\n",
+    "task_id": "recurrence/fibonacci"
+  }
+]

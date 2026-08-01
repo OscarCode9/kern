@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+<title id="title">Native-system frontier</title>
+<desc id="desc">Competitors use cl100k_base; Kern is shown with shared and frozen native tokenizers</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">Native-system frontier</text>
+<text x="92" y="65" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">Competitors use cl100k_base; Kern is shown with shared and frozen native tokenizers</text>
+<line x1="92" y1="448.0" x2="946" y2="448.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="453.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="376.8" x2="946" y2="376.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="381.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">36</text>
+<line x1="92" y1="305.6" x2="946" y2="305.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="310.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">72</text>
+<line x1="92" y1="234.4" x2="946" y2="234.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="239.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">108</text>
+<line x1="92" y1="163.2" x2="946" y2="163.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="168.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">144</text>
+<line x1="92" y1="92.0" x2="946" y2="92.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">180</text>
+<text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Aggregate tokens</text>
+<text x="234.3" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">GNU APL</text>
+<rect x="136.3" y="167.2" width="60.0" height="280.8" rx="5" fill="#f97316"/>
+<text x="166.3" y="159.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">142.0</text>
+<rect x="204.3" y="268.0" width="60.0" height="180.0" rx="5" fill="#06b6d4"/>
+<text x="234.3" y="260.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">91.0</text>
+<rect x="272.3" y="252.2" width="60.0" height="195.8" rx="5" fill="#22c55e"/>
+<text x="302.3" y="244.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.0</text>
+<text x="519.0" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">CJam</text>
+<rect x="421.0" y="264.1" width="60.0" height="183.9" rx="5" fill="#f97316"/>
+<text x="451.0" y="256.1" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">93.0</text>
+<rect x="489.0" y="268.0" width="60.0" height="180.0" rx="5" fill="#06b6d4"/>
+<text x="519.0" y="260.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">91.0</text>
+<rect x="557.0" y="252.2" width="60.0" height="195.8" rx="5" fill="#22c55e"/>
+<text x="587.0" y="244.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.0</text>
+<text x="803.7" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">Kona K3</text>
+<rect x="705.7" y="220.6" width="60.0" height="227.4" rx="5" fill="#f97316"/>
+<text x="735.7" y="212.6" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">115.0</text>
+<rect x="773.7" y="268.0" width="60.0" height="180.0" rx="5" fill="#06b6d4"/>
+<text x="803.7" y="260.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">91.0</text>
+<rect x="841.7" y="252.2" width="60.0" height="195.8" rx="5" fill="#22c55e"/>
+<text x="871.7" y="244.2" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">99.0</text>
+<rect x="92" y="504" width="14" height="14" rx="3" fill="#f97316"/>
+<text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Competitor + cl100k</text>
+<rect x="282" y="504" width="14" height="14" rx="3" fill="#06b6d4"/>
+<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern + cl100k</text>
+<rect x="472" y="504" width="14" height="14" rx="3" fill="#22c55e"/>
+<text x="494" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern + Kern-16K</text>
+</svg>

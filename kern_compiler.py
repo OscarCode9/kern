@@ -162,10 +162,14 @@ class Parser:
         c = self.cur
         v = c.v
 
+        if v == '$' and self._looks_like_bound_rotate_output():
+            return self._bound_rotate_output()
         if v == '$' and self._looks_like_recurrence_primitive():
             return self._recurrence()
         if v == '$':
             return self._out(starred=True)
+        if v == ':' and self._looks_like_bound_palindrome_output():
+            return self._bound_palindrome_output()
         if v == ':' and self.peek().v == ':':
             return self._out()
         if c.t == 'SELF_FN':
@@ -216,13 +220,82 @@ class Parser:
 
         return self._expr_stmt()
 
+    def _looks_like_bound_rotate_output(self) -> bool:
+        """Whether ``$name=value<<<amount`` preserves a binding and prints."""
+        if not (
+            self.cur.v == '$'
+            and self.peek().t == 'NAME'
+            and self.peek(2).v == '='
+        ):
+            return False
+        depth = 0
+        index = self.pos + 3
+        while index < len(self.toks):
+            token = self.toks[index]
+            if token.t in {'NL', 'EOF'} and depth == 0:
+                return False
+            if token.v in {'(', '[', '{'}:
+                depth += 1
+            elif token.v in {')', ']', '}'}:
+                depth -= 1
+            elif token.v == '<<<' and depth == 0:
+                return True
+            elif token.v == '\\' and depth == 0:
+                return False
+            index += 1
+        return False
+
+    def _bound_rotate_output(self) -> str:
+        """Expand ``$name=value<<<n`` to assignment plus starred output."""
+        self.eat('$')
+        name = self.eat().v
+        self.eat('=')
+        value = self._compact_primitive_primary()
+        self.eat('<<<')
+        amount = self._compact_primitive_primary()
+        if self.cur.t not in {'NL', 'EOF'} and self.cur.v not in {';', '}'}:
+            raise SyntaxError("Unexpected token after bound rotation output")
+        indent = self._i()
+        return (
+            f'{name} = {value}\n'
+            f'{indent}print(*({name}[{amount}:] + {name}[:{amount}]))'
+        )
+
+    def _looks_like_bound_palindrome_output(self) -> bool:
+        """Whether ``::=~name=value`` preserves a binding and prints."""
+        return (
+            self.cur.v == ':'
+            and self.peek().v == ':'
+            and self.peek(2).v == '='
+            and self.peek(3).v == '~'
+            and self.peek(4).t == 'NAME'
+            and self.peek(5).v == '='
+        )
+
+    def _bound_palindrome_output(self) -> str:
+        """Expand ``::=~name=value`` to assignment plus integer palindrome."""
+        self.eat(':')
+        self.eat(':')
+        self.eat('=')
+        self.eat('~')
+        name = self.eat().v
+        self.eat('=')
+        value = self._compact_primitive_primary()
+        if self.cur.t not in {'NL', 'EOF'} and self.cur.v not in {';', '}'}:
+            raise SyntaxError("Unexpected token after bound palindrome output")
+        indent = self._i()
+        return (
+            f'{name} = {value}\n'
+            f'{indent}print(int({name} == {name}[::-1]))'
+        )
+
     def _looks_like_recurrence_primitive(self) -> bool:
-        """Whether ``$name=[a,b]\\count`` starts an additive recurrence."""
+        """Whether ``$name=[a,b]\\count`` or ``$name=#ab\\count`` recurs."""
         return (
             self.cur.v == '$'
             and self.peek().t == 'NAME'
             and self.peek(2).v == '='
-            and self.peek(3).v == '['
+            and self.peek(3).v in {'[', '#'}
         )
 
     def _recurrence(self) -> str:
@@ -230,11 +303,19 @@ class Parser:
         self.eat('$')
         name = self.eat().v
         self.eat('=')
-        self.eat('[')
-        first = self._expr_until({','})
-        self.eat(',')
-        second = self._expr_until({']'})
-        self.eat(']')
+        if self.cur.v == '#':
+            items = self._compact_digit_items()
+            if len(items) != 2:
+                raise SyntaxError(
+                    "Additive recurrence requires exactly two seeds"
+                )
+            first, second = items
+        else:
+            self.eat('[')
+            first = self._expr_until({','})
+            self.eat(',')
+            second = self._expr_until({']'})
+            self.eat(']')
         self.eat('\\')
         count = self._expr_line()
         if not count:
@@ -260,6 +341,7 @@ class Parser:
             self.cur.v == '@'
             and (
                 self.peek().t in {'NUM', 'STR'}
+                or self.peek().v == '#'
                 or (
                     self.peek().v in {'+', '-'}
                     and self.peek(2).t in {'NUM', 'NAME'}
@@ -713,6 +795,11 @@ class Parser:
                 expect_operand = False
                 previous_value = '!'
                 continue
+            if expect_operand and v == '#':
+                parts.append(self._compact_digit_vector())
+                expect_operand = False
+                previous_value = '#:'
+                continue
             if expect_operand and v in ('^', '?', '%'):
                 marker = self.eat().v
                 if marker == '%':
@@ -847,6 +934,8 @@ class Parser:
         """Compile one boundary-safe operand used by a compact primitive."""
         if self.cur.v == '!':
             return self._compact_range()
+        if self.cur.v == '#':
+            return self._compact_digit_vector()
         if self.cur.v in ('+', '-'):
             marker = self.eat().v
             if self.cur.t not in ('NUM', 'NAME'):
@@ -868,11 +957,33 @@ class Parser:
 
     def _compact_literal_vector(self) -> str:
         """Compile a comma strand in ``@1,2:3,4`` as a Python list."""
+        if self.cur.v == '#':
+            return self._compact_digit_vector()
         items = [self._compact_primitive_primary()]
         while self.cur.v == ',':
             self.eat(',')
             items.append(self._compact_primitive_primary())
         return '[' + ', '.join(items) + ']'
+
+    def _compact_digit_items(self) -> list[str]:
+        """Consume ``#012`` and return its individual decimal digit items."""
+        self.eat('#')
+        if (
+            self.cur.t != 'NUM'
+            or not self.cur.v
+            or any(char not in '0123456789' for char in self.cur.v)
+        ):
+            raise SyntaxError("Compact digit vector requires decimal digits")
+        digits = self.eat().v
+        if len(digits) < 2:
+            raise SyntaxError(
+                "Compact digit vector requires at least two digits"
+            )
+        return list(digits)
+
+    def _compact_digit_vector(self) -> str:
+        """Compile ``#012`` to the exact Python list ``[0, 1, 2]``."""
+        return '[' + ', '.join(self._compact_digit_items()) + ']'
 
     def _compact_range(self) -> str:
         """Compile ``!stop`` / ``!start:stop[:step]`` to ``range(...)``."""

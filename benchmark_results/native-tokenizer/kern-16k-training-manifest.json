@@ -25,7 +25,7 @@
     "unique_ast_hashes": 1739,
     "unique_source_hashes": 1739
   },
-  "generated_at": "2026-07-29T07:48:01.347564+00:00",
+  "generated_at": "2026-08-01T21:45:19.278521+00:00",
   "runtime": {
     "datasets": "4.8.5",
     "huggingface_hub": "1.25.1",
@@ -37,25 +37,25 @@
   "selection": {
     "candidates": [
       {
-        "characters_per_token": 2.8126064444056076,
+        "characters_per_token": 2.8133434055557465,
         "exact_roundtrip_failures": 0,
         "name": "bytelevel_regex",
-        "validation_characters": 820772,
-        "validation_tokens": 291819
+        "validation_characters": 819330,
+        "validation_tokens": 291230
       },
       {
-        "characters_per_token": 3.721697492937693,
+        "characters_per_token": 3.712499150411201,
         "exact_roundtrip_failures": 0,
         "name": "bytelevel_no_regex",
-        "validation_characters": 820772,
-        "validation_tokens": 220537
+        "validation_characters": 819330,
+        "validation_tokens": 220695
       }
     ],
     "corpus": {
       "accepted": 2048,
-      "accepted_characters": 820772,
+      "accepted_characters": 819330,
       "accepted_repositories": 8,
-      "kern_aggregate_sha256": "a8023af86f9952566afea9cb2d5ccdd7c9a2859b64830543a57527dfbab916ac",
+      "kern_aggregate_sha256": "7f9965d59375873c0296dc4f6922eb80295c710bc9d2909eb8bb7edfeaae3908",
       "rejections": {
         "python_parse": 128,
         "roundtrip_ast": 72,
@@ -80,7 +80,7 @@
     "model": "BPE",
     "normalizer": null,
     "pre_tokenizer": "bytelevel_no_regex",
-    "sha256": "d570a49067b2fffca939924527b8daa3c0cc74e687b1ce7026c3193396e570ec",
+    "sha256": "14402547477aecf3b4cc8015180f125e19ab66c20d220b82537ab869e9180c82",
     "special_tokens": [
       "<unk>"
     ],
@@ -88,19 +88,19 @@
   },
   "training": {
     "accepted": 25953,
-    "accepted_characters": 8580016,
+    "accepted_characters": 8558620,
     "accepted_repositories": 1022,
-    "kern_aggregate_sha256": "2d9d460d0f17ad7c1ae7acd6b0429e9b8056a755a49f3c3ce3852539d41cb153",
+    "kern_aggregate_sha256": "0521a409e1b4e23f63791f8de8da6062b6e0f404290e9e4e715820c5fa947f8c",
     "rejections": {
       "duplicate_kern": 1,
       "python_parse": 383,
-      "roundtrip_ast": 1055,
+      "roundtrip_ast": 1054,
       "source_too_long": 27,
-      "transform_or_compile": 137
+      "transform_or_compile": 151
     },
     "requested": 25953,
-    "scanned": 27556,
-    "source_aggregate_sha256": "7d98c1e0793a1eb143d10776185aac3beb2a0c9f0bc78e0c7add8b8b18d79c6b",
+    "scanned": 27569,
+    "source_aggregate_sha256": "e3238f690b01972f14cff1c1d869a0f179ca018a592747e45ab538e4ea2c6650",
     "split": "train"
   }
 }

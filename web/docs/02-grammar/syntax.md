@@ -459,6 +459,10 @@ is_palindrome(s:str)->bool{s=s.lower().replace(" ","");>s==s[::-1]
 | `.` before a function name | Function has an implicit first parameter `self` |
 | `.` at operand start inside an implicit-self function | The identifier `self` |
 | `?` / `!` postfix | `is None` / `is not None` |
+| `#` at operand start followed by 2+ digits | Compact decimal digit vector; `#012` restores `[0,1,2]` |
+| `#` after an expression | Compact `.count(...)` primitive in the opt-in compact profile |
+| `::=~name=value` at statement start | Restore `name=value; print(int(name == name[::-1]))` |
+| `$name=value<<<n` at statement start | Restore the binding and starred left-rotation output |
 | `\` at expression start | Lambda |
 | `:` after `\...` params | Lambda body separator |
 | `:` in `{k:v}` | Dict separator (inside `{}` = dict context) |

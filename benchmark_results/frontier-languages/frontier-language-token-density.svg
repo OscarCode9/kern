@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+<title id="title">Kern crosses the executable token frontier</title>
+<desc id="desc">14 matched programs · exact stdout · complete sources · lower is better</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">Kern crosses the executable token frontier</text>
+<text x="92" y="65" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">14 matched programs · exact stdout · complete sources · lower is better</text>
+<line x1="92" y1="448.0" x2="946" y2="448.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="453.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="376.8" x2="946" y2="376.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="381.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">60</text>
+<line x1="92" y1="305.6" x2="946" y2="305.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="310.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">120</text>
+<line x1="92" y1="234.4" x2="946" y2="234.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="239.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">180</text>
+<line x1="92" y1="163.2" x2="946" y2="163.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="168.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">240</text>
+<line x1="92" y1="92.0" x2="946" y2="92.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">300</text>
+<text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Aggregate LLM tokens</text>
+<text x="305.5" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">cl100k_base</text>
+<rect x="126.5" y="133.5" width="53.0" height="314.5" rx="5" fill="#94a3b8"/>
+<text x="153.0" y="125.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">265.0</text>
+<rect x="187.5" y="190.5" width="53.0" height="257.5" rx="5" fill="#06b6d4"/>
+<text x="214.0" y="182.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">217.0</text>
+<rect x="248.5" y="279.5" width="53.0" height="168.5" rx="5" fill="#a855f7"/>
+<text x="275.0" y="271.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">142.0</text>
+<rect x="309.5" y="337.6" width="53.0" height="110.4" rx="5" fill="#f97316"/>
+<text x="336.0" y="329.6" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">93.0</text>
+<rect x="370.5" y="311.5" width="53.0" height="136.5" rx="5" fill="#eab308"/>
+<text x="397.0" y="303.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">115.0</text>
+<rect x="431.5" y="340.0" width="53.0" height="108.0" rx="5" fill="#22c55e"/>
+<text x="458.0" y="332.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">91.0</text>
+<text x="732.5" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">o200k_base</text>
+<rect x="553.5" y="135.9" width="53.0" height="312.1" rx="5" fill="#94a3b8"/>
+<text x="580.0" y="127.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">263.0</text>
+<rect x="614.5" y="191.7" width="53.0" height="256.3" rx="5" fill="#06b6d4"/>
+<text x="641.0" y="183.7" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">216.0</text>
+<rect x="675.5" y="289.0" width="53.0" height="159.0" rx="5" fill="#a855f7"/>
+<text x="702.0" y="281.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">134.0</text>
+<rect x="736.5" y="335.3" width="53.0" height="112.7" rx="5" fill="#f97316"/>
+<text x="763.0" y="327.3" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">95.0</text>
+<rect x="797.5" y="313.9" width="53.0" height="134.1" rx="5" fill="#eab308"/>
+<text x="824.0" y="305.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">113.0</text>
+<rect x="858.5" y="338.8" width="53.0" height="109.2" rx="5" fill="#22c55e"/>
+<text x="885.0" y="330.8" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">92.0</text>
+<rect x="92" y="504" width="14" height="14" rx="3" fill="#94a3b8"/>
+<text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Python</text>
+<rect x="282" y="504" width="14" height="14" rx="3" fill="#06b6d4"/>
+<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">python-minifier</text>
+<rect x="472" y="504" width="14" height="14" rx="3" fill="#a855f7"/>
+<text x="494" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">GNU APL</text>
+<rect x="662" y="504" width="14" height="14" rx="3" fill="#f97316"/>
+<text x="684" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">CJam</text>
+<rect x="852" y="504" width="14" height="14" rx="3" fill="#eab308"/>
+<text x="874" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kona K3</text>
+<rect x="1042" y="504" width="14" height="14" rx="3" fill="#22c55e"/>
+<text x="1064" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern compact</text>
+</svg>

@@ -1,0 +1,232 @@
+{
+  "corpus": {
+    "authorship": "Benchmark-authored and adversarially tightened programs using documented primitives",
+    "kona_gcd_sensitivity": "The scored fixed-input Euclidean spelling is 115/113/185; a general recursive GCD spelling yields 123/121/195",
+    "normalization": "Collapse display-only whitespace; preserve value tokens and order",
+    "sources_and_hashes_published": true
+  },
+  "cross_screen_market": {
+    "competitor_cl100k_base": {
+      "bqn": 230,
+      "cjam": 93,
+      "gnu_apl": 142,
+      "golfscript": 169,
+      "j": 163,
+      "jelly": 128,
+      "k": 206,
+      "kona": 115,
+      "pyth": 132,
+      "uiua": 209
+    },
+    "kern_cl100k_base_current": 91,
+    "prior_screen_evidence": {
+      "array-languages": {
+        "corpus": "benchmark_results/array-languages/array-language-corpus.json",
+        "exact_stdout": {
+          "bqn": 14,
+          "uiua": 14
+        },
+        "registry_match": true,
+        "summary": "benchmark_results/array-languages/array-language-summary.json"
+      },
+      "compact-languages": {
+        "corpus": "benchmark_results/compact-languages/compact-language-corpus.json",
+        "exact_stdout": {
+          "golfscript": 14,
+          "j": 14,
+          "k": 14
+        },
+        "registry_match": true,
+        "summary": "benchmark_results/compact-languages/compact-language-summary.json"
+      },
+      "golf-languages": {
+        "corpus": "benchmark_results/golf-languages/golf-language-corpus.json",
+        "exact_stdout": {
+          "jelly": 14,
+          "pyth": 14
+        },
+        "registry_match": true,
+        "summary": "benchmark_results/golf-languages/golf-language-summary.json"
+      }
+    },
+    "protocol": "Current Kern and frontier runtimes joined to prior pinned executable screens only after exact task, Python source, and stdout-oracle registry equality"
+  },
+  "discovery_evidence": {
+    "interpretation": "This bounded density screen is not evidence that every program or every competitor solution is globally minimal",
+    "official_sources": {
+      "cjam": "https://sourceforge.net/p/cjam/code/ci/0.6.5/tree/",
+      "gnu_apl": "https://www.gnu.org/software/apl/",
+      "kona": "https://github.com/kevinlawler/kona"
+    },
+    "source_snapshot_date": "2026-08-01"
+  },
+  "metadata": {
+    "generated_at_utc": "2026-08-01T21:58:49.677420+00:00",
+    "kern_tokenizer_sha256": "14402547477aecf3b4cc8015180f125e19ab66c20d220b82537ab869e9180c82",
+    "protocol": "Fourteen fixed matched executable programs; adversarially strengthened complete sources; shared production tokenizers; exact normalized stdout; separate native and byte lanes",
+    "python": "3.12.11",
+    "python_minifier": "3.2.0",
+    "tiktoken": "0.13.0",
+    "tokenizers": "0.22.2"
+  },
+  "results": {
+    "categories": {
+      "array": {
+        "cl100k_base": {
+          "cjam": 41,
+          "gnu_apl": 65,
+          "kern": 38,
+          "kona": 50,
+          "python": 153,
+          "python_minifier": 122
+        },
+        "kern_native_16k": 44,
+        "programs": 6
+      },
+      "recurrence": {
+        "cl100k_base": {
+          "cjam": 12,
+          "gnu_apl": 23,
+          "kern": 5,
+          "kona": 10,
+          "python": 31,
+          "python_minifier": 27
+        },
+        "kern_native_16k": 6,
+        "programs": 1
+      },
+      "reduction": {
+        "cl100k_base": {
+          "cjam": 5,
+          "gnu_apl": 7,
+          "kern": 9,
+          "kona": 10,
+          "python": 19,
+          "python_minifier": 18
+        },
+        "kern_native_16k": 9,
+        "programs": 2
+      },
+      "scalar": {
+        "cl100k_base": {
+          "cjam": 16,
+          "gnu_apl": 16,
+          "kern": 15,
+          "kona": 19,
+          "python": 28,
+          "python_minifier": 17
+        },
+        "kern_native_16k": 15,
+        "programs": 2
+      },
+      "text": {
+        "cl100k_base": {
+          "cjam": 19,
+          "gnu_apl": 31,
+          "kern": 24,
+          "kona": 26,
+          "python": 34,
+          "python_minifier": 33
+        },
+        "kern_native_16k": 25,
+        "programs": 3
+      }
+    },
+    "cl100k_base": {
+      "cjam": 93,
+      "gnu_apl": 142,
+      "kern": 91,
+      "kona": 115,
+      "python": 265,
+      "python_minifier": 217
+    },
+    "comparisons": {
+      "median_per_pair_shared_kern_below_pct": {
+        "cjam": -16.666666666666664,
+        "gnu_apl": 15.340909090909092,
+        "kona": 12.5
+      },
+      "native_kern_below_competitor_cl100k_pct": {
+        "cjam": -6.451612903225806,
+        "gnu_apl": 30.28169014084507,
+        "kona": 13.91304347826087
+      },
+      "native_kern_wins": {
+        "cjam": 2,
+        "gnu_apl": 8,
+        "kona": 7
+      },
+      "shared_kern_below_pct": {
+        "cjam": 2.1505376344086025,
+        "gnu_apl": 35.91549295774648,
+        "kona": 20.869565217391305
+      },
+      "shared_kern_wins": {
+        "cjam": 5,
+        "gnu_apl": 8,
+        "kona": 8
+      }
+    },
+    "functional": {
+      "cjam": 14,
+      "gnu_apl": 14,
+      "kern": 14,
+      "kona": 14,
+      "python": 14,
+      "python_minifier": 14
+    },
+    "native_system": {
+      "cjam_cl100k_base": 93,
+      "gnu_apl_cl100k_base": 142,
+      "kern_native_16k": 99,
+      "kona_cl100k_base": 115
+    },
+    "o200k_base": {
+      "cjam": 95,
+      "gnu_apl": 134,
+      "kern": 92,
+      "kona": 113,
+      "python": 263,
+      "python_minifier": 216
+    },
+    "programs": 14,
+    "structural": {
+      "kern_contract_ast": 14,
+      "kern_native_exact_roundtrip": 14
+    },
+    "utf8_bytes": {
+      "cjam": 164,
+      "gnu_apl": 211,
+      "kern": 179,
+      "kona": 185,
+      "python": 611,
+      "python_minifier": 537
+    }
+  },
+  "runtime_gates": {
+    "cjam": {
+      "expected_jar_sha256": "e7444a9ac3cab491053df2bd625217906ba07ab091ace9aa52e54f700db9e3a7",
+      "jar_sha256": "e7444a9ac3cab491053df2bd625217906ba07ab091ace9aa52e54f700db9e3a7",
+      "java_version": "java version \"17.0.12\" 2024-07-16 LTS\nJava(TM) SE Runtime Environment (build 17.0.12+8-LTS-286)\nJava HotSpot(TM) 64-Bit Server VM (build 17.0.12+8-LTS-286, mixed mode, sharing)",
+      "ok": true,
+      "source_changeset": "c62f1221dfadd63f3b21776714f62573df24dd32",
+      "version": "0.6.5"
+    },
+    "gnu_apl": {
+      "binary_sha256_observed": "95208b403f16d9edfa53167d05a10d87f6caab9f879302c287c3474d70306707",
+      "expected_source_archive_sha256": "24bbb744fce47e62837234a053bdeecee51b9ea61c82c79f7cc191bc6a54c0a1",
+      "expected_version": "2.0",
+      "ok": true,
+      "source_archive_sha256": "24bbb744fce47e62837234a053bdeecee51b9ea61c82c79f7cc191bc6a54c0a1",
+      "version": "BUILDTAG:\n---------\n    Project:        GNU APL\n    Version / SVN:  2.0 / SVN: no-svnversion\n    Build Date:     2026-08-01 15:47:07 CST\n    Build OS:       Darwin 25.5.0 arm64\n    config.status:  default ./configure options\n    Archive SVN:   no-svn"
+    },
+    "kona": {
+      "binary_sha256_observed": "4e8b282824b6587c3150a618ef9e334de69fe4872b3b33612a9fb06f16727b56",
+      "commit": "ac4e4c515faf586520454c266619ce1fea650554",
+      "expected_commit": "ac4e4c515faf586520454c266619ce1fea650554",
+      "ok": true,
+      "suite": "t:0\nt:50\nt:100\nt:150\nt:200\nt:250\nt:300\nt:350\nt:400\nt:450\nt:500\nt:550\nt:600\nt:650\nt:700\nt:750\nt:800\nt:850\nt:900\nt:950\nt:1000\nt:1050\nt:1100\nTest pass rate: 1.0000, Total: 1134, Passed: 1101, Skipped: 33, Failed: 0, Time: 0.238575s\nOK"
+    }
+  },
+  "schema_version": 1
+}

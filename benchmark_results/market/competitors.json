@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-07-29",
+  "checked_at": "2026-08-01",
   "schema_version": 1,
   "coverage_note": "Living registry, not a claim that every programming language has been exhausted. Direct AI-oriented rivals and adversarial compact-language families are tracked separately.",
   "competitors": [
@@ -24,8 +24,8 @@
       "native_tokenizer_artifact_sha256": "c33eee7501da85966f969dc0007afd30c9cc2a7f2a6fb5f8b769aa7762210fcb",
       "public_claim": "52% average reduction across 42 programs with a purpose-built 16K BPE",
       "status": "reproduced_public_pairs_and_native_contest",
-      "kern_lane": "60 equivalent JSON-CLI pairs: Kern 3023 vs Toke 6347 cl100k tokens; Kern 60/60 vs Toke 29/60 public smoke probes",
-      "native_observation": "Equal 16K vocabulary held-out contest: Kern native BPE 2870 tokens vs Toke native BPE 3906; Kern is 26.52% smaller and exact-round-trips 60/60",
+      "kern_lane": "60 equivalent JSON-CLI pairs: current Kern 3012 vs Toke 6347 cl100k tokens; Kern 60/60 vs Toke 29/60 public smoke probes",
+      "native_observation": "Equal 16K vocabulary held-out contest: Kern native BPE 2788 tokens vs Toke native BPE 3906; Kern is 28.62% smaller and exact-round-trips 60/60",
       "next_gate": "Monitor Toke compiler, tokenizer, corpus, and public benchmark releases for material changes"
     },
     {
@@ -80,7 +80,7 @@
       "version_or_reference": "717063f24921d5aff405a39cf7643efedb5bb365",
       "public_claim": "No LLM-token claim; ranked first on the current code.golf all-hole bytes table with 7,755 best-solution bytes",
       "status": "first_adversarial_density_screen_reproduced",
-      "kern_lane": "14 matched executable programs: Kern 147 vs K 206 cl100k tokens; Kern-16K 127 vs K + cl100k 206; both 14/14 exact stdout",
+      "kern_lane": "14 matched executable programs: current Kern 91 vs K 206 cl100k tokens; Kern-16K 99 vs K + cl100k 206; both 14/14 exact stdout",
       "next_gate": "Expand with expert-reviewed K solutions and a larger corpus; the current code.golf leaders remain private"
     },
     {
@@ -91,8 +91,8 @@
       "version_or_reference": "6155e9f7860775be53bdc79c6e1c3b9308ebbfe5",
       "public_claim": "No LLM-token claim; ranked second on the current code.golf all-hole bytes table with 8,229 best-solution bytes",
       "status": "first_adversarial_density_screen_reproduced",
-      "kern_lane": "14 matched executable programs: Kern 147 vs GolfScript 169 cl100k tokens; Kern-16K 127 vs GolfScript + cl100k 169; both 14/14 exact stdout",
-      "next_gate": "Expand with expert-reviewed GolfScript solutions; current Kern wins 9/14 shared and 8/14 native individual pairs"
+      "kern_lane": "14 matched executable programs: current Kern 91 vs GolfScript 169 cl100k tokens; Kern-16K 99 vs GolfScript + cl100k 169; both 14/14 exact stdout",
+      "next_gate": "Expand with expert-reviewed GolfScript solutions and a larger corpus"
     },
     {
       "name": "J",
@@ -102,8 +102,8 @@
       "version_or_reference": "9.6.3 in code.golf",
       "public_claim": "No LLM-token claim; ranked third on the current code.golf all-hole bytes table with 8,741 best-solution bytes",
       "status": "first_adversarial_density_screen_reproduced",
-      "kern_lane": "14 matched executable programs: Kern 147 vs J 163 cl100k tokens; Kern-16K 127 vs J + cl100k 163; both 14/14 exact stdout",
-      "next_gate": "Expand with expert-reviewed J solutions and rebalance beyond the current six array tasks; current Kern wins 6/14 shared and 9/14 native individual pairs"
+      "kern_lane": "14 matched executable programs: current Kern 91 vs J 163 cl100k tokens; Kern-16K 99 vs J + cl100k 163; both 14/14 exact stdout",
+      "next_gate": "Expand with expert-reviewed J solutions and rebalance beyond the current six array tasks"
     },
     {
       "name": "Pyth",
@@ -112,8 +112,8 @@
       "version_or_reference": "97cdf30d749d2a0d6ec1bb4b9bc417c34cce05bb",
       "public_claim": "Designed to minimize source length; no production-LLM-token benchmark located",
       "status": "first_adversarial_density_screen_reproduced",
-      "kern_lane": "14 matched executable programs: Pyth 132 vs Kern 147 cl100k tokens; Kern-16K 127 vs Pyth + cl100k 132; both 14/14 exact stdout",
-      "next_gate": "Expert-review Pyth sources and expand the corpus; Pyth retains the neutral shared-tokenizer lead"
+      "kern_lane": "14 matched executable programs: current Kern 91 vs Pyth 132 cl100k tokens; Kern-16K 99 vs Pyth + cl100k 132; both 14/14 exact stdout",
+      "next_gate": "Expert-review Pyth sources and expand the corpus"
     },
     {
       "name": "Jelly",
@@ -122,8 +122,8 @@
       "version_or_reference": "70c9fd93ab009c05dc396f8cc091f72b212fb188",
       "public_claim": "Designed for code golf; no production-LLM-token benchmark located",
       "status": "first_adversarial_density_screen_reproduced",
-      "kern_lane": "14 matched executable programs: Jelly 128 vs Kern 147 cl100k tokens; Kern-16K 127 vs Jelly + cl100k 128; all 14/14 exact stdout; Jelly code-page total 145 is reported separately",
-      "next_gate": "Expert-review Jelly sources and expand the corpus; Jelly retains the neutral shared-tokenizer and byte/code-page leads"
+      "kern_lane": "14 matched executable programs: current Kern 91 vs Jelly 128 cl100k tokens; Kern-16K 99 vs Jelly + cl100k 128; all 14/14 exact stdout; Jelly code-page total 145 is reported separately",
+      "next_gate": "Expert-review Jelly sources and expand the corpus; keep its one-byte code-page lane separate"
     },
     {
       "name": "Uiua",
@@ -131,9 +131,9 @@
       "official_source": "https://github.com/uiua-lang/uiua",
       "version_or_reference": "0.18.1",
       "public_claim": "Concise array notation, but no matched production-token claim located",
-      "status": "array_density_screen_pending",
-      "kern_lane": "Matched array workloads plus general control-flow workloads; shared tokenizers and executable oracles",
-      "next_gate": "Measure Unicode-token fragmentation and domain-specific density separately"
+      "status": "array_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: current Kern 91 vs Uiua 209 cl100k tokens; both 14/14 exact stdout",
+      "next_gate": "Expert-review sources and expand beyond the six array tasks"
     },
     {
       "name": "BQN",
@@ -142,9 +142,60 @@
       "evaluation_source": "https://github.com/dzaima/CBQN",
       "version_or_reference": "CBQN 0.12.0 (b4db324a99d6590d91b9b09bc36847f3254c1543)",
       "public_claim": "Powerful concise array notation, but no matched production-token claim located",
-      "status": "array_density_screen_pending",
-      "kern_lane": "Matched array workloads plus general control-flow workloads; shared tokenizers and executable oracles",
-      "next_gate": "Measure after K and J, with glyph and workload bias reported"
+      "status": "array_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: current Kern 91 vs BQN 230 cl100k tokens; both 14/14 exact stdout",
+      "next_gate": "Expert-review sources and expand beyond the six array tasks"
+    },
+    {
+      "name": "GNU APL",
+      "kind": "Open-source APL implementation",
+      "official_source": "https://www.gnu.org/software/apl/",
+      "version_or_reference": "GNU APL 2.0 official source archive SHA-256 24bbb744fce47e62837234a053bdeecee51b9ea61c82c79f7cc191bc6a54c0a1",
+      "public_claim": "Concise array language; no matched production-LLM-token claim located",
+      "status": "frontier_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: current Kern 91 vs GNU APL 142 cl100k tokens; both 14/14 exact stdout",
+      "next_gate": "Expert-review APL sources, expand the corpus, and run a separate licensed Dyalog gate"
+    },
+    {
+      "name": "CJam",
+      "kind": "Stack-based code-golf language",
+      "official_source": "https://sourceforge.net/p/cjam/code/ci/0.6.5/tree/",
+      "version_or_reference": "0.6.5 changeset c62f1221dfadd63f3b21776714f62573df24dd32; official JAR SHA-256 e7444a9ac3cab491053df2bd625217906ba07ab091ace9aa52e54f700db9e3a7",
+      "public_claim": "Designed for code golf; no production-LLM-token benchmark located",
+      "status": "frontier_density_screen_reproduced_closest_shared_challenger",
+      "kern_lane": "14 matched executable programs: current Kern 91 vs CJam 93 cl100k tokens; both 14/14 exact stdout; CJam leads UTF-8 bytes 164 vs 179 and Kern-native system tokens 93 vs 99",
+      "next_gate": "Expert-review both source sets and expand the corpus; the two-token shared lead is narrow and Kern wins only 5/14 pairs"
+    },
+    {
+      "name": "Kona K3",
+      "kind": "Open-source K3 array-language implementation",
+      "official_source": "https://github.com/kevinlawler/kona",
+      "version_or_reference": "ac4e4c515faf586520454c266619ce1fea650554",
+      "public_claim": "Compact K-family notation; no matched production-LLM-token claim located",
+      "status": "frontier_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: current Kern 91 vs Kona 115 cl100k tokens; both 14/14 exact stdout; upstream suite 1101 passed, 33 skipped, 0 failed",
+      "next_gate": "Expert-review sources, use the disclosed general-GCD sensitivity, and expand the corpus"
+    },
+    {
+      "name": "Nibbles",
+      "kind": "Functional code-golf language",
+      "official_source": "https://github.com/darrenks/nibbles",
+      "evaluation_source": "https://golfscript.com/nibbles/index.html",
+      "version_or_reference": "release 1.01; current repository commit 5bbfddb9892baa5c6e3fd52e71a0db29ee994f06",
+      "public_claim": "Designed for extreme source compactness",
+      "status": "runtime_gate_open_no_score",
+      "kern_lane": "No score: local GHC build/runtime attempts were not reliable and the public Try-It endpoint was unavailable",
+      "next_gate": "Obtain a reproducible pinned runtime, execute the same fourteen oracles, and publish full hashes before scoring"
+    },
+    {
+      "name": "Dyalog APL",
+      "kind": "Commercial APL implementation",
+      "official_source": "https://www.dyalog.com/dyalog/dyalog-versions/200.htm",
+      "version_or_reference": "Dyalog 20",
+      "public_claim": "Modern APL implementation with language features beyond GNU APL",
+      "status": "licensed_system_runtime_gate_open",
+      "kern_lane": "Not silently substituted by GNU APL; no Dyalog score is reported",
+      "next_gate": "Install under the applicable license and execute a separately identified Dyalog corpus gate"
     },
     {
       "name": "NURL",

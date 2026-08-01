@@ -323,18 +323,76 @@ print(*(values[3:] + values[:3]))
         for marker in (
             "+/!1:101",
             "%10",
-            "$^[3,1,2]",
-            "$?[3,1,3,2]",
+            "$^#312",
+            "$?#3132",
             "$*x:!1:5",
             "'abracadabra'#'a'",
-            "@1,2:3,4",
+            "@#12:#34",
             "&2706:410",
-            "$values<<<3",
+            "$values=#12345<<<3",
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, kern)
         self.assertNotIn("imp math", kern)
         self.assertTrue(rebuilt.startswith("import math\n"))
+        self.assertEqual(
+            ast.dump(ast.parse(rebuilt), include_attributes=False),
+            ast.dump(ast.parse(expected), include_attributes=False),
+        )
+
+    def test_compact_digit_vectors_are_exact_and_contextual(self) -> None:
+        source = """\
+digits = [9, 1, 5, 3, 7, 2, 8, 6, 4]
+print(*sorted(digits))
+print(*dict.fromkeys([3, 1, 2, 3, 2, 4, 1, 5]))
+print(sum(a * b for a, b in zip([1, 2, 3], [4, 5, 6])))
+print("10101".count("1"))
+"""
+        kern = transpile(source, compact=True)
+        rebuilt = compile_kern(kern)
+        expected = ast.unparse(compact_tree(ast.parse(source)))
+
+        self.assertIn("digits=#915372864", kern)
+        self.assertIn("$?#31232415", kern)
+        self.assertIn("::@#123:#456", kern)
+        self.assertIn("'10101'#'1'", kern)
+        self.assertEqual(
+            ast.dump(ast.parse(rebuilt), include_attributes=False),
+            ast.dump(ast.parse(expected), include_attributes=False),
+        )
+
+        self.assertEqual(
+            compile_kern("::@12:34"),
+            "print(sum(a * b for a, b in zip([12], [34])))",
+        )
+        with self.assertRaises(SyntaxError):
+            compile_kern("::#7")
+
+        for source in (
+            "value = [7]",
+            "value = [10, 2]",
+            "value = [True, False]",
+            "value = [-1, 2]",
+        ):
+            with self.subTest(source=source):
+                self.assertNotIn("=#", transpile(source, compact=True))
+        for kern in ("::#1", "::#12.3", "::#1e2"):
+            with self.subTest(kern=kern):
+                with self.assertRaises(SyntaxError):
+                    compile_kern(kern)
+
+    def test_digit_vector_recurrence_preserves_seed_binding(self) -> None:
+        source = """\
+values = [0, 1]
+for _ in range(4):
+    values.append(values[-1] + values[-2])
+print(*values)
+"""
+        kern = transpile(source, compact=True)
+        rebuilt = compile_kern(kern)
+        expected = ast.unparse(compact_tree(ast.parse(source)))
+
+        self.assertEqual(kern, "$values=#01\\4")
         self.assertEqual(
             ast.dump(ast.parse(rebuilt), include_attributes=False),
             ast.dump(ast.parse(expected), include_attributes=False),
@@ -379,7 +437,7 @@ print(sum(a * b for a, b in zip([True, False], [1, 2])))
 """
         boolean_dot_kern = transpile(boolean_dot, compact=True)
         self.assertIn(
-            "@a,b:[True,False]:[1,2]",
+            "@a,b:[True,False]:#12",
             boolean_dot_kern,
         )
         self.assertEqual(
@@ -420,8 +478,8 @@ print(*values)
         rebuilt = compile_kern(kern)
         expected = ast.unparse(compact_tree(ast.parse(source)))
 
-        self.assertIn("::=~text", kern)
-        self.assertIn("$values=[0,1]\\10", kern)
+        self.assertIn("::=~text='racecar'", kern)
+        self.assertIn("$values=#01\\10", kern)
         self.assertEqual(
             ast.dump(ast.parse(rebuilt), include_attributes=False),
             ast.dump(ast.parse(expected), include_attributes=False),
@@ -429,6 +487,49 @@ print(*values)
         namespace: dict[str, object] = {}
         exec(rebuilt, namespace)
         self.assertEqual(namespace["values"][-1], 89)
+
+    def test_bound_rotation_output_preserves_the_original_assignment(self) -> None:
+        source = """\
+values = [1, 2, 3, 4, 5]
+print(*(values[3:] + values[:3]))
+"""
+        kern = transpile(source, compact=True)
+        rebuilt = compile_kern(kern)
+        expected = ast.unparse(compact_tree(ast.parse(source)))
+
+        self.assertEqual(kern, "$values=#12345<<<3")
+        self.assertEqual(
+            ast.dump(ast.parse(rebuilt), include_attributes=False),
+            ast.dump(ast.parse(expected), include_attributes=False),
+        )
+
+    def test_bound_output_fusions_require_exact_adjacent_shapes(self) -> None:
+        cases = (
+            "values = [1, 2, 3]\nprint(*(other[1:] + other[:1]))",
+            "values = make_values()\nprint(*(values[1:] + values[:1]))",
+            "text = 'racecar'\nprint(int(other == other[::-1]))",
+            "text = make_text()\nprint(int(text == text[::-1]))",
+        )
+        for source in cases:
+            with self.subTest(source=source):
+                kern = transpile(source, compact=True)
+                self.assertNotIn("$values=", kern)
+                self.assertNotIn("::=~text=", kern)
+                self.assertEqual(
+                    ast.dump(
+                        ast.parse(compile_kern(kern)),
+                        include_attributes=False,
+                    ),
+                    ast.dump(
+                        compact_tree(ast.parse(source)),
+                        include_attributes=False,
+                    ),
+                )
+
+        self.assertEqual(
+            compile_kern("::=~text"),
+            "print(int(text == text[::-1]))",
+        )
 
     def test_recurrence_primitive_requires_the_exact_loop_shape(self) -> None:
         source = """\
@@ -439,7 +540,7 @@ print(*values)
 """
         kern = transpile(source, compact=True)
 
-        self.assertNotIn("$values=[0,1]\\10", kern)
+        self.assertNotIn("$values=#01\\10", kern)
 
     def test_stepped_range_rewrite_is_guarded(self) -> None:
         exact = ast.unparse(
