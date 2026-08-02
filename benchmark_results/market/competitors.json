@@ -177,6 +177,17 @@
       "next_gate": "Expert-review sources, use the disclosed general-GCD sensitivity, and expand the corpus"
     },
     {
+      "name": "Vyxal 3",
+      "kind": "Modern stack-based array and code-golf language",
+      "official_source": "https://github.com/Vyxal/Vyxal",
+      "evaluation_source": "https://github.com/Vyxal/Vyxal/releases/tag/v3.12.0",
+      "version_or_reference": "v3.12.0; source commit 7f201806cde2a1fafdca054ac398be36f939c273; official JAR SHA-256 f50af719c56374534216912887097959e8cc58dd8622491c0a246f8479cb7615",
+      "public_claim": "Designed to be inherently terse; no matched production-LLM-token benchmark located",
+      "status": "golf_density_screen_reproduced",
+      "kern_lane": "14 matched executable programs: Kern 91 vs Vyxal 151 cl100k tokens and 92 vs 147 o200k tokens; both 14/14 exact stdout; Vyxal's separate official code-page score is 177 units",
+      "next_gate": "Expert-review both source sets, seek best-known Vyxal submissions, and expand the array-heavy corpus"
+    },
+    {
       "name": "Nibbles",
       "kind": "Functional code-golf language",
       "official_source": "https://github.com/darrenks/nibbles",

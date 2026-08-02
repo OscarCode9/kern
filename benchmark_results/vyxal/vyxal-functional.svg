@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+<title id="title">Vyxal functional gate</title>
+<desc id="desc">Official code-page bytes executed against exact stdout oracles</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">Vyxal functional gate</text>
+<text x="92" y="65" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">Official code-page bytes executed against exact stdout oracles</text>
+<line x1="92" y1="448.0" x2="946" y2="448.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="453.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="376.8" x2="946" y2="376.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="381.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">20</text>
+<line x1="92" y1="305.6" x2="946" y2="305.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="310.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">40</text>
+<line x1="92" y1="234.4" x2="946" y2="234.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="239.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">60</text>
+<line x1="92" y1="163.2" x2="946" y2="163.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="168.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">80</text>
+<line x1="92" y1="92.0" x2="946" y2="92.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">100</text>
+<text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Normalized stdout oracle pass rate (%)</text>
+<text x="519.0" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">14 matched programs</text>
+<rect x="455.0" y="92.0" width="60.0" height="356.0" rx="5" fill="#22c55e"/>
+<text x="485.0" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
+<rect x="523.0" y="92.0" width="60.0" height="356.0" rx="5" fill="#f97316"/>
+<text x="553.0" y="106.0" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">100.0%</text>
+<rect x="92" y="504" width="14" height="14" rx="3" fill="#22c55e"/>
+<text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern</text>
+<rect x="282" y="504" width="14" height="14" rx="3" fill="#f97316"/>
+<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Vyxal</text>
+</svg>

@@ -4,7 +4,7 @@ This is Kern's directly reproduced language-level market comparison. It does
 **not** claim that Kern has already beaten every language. It establishes
 audited results against Sigil and Toke—including an equal-vocabulary native
 tokenizer win—paired audits of KARN and NERD, and executable screens of K,
-GolfScript, J, Pyth, Jelly, Uiua, BQN, GNU APL, CJam, and Kona, plus an
+GolfScript, J, Pyth, Jelly, Uiua, BQN, GNU APL, CJam, Kona, and Vyxal, plus an
 explicit queue for the remaining contenders.
 
 ## Reproduced Sigil result
@@ -196,7 +196,7 @@ reproduction command are in the [NERD report](../nerd/README.md).
 Direct LLM-oriented projects are not the whole market. The current
 [code.golf all-hole bytes ranking](https://code.golf/rankings/langs/all/all/bytes)
 is only an adversary-discovery signal because it measures private human-golfed
-bytes rather than production LLM tokens. Kern now has four pinned executable
+bytes rather than production LLM tokens. Kern now has five pinned executable
 screens on an identical fourteen-program registry.
 
 | `cl100k_base` aggregate | Tokens | Exact stdout |
@@ -207,6 +207,7 @@ screens on an identical fourteen-program registry.
 | Jelly | `128` | `14/14` |
 | Pyth | `132` | `14/14` |
 | GNU APL 2.0 | `142` | `14/14` |
+| Vyxal 3.12.0 | `151` | `14/14` |
 | J | `163` | `14/14` |
 | GolfScript | `169` | `14/14` |
 | K | `206` | `14/14` |
@@ -229,6 +230,12 @@ benchmark submissions, not certified global minima. The
 [complete frontier report](../frontier-languages/README.md) publishes the
 sources, hashes, runtime gates, per-pair details, graphs, and limitations.
 
+The separate [Vyxal report](../vyxal/README.md) pins the official v3.12.0 JAR,
+executes all fourteen programs from Vyxal's one-byte code page, and keeps its
+`177` code-page units separate from the `151` shared-tokenizer score. Kern is
+`39.74%` below Vyxal in the cl100k aggregate, although Vyxal wins five
+individual pairs and three tie.
+
 The other newly identified direct contender is
 [zerolang](https://github.com/vercel-labs/zerolang), a graph-first language for
 agents that names token efficiency as a design goal. It requires separate
@@ -243,7 +250,7 @@ The machine-readable registry is
 1. expert review and expansion of every fourteen-program compact-language
    source set;
 2. reliable Nibbles execution and a separately licensed Dyalog APL 20 gate;
-3. Vyxal, 05AB1E, Husk, Brachylog, q, and zerolang audits;
+3. 05AB1E, Husk, Brachylog, q, and zerolang audits;
 4. exact ShortCoder and Token Sugar method reproduction;
 5. continued monitoring for KARN, NERD, Toke, Ax, and other public version
    changes, plus third-party reproduction.
@@ -289,3 +296,4 @@ Artifacts:
 - `../array-languages/`: Uiua and BQN executable sources and runtime gates.
 - `../frontier-languages/`: current Kern, GNU APL, CJam, Kona, and the verified
   same-registry cross-screen market graph.
+- `../vyxal/`: official Vyxal JAR/code-page execution, results, and graphs.

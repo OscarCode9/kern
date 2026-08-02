@@ -1,0 +1,100 @@
+[
+  {
+    "category": "scalar",
+    "expected_stdout": "201",
+    "python": "print((17 * 23 + 11) // 2)\n",
+    "task_id": "scalar/arithmetic",
+    "vyxal": "17 23\u00d711+2\u223b"
+  },
+  {
+    "category": "reduction",
+    "expected_stdout": "5050",
+    "python": "print(sum(range(1, 101)))\n",
+    "task_id": "reduction/sum_1_100",
+    "vyxal": "100\u027e\u2211"
+  },
+  {
+    "category": "reduction",
+    "expected_stdout": "3628800",
+    "python": "import math\nprint(math.factorial(10))\n",
+    "task_id": "reduction/factorial_10",
+    "vyxal": "10!"
+  },
+  {
+    "category": "text",
+    "expected_stdout": "egaugnalnrek",
+    "python": "print(\"kernlanguage\"[::-1])\n",
+    "task_id": "text/reverse",
+    "vyxal": "\"kernlanguage\"\u21c4"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "1 2 3 4 5 6 7 8 9",
+    "python": "print(*sorted([9, 1, 5, 3, 7, 2, 8, 6, 4]))\n",
+    "task_id": "array/sort",
+    "vyxal": "#[9|1|5|3|7|2|8|6|4#]S\u201e"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "3 1 2 4 5",
+    "python": "print(*dict.fromkeys([3, 1, 2, 3, 2, 4, 1, 5]))\n",
+    "task_id": "array/distinct",
+    "vyxal": "#[3|1|2|3|2|4|1|5#]u\u201e"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "1 4 9 16 25 36 49 64 81 100",
+    "python": "print(*(x * x for x in range(1, 11)))\n",
+    "task_id": "array/squares",
+    "vyxal": "10\u027e\u00b2\u201e"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "2 4 6 8 10 12 14 16 18 20",
+    "python": "print(*(x for x in range(1, 21) if x % 2 == 0))\n",
+    "task_id": "array/evens",
+    "vyxal": "20\u027e\u028ee}\u201e"
+  },
+  {
+    "category": "text",
+    "expected_stdout": "5",
+    "python": "print(\"abracadabra\".count(\"a\"))\n",
+    "task_id": "text/count_character",
+    "vyxal": "\"abracadabra\"'aC"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "32",
+    "python": "print(sum(a * b for a, b in zip([1, 2, 3], [4, 5, 6])))\n",
+    "task_id": "array/dot_product",
+    "vyxal": "#[1|2|3#]#[4|5|6#]\u16de\u00d7+"
+  },
+  {
+    "category": "text",
+    "expected_stdout": "1",
+    "python": "text = \"racecar\"\nprint(int(text == text[::-1]))\n",
+    "task_id": "text/palindrome",
+    "vyxal": "\"racecar\"/\u21c4"
+  },
+  {
+    "category": "scalar",
+    "expected_stdout": "82",
+    "python": "import math\nprint(math.gcd(2706, 410))\n",
+    "task_id": "scalar/gcd",
+    "vyxal": "2706 410\u03ba"
+  },
+  {
+    "category": "array",
+    "expected_stdout": "4 5 1 2 3",
+    "python": "values = [1, 2, 3, 4, 5]\nprint(*(values[3:] + values[:3]))\n",
+    "task_id": "array/rotate_left",
+    "vyxal": "#[1|2|3|4|5#]3\u21ba\u201e"
+  },
+  {
+    "category": "recurrence",
+    "expected_stdout": "0 1 1 2 3 5 8 13 21 34 55 89",
+    "python": "values = [0, 1]\nfor _ in range(10):\n    values.append(values[-1] + values[-2])\nprint(*values)\n",
+    "task_id": "recurrence/fibonacci",
+    "vyxal": "#[0|1#]\u2384+}12\u2296\u201e"
+  }
+]

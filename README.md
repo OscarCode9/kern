@@ -366,6 +366,31 @@ gate, CJam JAR hash, Kona commit and `1,101` passed, `0` failed (`33` skipped),
 separate byte/native charts, sensitivity analysis, and reproduction command.
 Nibbles and Dyalog remain explicit open runtime gates; no score is invented.
 
+### Reproduced Vyxal 3 screen (August 1, 2026)
+
+Vyxal 3.12.0 is now executed from the official release JAR and its 256-unit
+one-byte code page on the same fourteen-program registry.
+
+| Complete-source aggregate | Kern compact | Vyxal 3.12.0 |
+|---|---:|---:|
+| Shared `cl100k_base` | **`91`** | `151` |
+| Shared `o200k_base` | **`92`** | `147` |
+| Deployable tokenizer lane | **`99` Kern-16K** | `151` cl100k |
+| UTF-8 bytes | **`179`** | `213` |
+| Exact stdout | **`14/14`** | **`14/14`** |
+
+Kern is `39.74%` below Vyxal in the neutral `cl100k_base` aggregate and
+`37.41%` below it with `o200k_base`. Per-program results remain visible: Kern
+wins `6/14`, Vyxal wins `5/14`, and `3/14` tie under cl100k.
+
+![Kern versus Vyxal](benchmark_results/vyxal/vyxal-token-density.svg)
+
+Vyxal's separate official code-page total is `177` one-byte units. It is
+executed and published, but never substituted for LLM tokens. The complete
+[Vyxal report](benchmark_results/vyxal/README.md) includes every source, hash,
+raw-byte execution gate, category split, graph, limitation, and reproduction
+command.
+
 ### Reproduced compact-language screen: K, GolfScript, and J
 
 The current code.golf all-hole byte ranking identifies K, GolfScript, and J as
@@ -460,6 +485,7 @@ all array or golfing languages are closed.
 | [Pyth](https://github.com/isaacg1/pyth) and [Jelly](https://github.com/DennisMitchell/jellylanguage) | Dedicated procedural and Unicode golfing languages | Pinned 14/14 competitor executions; current Kern leads the shared, system, and UTF-8 aggregates, while Jelly's separate one-byte code-page score remains lower |
 | [Uiua](https://github.com/uiua-lang/uiua) and [BQN](https://mlochbaum.github.io/BQN/) | Modern stack-array and array languages | Reproduced on 14 executable pairs: Kern wins all 14 shared-tokenizer pairs against both and leads aggregate tokens and UTF-8 bytes |
 | [GNU APL](https://www.gnu.org/software/apl/), [CJam](https://sourceforge.net/p/cjam/code/ci/0.6.5/tree/), and [Kona](https://github.com/kevinlawler/kona) | APL, stack-golf, and K-family density adversaries | Pinned source/JAR/commit gates and 14/14 exact stdout; Kern leads the neutral aggregate at 91 vs CJam 93, but CJam leads bytes and the native-system lane |
+| [Vyxal 3](https://github.com/Vyxal/Vyxal) | Modern stack-based array and code-golf language | Official v3.12.0 JAR and one-byte code page reproduced 14/14; Kern leads shared aggregates at 91 vs 151 cl100k, while Vyxal's separate code-page score is 177 units |
 | [Nibbles](https://github.com/darrenks/nibbles) and [Dyalog APL](https://www.dyalog.com/dyalog/dyalog-versions/200.htm) | Strong functional-golf and commercial APL challengers | Investigated, but still open: no reliable Nibbles runtime was obtained and Dyalog requires a separate licensed system-install gate; no scores are fabricated |
 | [LiveCodeBench](https://livecodebench.github.io/) | Continuously updated code-generation benchmark | Planned for the model-generation phase, not a transpiler-preservation test |
 | [CodeGolf Bench](https://arxiv.org/abs/2605.30394) | Dynamic concise-code generation benchmark across 60 languages | Planned for the generation phase with identical model, prompt, correctness, and attempt budgets |
@@ -471,10 +497,10 @@ tokenizer, model, prompt, and execution protocol.
 
 The market registry is deliberately a living audit, not a declaration that
 every language has already been defeated. K, GolfScript, J, Pyth, Jelly,
-Uiua, BQN, GNU APL, CJam, and Kona now have first reproducible screens. The
-next density frontier is expert review and corpus expansion followed by Dyalog
-APL, Nibbles, Vyxal/05AB1E/Husk/Brachylog, and q, plus the separate source/graph/edit-loop
-audit of zerolang.
+Uiua, BQN, GNU APL, CJam, Kona, and Vyxal now have first reproducible screens.
+The next density frontier is expert review and corpus expansion followed by
+Dyalog APL, Nibbles, 05AB1E, Husk, Brachylog, and q, plus the separate
+source/graph/edit-loop audit of zerolang.
 
 ### Reproduce
 
@@ -494,6 +520,8 @@ Artifacts:
 - [`frontier-language-summary.json`](benchmark_results/frontier-languages/frontier-language-summary.json)
 - [`frontier-language-market.svg`](benchmark_results/frontier-languages/frontier-language-market.svg)
 - [`frontier-language-token-density.svg`](benchmark_results/frontier-languages/frontier-language-token-density.svg)
+- [`vyxal-summary.json`](benchmark_results/vyxal/vyxal-summary.json)
+- [`vyxal-token-density.svg`](benchmark_results/vyxal/vyxal-token-density.svg)
 - [`native-tokenizer-summary.json`](benchmark_results/native-tokenizer/native-tokenizer-summary.json)
 - [`harmony-summary.json`](benchmark_results/harmony/harmony-summary.json)
 - [`harmony-token-density.svg`](benchmark_results/harmony/harmony-token-density.svg)
@@ -700,6 +728,7 @@ Observed legacy-harness result:
 - `benchmark_golf_languages.py`: executable Pyth and Jelly density screen
 - `benchmark_array_languages.py`: executable Uiua and BQN density screen
 - `benchmark_frontier_languages.py`: GNU APL, CJam, Kona, and verified same-corpus market screen
+- `benchmark_vyxal.py`: official Vyxal 3 JAR/code-page execution and density screen
 - `benchmark_harmony.py`: full-corpus `o200k_base` / `o200k_harmony` equivalence audit
 - `benchmark_native_tokenizer.py`: held-out Kern-16K and Toke-16K system comparison
 - `market-benchmark-requirements.txt`: pinned optional market dependencies
@@ -711,6 +740,7 @@ Observed legacy-harness result:
 - `benchmark_results/golf-languages/`: Pyth/Jelly sources, code-page gates, results, and graphs
 - `benchmark_results/array-languages/`: Uiua/BQN sources, runtime gates, results, and graphs
 - `benchmark_results/frontier-languages/`: current frontier sources, exact executions, and cross-screen graphs
+- `benchmark_results/vyxal/`: Vyxal sources, code-page gates, results, and graphs
 - `benchmark_results/native-tokenizer/`: frozen Kern-16K artifact, manifest, held-out results, and graphs
 - `benchmark_results/harmony/`: Harmony encoding contract, full-corpus details, and graph
 - `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
@@ -762,6 +792,7 @@ python3 benchmark_humaneval_roundtrip.py
 python3 benchmark_humaneval_functional.py
 python3 benchmark_multitokenizer.py
 python3 benchmark_head_to_head.py --datasets humaneval mbpp_train --tokenizers cl100k_base o200k_harmony
+python3 benchmark_vyxal.py
 python3 analyze_head_to_head.py
 ```
 

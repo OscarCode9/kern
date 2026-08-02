@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+<title id="title">Source storage units are not LLM tokens</title>
+<desc id="desc">UTF-8 bytes and Vyxal code-page units are reported separately</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">Source storage units are not LLM tokens</text>
+<text x="92" y="65" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">UTF-8 bytes and Vyxal code-page units are reported separately</text>
+<line x1="92" y1="448.0" x2="946" y2="448.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="453.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="376.8" x2="946" y2="376.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="381.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">48</text>
+<line x1="92" y1="305.6" x2="946" y2="305.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="310.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">96</text>
+<line x1="92" y1="234.4" x2="946" y2="234.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="239.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">144</text>
+<line x1="92" y1="163.2" x2="946" y2="163.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="168.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">192</text>
+<line x1="92" y1="92.0" x2="946" y2="92.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">240</text>
+<text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Aggregate source units</text>
+<text x="305.5" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">UTF-8 bytes</text>
+<rect x="241.5" y="182.5" width="60.0" height="265.5" rx="5" fill="#22c55e"/>
+<text x="271.5" y="174.5" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">179.0</text>
+<rect x="309.5" y="132.1" width="60.0" height="315.9" rx="5" fill="#f97316"/>
+<text x="339.5" y="124.1" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">213.0</text>
+<text x="732.5" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">Vyxal code page</text>
+<rect x="736.5" y="185.4" width="60.0" height="262.6" rx="5" fill="#f97316"/>
+<text x="766.5" y="177.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">177.0</text>
+<rect x="92" y="504" width="14" height="14" rx="3" fill="#22c55e"/>
+<text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Kern compact</text>
+<rect x="282" y="504" width="14" height="14" rx="3" fill="#f97316"/>
+<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">Vyxal</text>
+</svg>

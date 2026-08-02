@@ -134,12 +134,16 @@ This result closes Uiua and BQN only for this fixed corpus. It does not close
 the market. The next high-risk families are:
 
 1. Dyalog APL and another executable APL implementation;
-2. Nibbles and CJam, whose encodings and stack semantics differ from the
+2. Nibbles, whose encoding and functional semantics differ from the
    already-tested GolfScript/Pyth/Jelly group;
-3. Vyxal, 05AB1E, Husk, and Brachylog;
+3. 05AB1E, Husk, and Brachylog;
 4. q and another modern K-family implementation;
 5. zerolang's graph and checked-edit representation, which needs a different
    protocol from source-only languages.
+
+CJam and Vyxal have since passed separate executable follow-up gates in the
+[frontier](../frontier-languages/README.md) and
+[Vyxal](../vyxal/README.md) reports.
 
 For code-page or nibble-based languages, native storage units must remain
 separate from UTF-8 bytes and LLM-token counts.

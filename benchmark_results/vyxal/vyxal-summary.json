@@ -1,0 +1,134 @@
+{
+  "corpus": {
+    "authorship": "Benchmark-authored compact Vyxal programs using documented primitives; not certified best-known golf submissions",
+    "normalization": "Collapse display-only whitespace while preserving value tokens and their order",
+    "sources_and_hashes_published": true
+  },
+  "discovery_evidence": {
+    "interpretation": "Vyxal is an adversarial modern golfing language. This fixed corpus is a density screen, not a claim that either source set is globally minimal.",
+    "official_release": "https://github.com/Vyxal/Vyxal/releases/tag/v3.12.0",
+    "official_repository": "https://github.com/Vyxal/Vyxal",
+    "source_snapshot_date": "2026-08-01"
+  },
+  "metadata": {
+    "generated_at": "2026-08-02T02:05:05.823237+00:00",
+    "kern_tokenizer_sha256": "14402547477aecf3b4cc8015180f125e19ab66c20d220b82537ab869e9180c82",
+    "protocol": "Fourteen fixed matched executable programs; official Vyxal code-page execution; shared production tokenizers; exact normalized stdout; separate LLM-token, native-BPE, UTF-8, and Vyxal code-page lanes",
+    "python": "3.12.11",
+    "python_minifier": "3.2.0",
+    "tiktoken": "0.13.0",
+    "tokenizers": "0.22.2"
+  },
+  "results": {
+    "categories": {
+      "array": {
+        "cl100k_base": {
+          "kern": 38,
+          "python": 153,
+          "python_minifier": 122,
+          "vyxal": 92
+        },
+        "programs": 6,
+        "vyxal_codepage_units": 93
+      },
+      "recurrence": {
+        "cl100k_base": {
+          "kern": 5,
+          "python": 31,
+          "python_minifier": 27,
+          "vyxal": 16
+        },
+        "programs": 1,
+        "vyxal_codepage_units": 14
+      },
+      "reduction": {
+        "cl100k_base": {
+          "kern": 9,
+          "python": 19,
+          "python_minifier": 18,
+          "vyxal": 7
+        },
+        "programs": 2,
+        "vyxal_codepage_units": 8
+      },
+      "scalar": {
+        "cl100k_base": {
+          "kern": 15,
+          "python": 28,
+          "python_minifier": 17,
+          "vyxal": 14
+        },
+        "programs": 2,
+        "vyxal_codepage_units": 20
+      },
+      "text": {
+        "cl100k_base": {
+          "kern": 24,
+          "python": 34,
+          "python_minifier": 33,
+          "vyxal": 22
+        },
+        "programs": 3,
+        "vyxal_codepage_units": 42
+      }
+    },
+    "cl100k_base": {
+      "kern": 91,
+      "python": 265,
+      "python_minifier": 217,
+      "vyxal": 151
+    },
+    "comparisons": {
+      "native_kern_below_vyxal_cl100k_pct": 34.437086092715234,
+      "o200k_kern_below_vyxal_pct": 37.41496598639456,
+      "shared_kern_below_vyxal_pct": 39.735099337748345,
+      "shared_kern_wins": 6,
+      "shared_ties": 3,
+      "shared_vyxal_wins": 5
+    },
+    "functional": {
+      "kern": 14,
+      "python": 14,
+      "python_minifier": 14,
+      "vyxal": 14
+    },
+    "native_system": {
+      "kern_native_16k": 99,
+      "vyxal_cl100k_base": 151
+    },
+    "o200k_base": {
+      "kern": 92,
+      "python": 263,
+      "python_minifier": 216,
+      "vyxal": 147
+    },
+    "programs": 14,
+    "structural": {
+      "kern_contract_ast": 14,
+      "kern_native_exact_roundtrip": 14,
+      "vyxal_codepage_roundtrip": 14
+    },
+    "utf8_bytes": {
+      "kern": 179,
+      "python": 611,
+      "python_minifier": 537,
+      "vyxal": 213
+    },
+    "vyxal_codepage_units": 177
+  },
+  "runtime_gate": {
+    "codepage_sha256": "04773c1e2df06bf6af244473ba06411cbf9bfba1131b87bd92f6c26847f5b624",
+    "codepage_units": 256,
+    "expected_jar_sha256": "f50af719c56374534216912887097959e8cc58dd8622491c0a246f8479cb7615",
+    "expected_version": "3.12.0",
+    "jar_bytes": 25990653,
+    "jar_sha256": "f50af719c56374534216912887097959e8cc58dd8622491c0a246f8479cb7615",
+    "java": "java version \"17.0.12\" 2024-07-16 LTS",
+    "ok": true,
+    "release": "v3.12.0",
+    "source_commit": "7f201806cde2a1fafdca054ac398be36f939c273",
+    "version": "3.12.0",
+    "version_error": ""
+  },
+  "schema_version": 1
+}

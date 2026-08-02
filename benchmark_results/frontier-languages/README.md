@@ -102,7 +102,9 @@ Dyalog APL 20 was inspected but not silently substituted for GNU APL: its
 official distribution and license require a separate system-install gate.
 Nibbles 1.01 was also inspected, but no reliable executable was obtained in
 this environment; its runtime gate remains open and no score is invented.
-Vyxal, 05AB1E, Husk, Brachylog, and other active golf languages remain in the
+Vyxal has since passed a separate official-JAR and code-page gate on all
+fourteen tasks; its [dedicated report](../vyxal/README.md) publishes that
+result. 05AB1E, Husk, Brachylog, and other active golf languages remain in the
 expansion queue. Consequently this report supports a bounded corpus lead, not
 a global “world champion” claim.
 
@@ -111,7 +113,8 @@ Official references: [GNU APL](https://www.gnu.org/software/apl/),
 [CJam operators](https://sourceforge.net/p/cjam/wiki/Operators/), and
 [Kona](https://github.com/kevinlawler/kona). Open gates are tracked against
 [Nibbles](https://github.com/darrenks/nibbles) and
-[Dyalog APL 20](https://www.dyalog.com/dyalog/dyalog-versions/200.htm).
+[Dyalog APL 20](https://www.dyalog.com/dyalog/dyalog-versions/200.htm). The
+executed next-stage reference is [Vyxal 3.12.0](../vyxal/README.md).
 
 ## Reproduce
 
