@@ -1,0 +1,220 @@
+{
+  "encoding_contract": {
+    "mergeable_ranks_equal": true,
+    "mergeable_ranks_sha256": {
+      "o200k_base": "dcf8f06c59a061f59909285da2f0fbbc0fa772916ad5f0b4ed52ce6a1c32d04a",
+      "o200k_harmony": "dcf8f06c59a061f59909285da2f0fbbc0fa772916ad5f0b4ed52ce6a1c32d04a"
+    },
+    "pattern_equal": true,
+    "special_token_count": {
+      "o200k_base": 2,
+      "o200k_harmony": 1091
+    },
+    "special_token_probes": [
+      {
+        "harmony_allowed_special_tokens": 1,
+        "harmony_special_token_id": 199998,
+        "marker": "<|startoftext|>",
+        "o200k_base_ordinary_tokens": 7,
+        "o200k_harmony_ordinary_tokens": 7
+      },
+      {
+        "harmony_allowed_special_tokens": 1,
+        "harmony_special_token_id": 200002,
+        "marker": "<|return|>",
+        "o200k_base_ordinary_tokens": 5,
+        "o200k_harmony_ordinary_tokens": 5
+      },
+      {
+        "harmony_allowed_special_tokens": 1,
+        "harmony_special_token_id": 200003,
+        "marker": "<|constrain|>",
+        "o200k_base_ordinary_tokens": 6,
+        "o200k_harmony_ordinary_tokens": 6
+      },
+      {
+        "harmony_allowed_special_tokens": 1,
+        "harmony_special_token_id": 200005,
+        "marker": "<|channel|>",
+        "o200k_base_ordinary_tokens": 5,
+        "o200k_harmony_ordinary_tokens": 5
+      },
+      {
+        "harmony_allowed_special_tokens": 1,
+        "harmony_special_token_id": 200006,
+        "marker": "<|start|>",
+        "o200k_base_ordinary_tokens": 5,
+        "o200k_harmony_ordinary_tokens": 5
+      },
+      {
+        "harmony_allowed_special_tokens": 1,
+        "harmony_special_token_id": 200007,
+        "marker": "<|end|>",
+        "o200k_base_ordinary_tokens": 5,
+        "o200k_harmony_ordinary_tokens": 5
+      },
+      {
+        "harmony_allowed_special_tokens": 1,
+        "harmony_special_token_id": 200008,
+        "marker": "<|message|>",
+        "o200k_base_ordinary_tokens": 5,
+        "o200k_harmony_ordinary_tokens": 5
+      },
+      {
+        "harmony_allowed_special_tokens": 1,
+        "harmony_special_token_id": 200012,
+        "marker": "<|call|>",
+        "o200k_base_ordinary_tokens": 5,
+        "o200k_harmony_ordinary_tokens": 5
+      }
+    ],
+    "tiktoken_constructor_source": "tiktoken_ext/openai_public.py",
+    "tiktoken_constructor_source_sha256": "954392738e60d0fb6dca1dad80872efc47c8e2733babecbbf0a23970ed66c2cb",
+    "vocabulary_size": {
+      "o200k_base": 200019,
+      "o200k_harmony": 201088
+    }
+  },
+  "interpretation": "Under tiktoken 0.13.0, o200k_harmony adds special tokens but uses the same pattern and mergeable ranks as o200k_base; raw ordinary code therefore has identical token IDs and counts",
+  "metadata": {
+    "bigcodebench_revision": "b74c0d0bf70d2c0bc459be537895cca163007f1a",
+    "bigcodebench_split": "v0.1.4",
+    "constructor_function": "tiktoken_ext.openai_public.o200k_harmony",
+    "constructor_source_file": "openai_public.py",
+    "generated_at_utc": "2026-08-02T01:31:44.745542+00:00",
+    "humaneval_plus_hash": "fe585eb4df8c88d844eeb463ea4d0302",
+    "mbpp_plus_hash": "ee43ecabebf20deef4bb776a405ac5b1",
+    "protocol": "Code-only source scored with encode_ordinary; no chat or Harmony message envelope is included",
+    "tiktoken": "0.13.0"
+  },
+  "results": {
+    "max_absolute_case_delta": 0,
+    "o200k_exact_id_matches": 6728,
+    "o200k_token_delta": 0,
+    "programs": 1682,
+    "representation_rows": 6728,
+    "totals": {
+      "BigCodeBench": {
+        "kern": {
+          "cl100k_base": 128909,
+          "o200k_base": 132165,
+          "o200k_exact_id_matches": 1140,
+          "o200k_harmony": 132165,
+          "programs": 1140
+        },
+        "kern_compact": {
+          "cl100k_base": 118278,
+          "o200k_base": 121271,
+          "o200k_exact_id_matches": 1140,
+          "o200k_harmony": 121271,
+          "programs": 1140
+        },
+        "python": {
+          "cl100k_base": 163786,
+          "o200k_base": 166184,
+          "o200k_exact_id_matches": 1140,
+          "o200k_harmony": 166184,
+          "programs": 1140
+        },
+        "python_minifier": {
+          "cl100k_base": 123109,
+          "o200k_base": 125900,
+          "o200k_exact_id_matches": 1140,
+          "o200k_harmony": 125900,
+          "programs": 1140
+        }
+      },
+      "Combined": {
+        "kern": {
+          "cl100k_base": 147668,
+          "o200k_base": 151222,
+          "o200k_exact_id_matches": 1682,
+          "o200k_harmony": 151222,
+          "programs": 1682
+        },
+        "kern_compact": {
+          "cl100k_base": 135990,
+          "o200k_base": 139278,
+          "o200k_exact_id_matches": 1682,
+          "o200k_harmony": 139278,
+          "programs": 1682
+        },
+        "python": {
+          "cl100k_base": 189540,
+          "o200k_base": 192065,
+          "o200k_exact_id_matches": 1682,
+          "o200k_harmony": 192065,
+          "programs": 1682
+        },
+        "python_minifier": {
+          "cl100k_base": 142487,
+          "o200k_base": 145445,
+          "o200k_exact_id_matches": 1682,
+          "o200k_harmony": 145445,
+          "programs": 1682
+        }
+      },
+      "HumanEval+": {
+        "kern": {
+          "cl100k_base": 7736,
+          "o200k_base": 7861,
+          "o200k_exact_id_matches": 164,
+          "o200k_harmony": 7861,
+          "programs": 164
+        },
+        "kern_compact": {
+          "cl100k_base": 7300,
+          "o200k_base": 7424,
+          "o200k_exact_id_matches": 164,
+          "o200k_harmony": 7424,
+          "programs": 164
+        },
+        "python": {
+          "cl100k_base": 10571,
+          "o200k_base": 10611,
+          "o200k_exact_id_matches": 164,
+          "o200k_harmony": 10611,
+          "programs": 164
+        },
+        "python_minifier": {
+          "cl100k_base": 7813,
+          "o200k_base": 7875,
+          "o200k_exact_id_matches": 164,
+          "o200k_harmony": 7875,
+          "programs": 164
+        }
+      },
+      "MBPP+": {
+        "kern": {
+          "cl100k_base": 11023,
+          "o200k_base": 11196,
+          "o200k_exact_id_matches": 378,
+          "o200k_harmony": 11196,
+          "programs": 378
+        },
+        "kern_compact": {
+          "cl100k_base": 10412,
+          "o200k_base": 10583,
+          "o200k_exact_id_matches": 378,
+          "o200k_harmony": 10583,
+          "programs": 378
+        },
+        "python": {
+          "cl100k_base": 15183,
+          "o200k_base": 15270,
+          "o200k_exact_id_matches": 378,
+          "o200k_harmony": 15270,
+          "programs": 378
+        },
+        "python_minifier": {
+          "cl100k_base": 11565,
+          "o200k_base": 11670,
+          "o200k_exact_id_matches": 378,
+          "o200k_harmony": 11670,
+          "programs": 378
+        }
+      }
+    }
+  },
+  "schema_version": 1
+}

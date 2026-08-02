@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img" aria-labelledby="title desc">
+<title id="title">o200k_harmony raw-source equivalence</title>
+<desc id="desc">1,682 code-only programs · encode_ordinary · lower is better</desc>
+<rect width="100%" height="100%" fill="#0b1020"/>
+<text x="92" y="38" fill="#f8fafc" font-family="Inter,system-ui,sans-serif" font-size="24" font-weight="700">o200k_harmony raw-source equivalence</text>
+<text x="92" y="65" fill="#94a3b8" font-family="Inter,system-ui,sans-serif" font-size="14">1,682 code-only programs · encode_ordinary · lower is better</text>
+<line x1="92" y1="448.0" x2="946" y2="448.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="453.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">0</text>
+<line x1="92" y1="376.8" x2="946" y2="376.8" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="381.8" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">42000</text>
+<line x1="92" y1="305.6" x2="946" y2="305.6" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="310.6" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">84000</text>
+<line x1="92" y1="234.4" x2="946" y2="234.4" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="239.4" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">126000</text>
+<line x1="92" y1="163.2" x2="946" y2="163.2" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="168.2" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">168000</text>
+<line x1="92" y1="92.0" x2="946" y2="92.0" stroke="#25314d" stroke-width="1"/>
+<text x="80" y="97.0" fill="#94a3b8" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12">210000</text>
+<text x="22" y="270.0" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 22 270.0)" font-family="Inter,system-ui,sans-serif" font-size="13">Aggregate ordinary-source tokens</text>
+<text x="198.8" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">Python</text>
+<rect x="134.8" y="122.4" width="60.0" height="325.6" rx="5" fill="#38bdf8"/>
+<text x="164.8" y="114.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">192065.0</text>
+<rect x="202.8" y="122.4" width="60.0" height="325.6" rx="5" fill="#f97316"/>
+<text x="232.8" y="114.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">192065.0</text>
+<text x="412.2" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">Kern reversible</text>
+<rect x="348.2" y="191.6" width="60.0" height="256.4" rx="5" fill="#38bdf8"/>
+<text x="378.2" y="183.6" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">151222.0</text>
+<rect x="416.2" y="191.6" width="60.0" height="256.4" rx="5" fill="#f97316"/>
+<text x="446.2" y="183.6" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">151222.0</text>
+<text x="625.8" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">Kern compact</text>
+<rect x="561.8" y="211.9" width="60.0" height="236.1" rx="5" fill="#38bdf8"/>
+<text x="591.8" y="203.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">139278.0</text>
+<rect x="629.8" y="211.9" width="60.0" height="236.1" rx="5" fill="#f97316"/>
+<text x="659.8" y="203.9" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">139278.0</text>
+<text x="839.2" y="476" fill="#cbd5e1" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14">python-minifier</text>
+<rect x="775.2" y="201.4" width="60.0" height="246.6" rx="5" fill="#38bdf8"/>
+<text x="805.2" y="193.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">145445.0</text>
+<rect x="843.2" y="201.4" width="60.0" height="246.6" rx="5" fill="#f97316"/>
+<text x="873.2" y="193.4" fill="#f8fafc" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600">145445.0</text>
+<rect x="92" y="504" width="14" height="14" rx="3" fill="#38bdf8"/>
+<text x="114" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">o200k_base</text>
+<rect x="282" y="504" width="14" height="14" rx="3" fill="#f97316"/>
+<text x="304" y="516" fill="#cbd5e1" font-family="Inter,system-ui,sans-serif" font-size="13">o200k_harmony</text>
+</svg>

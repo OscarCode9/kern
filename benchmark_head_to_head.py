@@ -80,6 +80,9 @@ def build_tokenizers(enabled: list[str]) -> dict[str, Callable[[str], int]]:
         elif name == "o200k_base":
             enc = tiktoken.get_encoding("o200k_base")
             built[name] = lambda s, e=enc: len(e.encode(s))
+        elif name == "o200k_harmony":
+            enc = tiktoken.get_encoding("o200k_harmony")
+            built[name] = lambda s, e=enc: len(e.encode_ordinary(s))
         elif name == "llama_tinyllama":
             os.environ.setdefault("TRANSFORMERS_NO_ADVISORY_WARNINGS", "1")
             from transformers import AutoTokenizer  # lazy import
@@ -450,7 +453,13 @@ def parse_args() -> argparse.Namespace:
         "--tokenizers",
         nargs="+",
         default=["cl100k_base", "o200k_base", "llama_tinyllama", "codegen_350m_mono"],
-        choices=["cl100k_base", "o200k_base", "llama_tinyllama", "codegen_350m_mono"],
+        choices=[
+            "cl100k_base",
+            "o200k_base",
+            "o200k_harmony",
+            "llama_tinyllama",
+            "codegen_350m_mono",
+        ],
     )
     parser.add_argument(
         "--external-config",

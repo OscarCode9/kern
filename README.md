@@ -179,6 +179,33 @@ it is the intentionally alpha-renamed compact AST. The 25 incompatibilities
 remain explicit next targets: 16 attribute/call precedence cases, 8 f-string
 cases, and 1 grouped-lambda case.
 
+### `o200k_harmony` audit (August 1, 2026)
+
+`o200k_harmony` sounds like a new density target, but the pinned
+`tiktoken 0.13.0` constructor reuses the same ordinary-text pattern and merge
+ranks as `o200k_base`; it adds special tokens for structured messages.
+
+We verified this on every Python, reversible Kern, compact Kern, and
+python-minifier representation in the same 1,682-program modern corpus:
+
+| Representation | `o200k_base` | `o200k_harmony` | Delta |
+|---|---:|---:|---:|
+| Python | `192,065` | `192,065` | `0` |
+| Kern reversible | `151,222` | `151,222` | `0` |
+| **Kern compact** | **`139,278`** | **`139,278`** | **`0`** |
+| python-minifier | `145,445` | `145,445` | `0` |
+
+All `6,728/6,728` ordinary-source token streams have identical token IDs.
+Kern therefore keeps its `6,167`-token (`4.24%`) advantage over
+python-minifier under Harmony. Chat/message-envelope overhead is deliberately
+excluded because it requires a separately pinned serialization protocol.
+
+![o200k_harmony raw-source audit](benchmark_results/harmony/harmony-token-density.svg)
+
+The complete [Harmony audit](benchmark_results/harmony/README.md) publishes
+the per-program details, tokenizer-source hash, merge-rank hash, special-token
+probes, graph, and reproduction command.
+
 ### Reproduced language-market results (July 29, 2026)
 
 Kern now has a directly reproduced language-level comparison against the
@@ -468,6 +495,8 @@ Artifacts:
 - [`frontier-language-market.svg`](benchmark_results/frontier-languages/frontier-language-market.svg)
 - [`frontier-language-token-density.svg`](benchmark_results/frontier-languages/frontier-language-token-density.svg)
 - [`native-tokenizer-summary.json`](benchmark_results/native-tokenizer/native-tokenizer-summary.json)
+- [`harmony-summary.json`](benchmark_results/harmony/harmony-summary.json)
+- [`harmony-token-density.svg`](benchmark_results/harmony/harmony-token-density.svg)
 - [`optimization-discovery-2026-07-23.md`](benchmark_results/modern/optimization-discovery-2026-07-23.md):
   measured candidates for the next compression iteration
 
@@ -671,6 +700,7 @@ Observed legacy-harness result:
 - `benchmark_golf_languages.py`: executable Pyth and Jelly density screen
 - `benchmark_array_languages.py`: executable Uiua and BQN density screen
 - `benchmark_frontier_languages.py`: GNU APL, CJam, Kona, and verified same-corpus market screen
+- `benchmark_harmony.py`: full-corpus `o200k_base` / `o200k_harmony` equivalence audit
 - `benchmark_native_tokenizer.py`: held-out Kern-16K and Toke-16K system comparison
 - `market-benchmark-requirements.txt`: pinned optional market dependencies
 - `benchmark_results/market/`: Sigil comparison, graphs, and world-market competitor registry
@@ -682,6 +712,7 @@ Observed legacy-harness result:
 - `benchmark_results/array-languages/`: Uiua/BQN sources, runtime gates, results, and graphs
 - `benchmark_results/frontier-languages/`: current frontier sources, exact executions, and cross-screen graphs
 - `benchmark_results/native-tokenizer/`: frozen Kern-16K artifact, manifest, held-out results, and graphs
+- `benchmark_results/harmony/`: Harmony encoding contract, full-corpus details, and graph
 - `analyze_head_to_head.py`: bootstrap confidence intervals over head-to-head metrics
 - `test_baseline_adapters.py`: adapter sanity tests (`python`, `kern`, `simpy`, `token_sugar`)
 - `prepare_finetune_dataset.py`: exports `.py` + `.kern` pairs and JSONL for fine-tuning
@@ -730,7 +761,7 @@ python3 benchmark_grammar.py
 python3 benchmark_humaneval_roundtrip.py
 python3 benchmark_humaneval_functional.py
 python3 benchmark_multitokenizer.py
-python3 benchmark_head_to_head.py --datasets humaneval mbpp_train --tokenizers cl100k_base
+python3 benchmark_head_to_head.py --datasets humaneval mbpp_train --tokenizers cl100k_base o200k_harmony
 python3 analyze_head_to_head.py
 ```
 
@@ -739,7 +770,7 @@ Run head-to-head with SimPy and Token Sugar adapters:
 ```bash
 python3 benchmark_head_to_head.py \
   --datasets humaneval mbpp_train \
-  --tokenizers cl100k_base o200k_base llama_tinyllama codegen_350m_mono \
+  --tokenizers cl100k_base o200k_base o200k_harmony llama_tinyllama codegen_350m_mono \
   --include-simpy \
   --include-token-sugar
 ```
